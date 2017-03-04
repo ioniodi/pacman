@@ -32,7 +32,7 @@
         this.safetile = 1; //this.safetile = 14;
         this.gridsize = 32; // this.gridsize = 16
 
-        this.speed = 150;
+        this.speed = 300;
         this.threshold = 3;
         this.turnSpeed = 150;//+
 
@@ -70,7 +70,7 @@
 
             this.load.image('dot', 'assets/dot.png');
             this.load.image('tiles', 'assets/pacman-tiles.png');
-            this.load.spritesheet('car', 'assets/car.png'); // this.load.spritesheet('pacman', 'assets/car.png', 32, 32);
+            this.load.spritesheet('car', 'assets/car.png',32,32); // this.load.spritesheet('pacman', 'assets/car.png', 32, 32);
             this.load.tilemap('map', 'assets/pacman-map.json', null, Phaser.Tilemap.TILED_JSON);
 
             //  Needless to say, graphics (C)opyright Namco
