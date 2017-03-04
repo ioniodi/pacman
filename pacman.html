@@ -208,7 +208,7 @@
                 (this.current === Phaser.LEFT && to === Phaser.DOWN) ||
                 (this.current === Phaser.RIGHT && to === Phaser.UP))
             {
-                return "90";
+                return "-90";
             }
             return "90";
         },
@@ -224,9 +224,12 @@
         update: function () {
           
             this.physics.arcade.collide(this.pacman, this.layer);
+            
             this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
+            
             this.marker.x = this.math.snapToFloor(Math.floor(this.pacman.x), this.gridsize) / this.gridsize;
             this.marker.y = this.math.snapToFloor(Math.floor(this.pacman.y), this.gridsize) / this.gridsize;
+            
             //  Update our grid sensors
             this.directions[1] = this.map.getTileLeft(this.layer.index, this.marker.x, this.marker.y);
             this.directions[2] = this.map.getTileRight(this.layer.index, this.marker.x, this.marker.y);
