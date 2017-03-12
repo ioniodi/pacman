@@ -12,3 +12,4 @@
 Αυτές οι 2 γραμμές κώδικα κάνουν Load τα αρχεία dot.png και pacman.png. Αλλάζουμε τα ονόματα σε dot2.png και pacman2.png.
 
 Για την δημιουργία του terrain θα χρησιμοποιήσουμε το Tiled (http://www.mapeditor.org/). Η γραμμή κώδικα που κάνει load το terrain είναι η εξής: this.load.tilemap('map', 'assets/pacman-map.json', null, Phaser.Tilemap.TILED_JSON);
+Επίσης αλλάχτηκε το αρχείο tiles, μετατρέπωντας το μπλέ χρώμα στα τοιχώματα σε πράσινο. Επεξεργασία εικόνας έγινε με το paint.net.
