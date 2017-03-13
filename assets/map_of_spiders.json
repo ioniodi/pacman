@@ -28,7 +28,7 @@
           "terrains":[
                 {
                  "name":"New Terrain",
-                 "tile":-1
+                 "tile":0
                 }],
          "tilecount":48,
          "tileheight":16,
