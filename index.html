@@ -75,8 +75,8 @@
             
         
         create: function () {
-     this.music = this.add.audio('boden');
-     this.music.onDecoded.add(start, this);
+    this.music = game.add.audio('boden');
+    this.music.play();
 
             
               
@@ -160,11 +160,7 @@
             }
 
         },
-start: function() {
 
-    music.fadeIn(4000);
-
-},
         turn: function () {
 
             var cx = Math.floor(this.pacman.x);
