@@ -59,12 +59,12 @@
 
             //  We need this because the assets are on github pages
             //  Remove the next 2 lines if running locally
-            this.load.baseURL = ' https://mpoympaslef.github.io/pacman/';
+            this.load.baseURL = 'https://ioniodi.github.io/pacman/';
             this.load.crossOrigin = 'anonymous';
 
             this.load.image('dot', 'assets/k.jpg');
             this.load.image('tiles', 'assets/pacman-tiles.png');
-            this.load.spritesheet('pacman', 'assets/popeyechar.jpg', 96, 32);
+            this.load.spritesheet('pacman', 'assets/popeyechar.jpg', 32, 32);
             this.load.tilemap('map', 'assets/pacman-map.json', null, Phaser.Tilemap.TILED_JSON);
 
             //  Needless to say, graphics (C)opyright Namco
@@ -76,7 +76,7 @@
             this.map = this.add.tilemap('map');
             this.map.addTilesetImage('pacman-tiles', 'tiles');
 
-            this.layer = this.map.createLayer('pacman');
+            this.layer = this.map.createLayer('Pacman');
 
             this.dots = this.add.physicsGroup();
 
