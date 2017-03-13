@@ -25,6 +25,11 @@
          "margin":0,
          "name":"pacman-tiles",
          "spacing":0,
+          "terrains":[
+                {
+                 "name":"New Terrain",
+                 "tile":-1
+                }],
          "tilecount":48,
          "tileheight":16,
          "tilewidth":16
