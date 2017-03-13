@@ -19,7 +19,7 @@
         {
          "columns":16,
          "firstgid":1,
-         "image":"popeytiles.png",
+         "image":"popeyetiles.png",
          "imageheight":512,
          "imagewidth":512,
          "margin":0,
@@ -32,11 +32,11 @@
         {
          "columns":3,
          "firstgid":257,
-         "image":"popopopopeye.jpg",
+         "image":"popeyechar.jpg",
          "imageheight":32,
          "imagewidth":96,
          "margin":0,
-         "name":"popopopopeye",
+         "name":"popeyechar",
          "spacing":0,
          "tilecount":3,
          "tileheight":32,
