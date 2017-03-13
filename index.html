@@ -17,7 +17,7 @@
     <script type="text/javascript">
 
     var game = new Phaser.Game(448, 496, Phaser.AUTO);
-
+    var music;
     var Pacman = function (game) {
 
         this.map = null;
@@ -67,13 +67,16 @@
             this.load.spritesheet('pacman', 'assets/Trevor.png', 32, 32);
             this.load.tilemap('map', 'assets/map_of_spiders.json', null, Phaser.Tilemap.TILED_JSON);
           
+          this.load.audio('boden', 'assets/audio/01-metamorphosis-no.1.mp3');
             //  Needless to say, graphics (C)opyright Namco
 
         },
         
-
+            
         
         create: function () {
+      music = this.add.audio('boden');
+     music.onDecoded.add(start, this);
 
             
               
@@ -157,7 +160,11 @@
             }
 
         },
+start: function() {
 
+    music.fadeIn(4000);
+
+},
         turn: function () {
 
             var cx = Math.floor(this.pacman.x);
