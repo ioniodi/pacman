@@ -66,13 +66,16 @@
             this.load.image('tiles', 'assets/pacman-tiles2.png');
             this.load.spritesheet('pacman', 'assets/Trevor.png', 32, 32);
             this.load.tilemap('map', 'assets/map_of_spiders.json', null, Phaser.Tilemap.TILED_JSON);
-
+                 game.load.audio('boden', 'assets/audio/01-metamorphosis-no.1.mp3');
             //  Needless to say, graphics (C)opyright Namco
 
         },
 
         create: function () {
 
+            
+                music = game.add.audio('boden');
+                music.onDecoded.add(start, this);
             this.map = this.add.tilemap('map');
             this.map.addTilesetImage('pacman-tiles', 'tiles');
 
