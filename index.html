@@ -16,7 +16,7 @@
 
     <script type="text/javascript">
 
-    var game = new Phaser.Game(448, 496, Phaser.AUTO);
+    var game = new Phaser.Game(448, 550, Phaser.AUTO);
 
     var Pacman = function (game) {
 
@@ -38,6 +38,9 @@
 
         this.current = Phaser.NONE;
         this.turning = Phaser.NONE;
+        
+        this.score=0;
+        this.scoreText='';
 
     };
 
@@ -96,7 +99,9 @@
 
             this.physics.arcade.enable(this.pacman);
             this.pacman.body.setSize(16, 16, 0, 0);
-
+            
+            this.scoreText = game.add.text(0, 500, 'Score: 0', { fontSize: '32px', fill: 'red' });
+            
             this.cursors = this.input.keyboard.createCursorKeys();
 
             this.pacman.play('munch');
@@ -221,7 +226,10 @@
         eatDot: function (pacman, dot) {
 
             dot.kill();
-
+            
+            this.score+=10;
+            this.scoreText.text= 'Score: ' + this.score;
+            
             if (this.dots.total === 0)
             {
                 this.dots.callAll('revive');
