@@ -13,13 +13,16 @@
     <script src="//cdn.jsdelivr.net/phaser/2.2.2/phaser.min.js"></script>
 </head>
 <body>
-
+    <audio controls>
+            <sourse src="'assets/audio/01-metamorphosis-no.1.mp3" type="audio/mpeg">
+                </audio>
+        
     <script type="text/javascript">
 
     var game = new Phaser.Game(448, 496, Phaser.AUTO);
     
     var Pacman = function (game) {
-             this.music = null;
+       
         this.map = null;
         this.layer = null;
         this.pacman = null;
@@ -66,8 +69,6 @@
             this.load.image('tiles', 'assets/pacman-tiles2.png');
             this.load.spritesheet('pacman', 'assets/Trevor.png', 32, 32);
             this.load.tilemap('map', 'assets/map_of_spiders.json', null, Phaser.Tilemap.TILED_JSON);
-          
-          this.load.audio('boden', 'assets/audio/01-metamorphosis-no.1.mp3');
             //  Needless to say, graphics (C)opyright Namco
 
         },
