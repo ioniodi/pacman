@@ -5,8 +5,7 @@
     <meta charset="utf-8">
     <style>
         body {
-            margin: 0;
-            padding: 0;
+            margin: 0;            padding: 0;
             background-color: #000;
         }
     </style>
@@ -16,8 +15,7 @@
 
     <script type="text/javascript">
 
-    var game = new Phaser.Game(448, 496, Phaser.AUTO);
-    var Pacman = function (game) {
+    var game = new Phaser.Game(448, 496, Phaser.AUTO);    var Pacman = function (game) {
 
         this.map = null;
         this.layer = null;
@@ -28,7 +26,6 @@
 
         this.speed = 150;
         this.threshold = 3;
-
         this.marker = new Phaser.Point();
         this.turnPoint = new Phaser.Point();
 
@@ -38,7 +35,7 @@
         this.current = Phaser.NONE;
         this.turning = Phaser.NONE;
 
-    };
+   };
 
     Pacman.prototype = {
 
@@ -61,10 +58,10 @@
             this.load.baseURL = 'https://giorgosgr.github.io/pacman/';
             this.load.crossOrigin = 'anonymous';
 
-            this.load.image('dot', 'assets/dot.png');
+            this.load.image('dot', 'assets/fire.png');
             this.load.image('tiles', 'assets/pacman-tiles.png');
             this.load.spritesheet('pacman', 'assets/pacman.png', 32, 32);
-            this.load.tilemap('map', 'assets/pacman-map.json', null, Phaser.Tilemap.TILED_JSON);
+            this.load.tilemap('map', 'ddd.json', null, Phaser.Tilemap.TILED_JSON);
 
             //  Needless to say, graphics (C)opyright Namco
 
