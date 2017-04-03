@@ -22,11 +22,11 @@
     var game = new Phaser.Game(448, 496, Phaser.AUTO);
     
     var Pacman = function (game) {
-       
+       this.score=null;
         this.map = null;
         this.layer = null;
         this.pacman = null;
-
+        this.text = null;
         this.safetile = 14;
         this.gridsize = 16;
 
@@ -79,8 +79,14 @@
        
 
 
-            
-              
+            this.score =0;
+              text = game.add.text(game.world.centerX, game.world.centerY, "- Your score is -\n0!", {
+        font: "65px Arial",
+        fill: "#ff0044",
+        
+    });
+
+    text.anchor.setTo(0.5, 0.5);
             this.map = this.add.tilemap('map');
             this.map.addTilesetImage('pacman-tiles', 'tiles');
 
@@ -229,7 +235,8 @@
         eatDot: function (pacman, dot) {
 
             dot.kill();
-
+            
+            
             if (this.dots.total === 0)
             {
                 this.dots.callAll('revive');
@@ -241,7 +248,7 @@
           
             this.physics.arcade.collide(this.pacman, this.layer);
             this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
-
+            this.eatDot.onDown.addOnce(this.updateTextCndl,this);
             this.marker.x = this.math.snapToFloor(Math.floor(this.pacman.x), this.gridsize) / this.gridsize;
             this.marker.y = this.math.snapToFloor(Math.floor(this.pacman.y), this.gridsize) / this.gridsize;
 
@@ -261,6 +268,15 @@
         }
 
     };
+        
+        
+
+
+function updateTextCndl() {
+    this.score+=300;
+    this.text.setText("- Your score is -\n" + score + " !");
+
+}
 
     game.state.add('Game', Pacman, true);
 
