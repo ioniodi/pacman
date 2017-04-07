@@ -83,7 +83,7 @@
             this.flowers = this.add.physicsGroup();
 
             this.map.createFromTiles(7, this.safetile, 'dot', this.layer, this.dots);
-            this.map.createFromTiles(8, this.safetile, 'flower', this.layer, this.flowers);
+            this.map.createFromTiles(8, this.safetile, 'flower', this.layer, this.dots);
 
             //  The dots will need to be offset by 6px to put them back in the middle of the grid
             this.dots.setAll('x', 10, false, false, 1);
@@ -244,7 +244,7 @@
           
             this.physics.arcade.collide(this.pacman, this.layer);
             this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
-            this.physics.arcade.overlap(this.pacman, this.flowers, this.eatFlower, null, this);   
+            this.physics.arcade.overlap(this.pacman, this.dots, this.eatFlower, null, this);   
             
             this.marker.x = this.math.snapToFloor(Math.floor(this.pacman.x), this.gridsize) / this.gridsize;
             this.marker.y = this.math.snapToFloor(Math.floor(this.pacman.y), this.gridsize) / this.gridsize;
