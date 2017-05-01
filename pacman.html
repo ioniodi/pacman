@@ -226,6 +226,9 @@
         eatDot: function (pacman, dot) {
 
             dot.kill();
+            
+            var audio = new Audio('assets/Pop.mp3');
+             audio.play()
 
             if (this.dots.total === 0)
             {
