@@ -129,8 +129,8 @@
             this.move(Phaser.LEFT);
             
             scoreText = game.add.text(5, 0,'Score: 0', {font: '20px Verdana',  fill: '#FFFF00'});
-            bonusText = game.add.text(5,0,'Bonus: 0', {font: '20px 	Lucida Console',  fill: '#FFFFFF'});
-            lifeText = game.add.text(5,0,'Life: 7', {font: '20px 	Lucida Console',  fill: '#FFFFFF'});
+            bonusText = game.add.text(5,0,'Bonus: 0', {font: '20px Verdana',  fill: '#FFFF00'});
+            lifeText = game.add.text(5,0,'Life: 7', {font: '20px Verdana',  fill: '#FFFF00'});
 
         },
 
@@ -267,9 +267,13 @@
         
            
        eatDot2: function (pacman, dot2) {
+           
            dot2.kill();
+           
            bonus += 10;
+           
            bonusTxt.text = 'Bonus : ' + bonus;
+           
            scoreTxt.text = 'Score : ' + bonus;
             
            var audio = new Audio('assets/smb2_coin.mp3');
