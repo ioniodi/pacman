@@ -32,10 +32,10 @@
     var scoreText;
         
     var life=7;
-    var lifeTxt;
+    var lifeText;
     
     var bonus=0;
-    var bonusTxt;
+    var bonusText;
 
     var Pacman = function (game) {
 
@@ -129,8 +129,8 @@
             this.move(Phaser.LEFT);
             
             scoreText = game.add.text(5, 0,'Score: 0', {font: '20px Verdana',  fill: '#FFFF00'});
-            bonusTxt = game.add.text(190,0,'Bonus: 0', {font: '20px 	Lucida Console',  fill: '#FFFFFF'});
-            lifeTxt = game.add.text(330,0,'Life: 7', {font: '20px 	Lucida Console',  fill: '#FFFFFF'});
+            bonusText = game.add.text(5,0,'Bonus: 0', {font: '20px 	Lucida Console',  fill: '#FFFFFF'});
+            lifeText = game.add.text(5,0,'Life: 7', {font: '20px 	Lucida Console',  fill: '#FFFFFF'});
 
         },
 
