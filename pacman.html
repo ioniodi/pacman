@@ -46,7 +46,7 @@
         this.safetile = 14;
         this.gridsize = 16;
 
-        this.speed = 100;
+        this.speed = 150;
         this.threshold = 3;
 
         this.marker = new Phaser.Point();
@@ -104,7 +104,7 @@
 
             this.map.createFromTiles(7, this.safetile, 'dot', this.layer, this.dots);
             
-            this.map.createFromTiles(35, this.safetile, 'dot2', this.layer, this.dots2);
+            this.map.createFromTiles(5, this.safetile, 'dot2', this.layer, this.dots2);
 
             //  The dots will need to be offset by 6px to put them back in the middle of the grid
             this.dots.setAll('x', 6, false, false, 1);
@@ -276,8 +276,7 @@
            
            scoreTxt.text = 'Score : ' + bonus;
             
-           var audio = new Audio('assets/smb2_coin.mp3');
-           audio.play()
+         
            
            if (this.dots.total === 0)
            {
