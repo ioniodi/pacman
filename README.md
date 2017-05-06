@@ -15,3 +15,19 @@ https://p13korb.github.io/pacman/
 
 Για την δημιουργία του terrain θα χρησιμοποιήσουμε το Tiled (http://www.mapeditor.org/). Η γραμμή κώδικα που κάνει load το terrain είναι η εξής: this.load.tilemap('map', 'assets/pacman-map.json', null, Phaser.Tilemap.TILED_JSON);
 Επίσης αλλάχτηκε το αρχείο tiles, μετατρέπωντας το μπλέ χρώμα στα τοιχώματα σε πράσινο. Επεξεργασία εικόνας έγινε με το paint.net.
+
+Παραδοτέο 3
+
+Για την προσθήκη μουσικής προστέθηκε το τμήμα κώδικα : 
+
+     <audio autoplay loop>
+        <source src="assets/Anonymous - Ductia.mp3" type="audio/mp3">
+    </audio>
+   
+Για την καταμέτρηση του score, τροποποιήθηκε η συνάρτηση eatDot. Συγκεκριμένα προστέθηκε ήχος για κάθε φορά που χάνεται ένα νόμισμα, η συνάρτηση dot.play() καλέι τον ήχο "click.mp3" και αυξάνει το score κατά 1 "score=score+1".
+Τέλος τοποθετεί την τιμή της μεταβλητής score στο μήνυμα. "TextScore". Οι μεταβλητές αυτές δηλώθηκαν στην αρχή του script "var score=0, var TextScore".
+
+            var dot = new Audio('assets/click.mp3');
+            dot.play()
+            score = score + 1;
+            TextScore.text='Score: ' + score;
