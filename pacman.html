@@ -85,8 +85,8 @@
             this.pacman.play('munch');
             this.move(Phaser.LEFT);
             
-            scoreTxt = game.add.text(0, 0,'Score:0 ', {font: '20px 	Lucida Console',  fill: '#FFFFFF'});
-            bonusTxt = game.add.text(120,0,'Bonus:0 ', {font: '20px 	Lucida Console',  fill: '#FFFFFF'});
+            scoreText = game.add.text(0, 0,'Score:0 ', {font: '20px 	Lucida Console',  fill: '#FFFFFF'});
+            bonusText = game.add.text(120,0,'Bonus:0 ', {font: '20px 	Lucida Console',  fill: '#FFFFFF'});
 	    
             lifes = game.add.group();
             game.add.text(game.world.width - 340, 500, 'Lifes : ', { fontSize: '34px Arial', fill: 'white' });
