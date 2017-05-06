@@ -211,9 +211,9 @@
             coin.kill();
 		     
 	   
-	    bonus += 10;
-            bonusText.text = 'Bonus : ' + bonus;
-            scoreText.text = 'Score : ' + bonus;
+	    this/bonus += 10;
+            this.bonusText.text = 'Bonus : ' + this.bonus;
+            this.scoreText.text = 'Score : ' + this.bonus;
 		     
 	    var audio = new Audio('assets/smb2_coin'); 
             audio.play()
