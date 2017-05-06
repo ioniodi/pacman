@@ -85,7 +85,7 @@
             this.move(Phaser.LEFT);
             
             this.scoreText = game.add.text(0, 500, 'Score: 0', { fontSize: '16px Arial', fill: 'white' });
-	    this.scoreText = game.add.text(250, 500, 'Score: 0', { fontSize: '16px Arial', fill: 'white' });
+	   
 	    
             lifes = game.add.group();
             game.add.text(game.world.width - 340, 500, 'Lifes : ', { fontSize: '34px Arial', fill: 'white' });
@@ -99,7 +99,7 @@
 		    }
 		var sprite = game.add.sprite(417, 465, 'coin');
 	    
-	    game.add.tween(sprite).to( { alpha: 0 }, 30000, Phaser.Easing.Linear.None, true);
+	    game.add.tween(sprite).to( { alpha: 0 }, 3000, Phaser.Easing.Linear.None, true);
 	   
         
         },
@@ -204,7 +204,7 @@
             }
 		
         },
-	     eatCoin: function(pacman,coin){
+        eatCoin: function(pacman,coin){
 		     
             coin.kill();
 		     
