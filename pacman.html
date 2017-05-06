@@ -70,7 +70,7 @@
 
             this.load.image('dot', 'assets/fishfood.jpg');
             this.load.image('tiles', 'assets/pacman-tiles.png');
-            this.load.spritesheet('pacman', 'assets/cat.jpg', 32, 32);
+            this.load.spritesheet('pacman', 'assets/pacman.jpg', 32, 32);
             this.load.tilemap('map', 'assets/pacman-map.json', null, Phaser.Tilemap.TILED_JSON);
 	    this.load.image('coin','assets/coin.png');
 
@@ -111,12 +111,12 @@
             this.move(Phaser.LEFT);
             
             this.scoreText = game.add.text(0, 500, 'Score: 0', { fontSize: '34px Arial', fill: 'white' });
-            lives = game.add.group();
-            game.add.text(game.world.width - 340, 500, 'Lives : ', { fontSize: '34px Arial', fill: 'white' });
+            lifes = game.add.group();
+            game.add.text(game.world.width - 340, 500, 'Lifes : ', { fontSize: '34px Arial', fill: 'white' });
             
-            for (var i = 0; i < 3; i++) 
+            for (var i = 0; i < 4; i++) 
 		    {
-			var pacman = lives.create(game.world.width - 235 + (30 * i), 517, 'pacman');
+			var pacman = lifes.create(game.world.width - 235 + (30 * i), 517, 'pacman');
 			pacman.anchor.setTo(0.5, 0.5);
 			pacman.angle = 90;
 			pacman.alpha = 0.4;
@@ -278,7 +278,7 @@
           
             this.physics.arcade.collide(this.pacman, this.layer);
             this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
-	    this.physics.arcade.overlap(this.pacman, this.coins, this.eatCoin, null, this);
+	    
             		
 
             this.marker.x = this.math.snapToFloor(Math.floor(this.pacman.x), this.gridsize) / this.gridsize;
