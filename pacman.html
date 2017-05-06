@@ -76,7 +76,7 @@
             //  Pacman should collide with everything except the safe tile
             this.map.setCollisionByExclusion([this.safetile], true, this.layer);
             //  Position Pacman at grid location 14x17 (the +8 accounts for his anchor)
-            this.pacman = this.add.sprite((4 * 16) + 8, (7 * 16) + 8, 'pacman', 0);
+            this.pacman = this.add.sprite((4 * 8) + 8, (7 * 8) + 8, 'pacman', 0);
             this.pacman.anchor.set(0.5);
             this.pacman.animations.add('munch', [0, 1, 2, 1], 20, true);
             this.physics.arcade.enable(this.pacman);
@@ -89,9 +89,9 @@
             bonusTxt = game.add.text(120,0,'Bonus:0 ', {font: '20px 	Lucida Console',  fill: '#FFFFFF'});
 	    
             lifes = game.add.group();
-            game.add.text(game.world.width - 340, 500, 'Lifes : ', { fontSize: '34px Arial', fill: 'white' });
+            game.add.text(game.world.width - 340, 0, 'Lifes : ', { fontSize: '34px Arial', fill: 'white' });
             
-            for (var i = 0; i < 4; i++) 
+            for (var i = 0; i < 7; i++) 
 		    {
 			var pacman = lifes.create(game.world.width - 235 + (30 * i), 517, 'pacman');
 			pacman.anchor.setTo(0.5, 0.5);
@@ -193,6 +193,7 @@
             }
             this.current = direction;
         },
+	    
         eatDot: function (pacman, dot) {
             dot.kill();
            
