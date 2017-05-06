@@ -34,9 +34,12 @@
         this.opposites = [ Phaser.NONE, Phaser.RIGHT, Phaser.LEFT, Phaser.DOWN, Phaser.UP ];
         this.current = Phaser.NONE;
         this.turning = Phaser.NONE;
-        
+           
         this.score=0;
         this.scoreText='';
+	        
+	var bonus=0;
+    	var bonusText='';
     };
     Pacman.prototype = {
         init: function () {
@@ -81,6 +84,7 @@
             this.move(Phaser.LEFT);
             
             this.scoreText = game.add.text(0, 500, 'Score: 0', { fontSize: '34px Arial', fill: 'white' });
+	    this.bonusText = game.add.text(0, 500, 'Bonus: 0', { fontSize: '34px Arial', fill: 'white' });
             lifes = game.add.group();
             game.add.text(game.world.width - 340, 500, 'Lifes : ', { fontSize: '34px Arial', fill: 'white' });
             
@@ -202,8 +206,10 @@
 		     
             coin.kill();
 		     
-	    this.score+=15;
-            this.scoreText.text= 'Score: ' + this.score;
+	   
+	    bonus += 10;
+            bonusTxt.text = 'Bonus : ' + bonus;
+            scoreTxt.text = 'Score : ' + bonus;
 		     
 	    var audio = new Audio('assets/smb2_coin'); 
             audio.play()
