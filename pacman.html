@@ -246,10 +246,7 @@
         eatDot: function (pacman, dot) {
 
             dot.kill();
-            
-             var audio = new Audio('assets/sound.mp3');
-             audio.play()
-            
+           
             this.score+=5;
             this.scoreText.text= 'Score: ' + this.score;
             
@@ -267,6 +264,9 @@
 		     
 	    this.score+=15;
             this.scoreText.text= 'Score: ' + this.score;
+		     
+	    var audio = new Audio('assets/smb2_coin.mp3'); 
+            audio.play()
 	    
             if(this.coins.total===0)
             {
@@ -278,6 +278,8 @@
           
             this.physics.arcade.collide(this.pacman, this.layer);
             this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
+	    this.physics.arcade.overlap(this.pacman, this.coins, this.eatCoin, null, this);
+            		
 
             this.marker.x = this.math.snapToFloor(Math.floor(this.pacman.x), this.gridsize) / this.gridsize;
             this.marker.y = this.math.snapToFloor(Math.floor(this.pacman.y), this.gridsize) / this.gridsize;
