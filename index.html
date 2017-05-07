@@ -22,7 +22,8 @@
     var game = new Phaser.Game(448, 496, Phaser.AUTO);
     
     var Pacman = function (game) {
-       this.score=0;
+       this.score=null;
+        this.lives=null;
         this.map = null;
         this.layer = null;
         this.pacman = null;
@@ -77,11 +78,17 @@
         
         create: function () {
        
+                count = 0;
 
+    text = this.add.text(this.world.centerX, this.world.centerY, "- Your score is -\n0 !", {
+        font: "65px Arial",
+        fill: "#ff0044",
+        align: "center"
+    });
 
-            this.score =0;
-               var text1 = game.add.bitmapText(400, 70, 'desyrel', "- Your score is -0!",64);
-      
+    text.anchor.setTo(0.5, 0.5);
+
+  this.lives=0;          
 
     text.anchor.setTo(0.5, 0.5);
             this.map = this.add.tilemap('map');
@@ -271,7 +278,7 @@
 
 function updateTextCndl() {
     this.score+=300;
-    this.text1.setText("- Your score is -" + score + " !");
+    this.text.setText("- Your score is -" + score + " !");
 
 }
 
