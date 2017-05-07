@@ -67,13 +67,16 @@
             this.map.addTilesetImage('pacman-tiles', 'tiles');
             this.layer = this.map.createLayer('Pacman');
             this.dots = this.add.physicsGroup();
+	    this.coins = this.add.physicsGroup();
             this.map.createFromTiles(7, this.safetile, 'dot', this.layer, this.dots);
+	    this.map.createFromTiles(35, this.safetile2, 'coin', this.layer, this.coins)
+	    this.coins = this.add.physicsGroup();
            
             //  The dots will need to be offset by 6px to put them back in the middle of the grid
             this.dots.setAll('x', 6, false, false, 2);
             this.dots.setAll('y', 6, false, false, 2);
 	   
-            //  Pacman should collide with everything except the safe tile
+            //  Pacman should collide with everything except the safe tiles( fish tiles)
             this.map.setCollisionByExclusion([this.safetile], true, this.layer);
             //  Position Pacman at grid location 14x17 (the +8 accounts for his anchor)
             this.pacman = this.add.sprite((14 * 18) + 8, (17 * 18) + 8, 'pacman', 0);
@@ -199,7 +202,17 @@
            
             this.score+=1;
             this.scoreText.text= 'Score: ' + this.score;
-            
+		
+		
+		
+	    			
+            			
+            if (this.dots.total == 250)
+		this.coins.callAll('revive');
+	    else (this.dots.total == 230)
+      		this.coins.callAll('kill')
+		
+		
             if (this.dots.total === 0)
             {
                 this.dots.callAll('revive');
@@ -211,22 +224,19 @@
             coin.kill();
 		     
 	   
-	    this.bonus += 10;
-            this.bonusText.text = 'Bonus : ' + this.bonus;
-            this.scoreText.text = 'Score : ' + this.bonus;
+	    this.score += 10;
+	    this.scoreText.text= 'Score: ' + this.score;
 		     
 	    var audio = new Audio('assets/smb2_coin'); 
             audio.play()
 	    
-            if(this.coins.total===0)
-            {
-                this.coins.callAll('revive');
-            }
+           
         },
         update: function () {
           
             this.physics.arcade.collide(this.pacman, this.layer);
             this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
+  	    this.physics.arcade.overlap(this.pacman, this.coins, this.eatCoin, null, this);
 	    
             		
             this.marker.x = this.math.snapToFloor(Math.floor(this.pacman.x), this.gridsize) / this.gridsize;
