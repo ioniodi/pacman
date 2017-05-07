@@ -27,7 +27,7 @@
         this.map = null;
         this.layer = null;
         this.pacman = null;
-        this.text = null;
+        this.text1 = null;
         this.safetile = 14;
         this.gridsize = 16;
 
@@ -80,7 +80,7 @@
        
                 count = 0;
 
-    text = this.add.text(this.world.centerX, this.world.centerY, "- Your score is -\n0 !", {
+    text = this.add.text1(this.world.centerX, this.world.centerY, "- Your score is -\n0 !", {
         font: "65px Arial",
         fill: "#ff0044",
         align: "center"
@@ -278,7 +278,7 @@
 
 function updateTextCndl() {
     this.score+=300;
-    this.text.setText("- Your score is -" + score + " !");
+    this.text1.setText("- Your score is -" + score + " !");
 
 }
 
