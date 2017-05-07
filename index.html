@@ -65,7 +65,7 @@
             //  Remove the next 2 lines if running locally
             this.load.baseURL = 'https://arachnavonfenrir.github.io/pacman/';
             this.load.crossOrigin = 'anonymous';
-
+            this.load.image('egg','assets/egg.png');
             this.load.image('dot', 'assets/Candle.png');
             this.load.image('tiles', 'assets/pacman-tiles2.png');
             this.load.spritesheet('pacman', 'assets/Trevor.png', 32, 32);
@@ -97,12 +97,17 @@
             this.layer = this.map.createLayer('Pacman');
 
             this.dots = this.add.physicsGroup();
+            this.eggs = this.add.physicsGroup();
 
             this.map.createFromTiles(7, this.safetile, 'dot', this.layer, this.dots);
+            this.map.createFromTiles(1, this.safetile, 'egg', this.layer, this.eggs);
 
             //  The dots will need to be offset by 6px to put them back in the middle of the grid
             this.dots.setAll('x', -2, false, false, 1);
             this.dots.setAll('y', 2, false, false, 1);
+            
+             this.eggs.setAll('x', -2, false, false, 1);
+            this.eggs.setAll('y', 2, false, false, 1);
 
             //  Pacman should collide with everything except the safe tile
             this.map.setCollisionByExclusion([this.safetile], true, this.layer);
@@ -245,6 +250,12 @@
             {
                 this.dots.callAll('revive');
             }
+
+        },
+        eatEgg: function (pacman, egg,lives) {
+
+            egg.kill();
+            this.lives+=1;
 
         },
 
