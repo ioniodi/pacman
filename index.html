@@ -19,8 +19,7 @@
     var game = new Phaser.Game(448, 550, Phaser.AUTO);
 
     var Pacman = function (game) {
-
-       this.map = null;
+                this.map = null;
                 this.layer = null;
                 this.pacman = null;
                 this.safetile = 14;
@@ -38,7 +37,9 @@
                 this.lives = 3;
                 this.livesText = '';
                 this.timer = null;
-    };
+                //this.diamonds= null;
+                //this.diamond = null;
+            };
 
     Pacman.prototype = {
 
@@ -67,14 +68,13 @@
                     
                     this.load.spritesheet('pacman', 'assets/pacmanDelux.png', 32, 32);
                     this.load.tilemap('map', 'assets/pacman-map.json', null, Phaser.Tilemap.TILED_JSON);
+                    //  Needless to say, graphics (C)opyright Namco
 
-            //  Needless to say, graphics (C)opyright Namco
-
+                    this.load.audio('sound', 'assets/pacmanSound.wav');
         },
 
         create: function () {
-
-            this.map = this.add.tilemap('map');
+                    this.map = this.add.tilemap('map');
                     this.map.addTilesetImage('pacman-tiles', 'tiles');
                     this.layer = this.map.createLayer('Pacman');
                     this.dots = this.add.physicsGroup();
@@ -117,7 +117,8 @@
                     this.pacman.play('munch');
                     this.move(Phaser.LEFT);
 
-        },
+
+                },
 
         checkKeys: function () {
 
@@ -234,8 +235,7 @@
         },
 
         eatDot: function (pacman, dot) {
-
-            dot.kill();
+                    dot.kill();
                     this.sound.play('sound');
                     this.score += 10;
                     this.scoreText.text = 'Score: ' + this.score;
@@ -251,10 +251,8 @@
                         }
                         this.livesText.text = 'Lives: ' + this.lives;
                     }
-
-        },
-        
-        eatDiamond: function (pacman, diamond) {
+                },
+                eatDiamond: function (pacman, diamond) {
                     diamond.kill();
                     this.score += 50;
                     this.scoreText.text = 'Score: ' + this.score;
@@ -272,16 +270,15 @@
                                 this.diamond.visible= true;
                                 this.time.events.add(7000, this.removeDiamond, this);
                             }
-                           
+                            
                     
 
                 },
-        
-        removeDiamond: function () {
+
+                removeDiamond: function () {
                     this.diamond.visible = false;
                     this.time.events.add(7000, this.addDiamond, this);
                 },
-
         update: function () {
           
             this.physics.arcade.collide(this.pacman, this.layer);
