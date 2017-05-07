@@ -78,15 +78,15 @@
         
         create: function () {
        
-                count = 0;
+                this.count = 0;
 
-    text = this.add.text1(this.world.centerX, this.world.centerY, "- Your score is -\n0 !", {
+    this.text = this.add.text1(this.world.centerX, this.world.centerY, "- Your score is -0 !", {
         font: "65px Arial",
         fill: "#ff0044",
         align: "center"
     });
 
-    text.anchor.setTo(0.5, 0.5);
+    this.text.anchor.setTo(0.5, 0.5);
 
   this.lives=0;          
 
