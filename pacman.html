@@ -204,9 +204,9 @@
             this.scoreText.text= 'Score: ' + this.score 	
 		
             			
-            if (this.dots.total == 250)
+            if (this.dots.total >30)
 		this.coins.callAll('revive');
-	    else (this.dots.total == 230)
+	    else (this.dots.total =100)
       		this.coins.callAll('kill')
 		
 		
