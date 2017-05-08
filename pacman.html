@@ -17,7 +17,8 @@
     <script type="text/javascript">
 
     var game = new Phaser.Game(448, 496, Phaser.AUTO);
-
+    var score = 0;
+    var scoreText;
     var Pacman = function (game) {
 
         this.map = null;
@@ -99,7 +100,7 @@
             this.pacman.body.setSize(16, 16, 0, 0);
 
             this.cursors = this.input.keyboard.createCursorKeys();
-
+	    scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
             this.pacman.play('munch');
             this.move(Phaser.LEFT);
 		music = game.add.audio('pac');
@@ -257,7 +258,16 @@
             }
 
         }
-		
+	function collectStar (player, dot) {
+
+    // Removes the star from the screen
+    dot.kill();
+
+    //  Add and update the score
+    score += 10;
+    scoreText.text = 'Score: ' + score;
+
+}	
     };
 
     game.state.add('Game', Pacman, true);
