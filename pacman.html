@@ -7,7 +7,7 @@
         body {
             margin: 0;
             padding: 0;
-            background-color: "#4488AA";
+            background-color: #000;
         }
     </style>
     <script src="//cdn.jsdelivr.net/phaser/2.2.2/phaser.min.js"></script>
@@ -100,7 +100,7 @@
             this.pacman.body.setSize(16, 16, 0, 0);
 
             this.cursors = this.input.keyboard.createCursorKeys();
-	    scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
+	    scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#f0f8ff' });
             this.pacman.play('munch');
             this.move(Phaser.LEFT);
 		music = game.add.audio('pac');
