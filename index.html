@@ -133,7 +133,7 @@
 			pacman.alpha = 0.4;
 		    }
             //sprite pou eksafanizete
-            var sprite = game.add.sprite(417, 465, 'blood');
+            var sprite = game.add.sprite(87, 265, 'blood');
             //sprite.alpha =0;
             
             //o xronos pou kanei gia na eksafanistei
@@ -274,13 +274,17 @@
         eatBlood: function(pacman,blood){//pente
             blood.kill();
 	    this.score+=20;//anevasma sto score
+                this.bonus+=20//bonus
             this.scoreText.text= 'Score: ' + this.score;
+	    this.bonusText.text= 'Bonus: ' + this.bonus;
 	    var audio = new Audio('assets/pacman_yum.mp3'); //mousiki sto fagwma
             audio.play()
             /*if(this.blood.total===0)
             {
                 this.blood.callAll('revive');
             }*/
+            
+				
         },
 
         update: function () {
