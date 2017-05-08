@@ -13,3 +13,9 @@ test2
 Υπαρχουν bonus αίματα που αντιστοιχούν σε 20 πόντους.
 Έχω προσθέσει και μιά εικόνα ώς background.
 Το zombie έχει 3 ζωές.
+
+Link κώδικα:https://github.com/isoqar/pacman/blob/patch-1/index.html
+
+Link εκτελέσιμου παιχνιδιού:https://isoqar.github.io/pacman/
+
+Link:https://github.com/isoqar/pacman
