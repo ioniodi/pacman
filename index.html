@@ -77,6 +77,7 @@
             this.load.image('dot', 'assets/dot.png');
             this.load.image('tiles', 'assets/pacman-tiles.png');
             this.load.image('blood', 'assets/blood.png');
+		this.load.image('bleed', 'assets/bleed.png');
             this.load.spritesheet('pacman', 'assets/pacman.png', 32, 32);
             this.load.tilemap('map', 'assets/pacman-map.json', null, Phaser.Tilemap.TILED_JSON);
 
@@ -92,14 +93,20 @@
             this.layer = this.map.createLayer('Pacman');
 
             this.dots = this.add.physicsGroup();
+		this.bleed = this.add.physicsGroup();
+		this.blood = this.add.physicsGroup();
 
             this.map.createFromTiles(7, this.safetile, 'dot', this.layer, this.dots);
+		this.map.createFromTiles(16, this.safetile, 'bleed', this.layer, this.dots);
             this.map.createFromTiles(35, this.safetile, 'blood', this.layer, this.dots);
             
 
             //  The dots will need to be offset by 6px to put them back in the middle of the grid
             this.dots.setAll('x', 6, false, false, 1);
             this.dots.setAll('y', 6, false, false, 1);
+		
+		this.bleed.setAll('x', 6, false, false, 1);
+		this.bleed.setAll('y', 6, false, false, 1);
 
             //  Pacman should collide with everything except the safe tile
             this.map.setCollisionByExclusion([this.safetile], true, this.layer);
