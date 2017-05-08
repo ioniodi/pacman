@@ -241,10 +241,11 @@
 
         },
 
-        eatDot: function (pacman, dot) {
+        eatDot: function (pacman, dot,score) {
 
             dot.kill();
-            
+            score+=300;
+            text.setText("- Your score is -" + score + " !");
             
             if (this.dots.total === 0)
             {
@@ -263,7 +264,6 @@
           
             this.physics.arcade.collide(this.pacman, this.layer);
             this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
-            this.eatDot.onDown(this.updateTextCndl,this);
             this.marker.x = this.math.snapToFloor(Math.floor(this.pacman.x), this.gridsize) / this.gridsize;
             this.marker.y = this.math.snapToFloor(Math.floor(this.pacman.y), this.gridsize) / this.gridsize;
 
@@ -287,11 +287,7 @@
         
 
 
-function updateTextCndl() {
-    score+=300;
-    text.setText("- Your score is -" + score + " !");
 
-}
 
     game.state.add('Game', Pacman, true);
 
