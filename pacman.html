@@ -13,10 +13,7 @@
     <script src="//cdn.jsdelivr.net/phaser/2.2.2/phaser.min.js"></script>
 </head>
 <body>
-<audio controls>
-  <source src="sound_pac.ogg" type="audio/ogg"/>
-  <source src="sound_pac.mp3" type="audio/mpeg"/>
-</audio>
+
     <script type="text/javascript">
 
     var game = new Phaser.Game(448, 496, Phaser.AUTO);
@@ -69,6 +66,7 @@
             this.load.image('tiles', 'assets/pacman-tiles.png');
             this.load.spritesheet('pacman', 'assets/popeyechar.jpg', 32, 32);
             this.load.tilemap('map', 'assets/pacman-map.json', null, Phaser.Tilemap.TILED_JSON);
+		game.load.audio('pac', ['assets/sound_pac.mp3', 'assets/sound_pac.ogg']);
 
             //  Needless to say, graphics (C)opyright Namco
 
@@ -104,6 +102,12 @@
 
             this.pacman.play('munch');
             this.move(Phaser.LEFT);
+		music = game.add.audio('boden');
+
+    music.play();
+
+    s = game.add.sprite(game.world.centerX, game.world.centerY, 'disk');
+    s.anchor.setTo(0.5, 0.5);
 
         },
 
