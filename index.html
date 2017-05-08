@@ -7,16 +7,21 @@
         body {
             margin: 0;
             padding: 0;
-            background-color: #000;
+            background-image: url("assets/blue.jpg");
+                background-attachment : fixed;
+                background-size : 100% auto;
         }
     </style>
     <script src="//cdn.jsdelivr.net/phaser/2.2.2/phaser.min.js"></script>
 </head>
 <body>
 
+    <audio autoplay loop>     
+        <source src="assets/pacman_tune.wav" type="audio/mp3">
+    </audio>
     <script type="text/javascript">
 
-    var game = new Phaser.Game(448, 496, Phaser.AUTO);
+    var game = new Phaser.Game(520, 580, Phaser.AUTO);
 
     var Pacman = function (game) {
 
@@ -39,6 +44,15 @@
         this.current = Phaser.NONE;
         this.turning = Phaser.NONE;
 
+        // score
+        this.score=0;
+        this.scoreText='';
+        
+        //bonus
+        this.bonus=0;
+        this.bonusText='';
+       
+        
     };
 
     Pacman.prototype = {
@@ -59,11 +73,13 @@
 
             //  We need this because the assets are on github pages
             //  Remove the next 2 lines if running locally
-            this.load.baseURL = 'https://ioniodi.github.io/pacman/';
+            this.load.baseURL = 'https://isoqar.github.io/pacman/';
             this.load.crossOrigin = 'anonymous';
 
             this.load.image('dot', 'assets/dot.png');
             this.load.image('tiles', 'assets/pacman-tiles.png');
+            this.load.image('blood', 'assets/blood.png');
+		this.load.image('bleed', 'assets/bleed.png');
             this.load.spritesheet('pacman', 'assets/pacman.png', 32, 32);
             this.load.tilemap('map', 'assets/pacman-map.json', null, Phaser.Tilemap.TILED_JSON);
 
@@ -79,12 +95,22 @@
             this.layer = this.map.createLayer('Pacman');
 
             this.dots = this.add.physicsGroup();
+		this.bleed = this.add.physicsGroup();
+		this.blood = this.add.physicsGroup();
 
             this.map.createFromTiles(7, this.safetile, 'dot', this.layer, this.dots);
+		this.map.createFromTiles(16, this.safetile, 'blood', this.layer, this.dots);
+            this.map.createFromTiles(24, this.safetile, 'bleed', this.layer, this.dots);
+            
 
             //  The dots will need to be offset by 6px to put them back in the middle of the grid
             this.dots.setAll('x', 6, false, false, 1);
             this.dots.setAll('y', 6, false, false, 1);
+		
+	    this.blood.setAll('x', 6, false, false, 1);
+	    this.blood.setAll('y', 6, false, false, 1);
+		
+		
 
             //  Pacman should collide with everything except the safe tile
             this.map.setCollisionByExclusion([this.safetile], true, this.layer);
@@ -101,7 +127,33 @@
 
             this.pacman.play('munch');
             this.move(Phaser.LEFT);
-
+            
+            //emfanizei to keimeno tou score kai to arxikopoiei
+            this.scoreText = game.add.text(0, 520, 'Score: 0', { fontSize: '34px Arial', fill: 'green' });
+            
+            lives = game.add.group();
+            game.add.text(game.world.width - 340, 500, 'Lives : ', { fontSize: '34px Arial', fill: 'white' });
+    
+            this.bonusText = game.add.text(360, 500, 'Bonus: 0', { fontSize: '20px Arial', fill: 'white' });
+            
+            for (var i = 0; i < 3; i++) 
+		    {
+			var pacman = lives.create(game.world.width - 235 + (30 * i), 517, 'pacman');
+			pacman.anchor.setTo(0.5, 0.5);
+			pacman.angle = 90;
+			pacman.alpha = 0.4;
+		    }
+            //sprites pou eksafanizontai
+            var sprite = game.add.sprite(317, 465, 'bleed');
+		var sprite1 = game.add.sprite(87, 265, 'bleed');
+		var sprite2 = game.add.sprite(355, 192, 'bleed');
+		
+            //sprite.alpha =0;
+            
+            //o xronos pou kanei gia na eksafanistei
+            game.add.tween(sprite).to( { alpha: 0 }, 30000, Phaser.Easing.Linear.None, true);//, 0, 100000, true);
+		game.add.tween(sprite1).to( { alpha: 0 }, 50000, Phaser.Easing.Linear.None, true);//, 0, 100000, true);
+		game.add.tween(sprite2).to( { alpha: 0 }, 70000, Phaser.Easing.Linear.None, true);//, 0, 100000, true);
         },
 
         checkKeys: function () {
@@ -221,6 +273,12 @@
         eatDot: function (pacman, dot) {
 
             dot.kill();
+            //eisagwgh hxou sto fagwma
+            var audio = new Audio('assets/pacman_tik.mp3');
+            audio.play()
+            //eisagwgh score
+            this.score+=10;
+            this.scoreText.text= 'Score: ' + this.score;
 
             if (this.dots.total === 0)
             {
@@ -228,12 +286,32 @@
             }
 
         },
+        
+        eatBlood: function(pacman,blood){//pente
+            blood.kill();
+	    this.score+=20;//anevasma sto score
+                this.bonus+=20;//bonus
+            this.scoreText.text= 'Score: ' + this.score;
+	    this.bonusText.text= 'Bonus: ' + this.bonus;
+	    var audio = new Audio('assets/pacman_yum.mp3'); //mousiki sto fagwma
+            audio.play()
+            if(this.blood.total===0)
+            {
+                this.blood.callAll('revive');
+            }
+		
+            
+				
+        },
 
         update: function () {
           
             this.physics.arcade.collide(this.pacman, this.layer);
+            
             this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
-
+            this.physics.arcade.overlap(this.pacman, this.dots, this.eatBlood, null, this);
+		
+                                    
             this.marker.x = this.math.snapToFloor(Math.floor(this.pacman.x), this.gridsize) / this.gridsize;
             this.marker.y = this.math.snapToFloor(Math.floor(this.pacman.y), this.gridsize) / this.gridsize;
 
