@@ -283,7 +283,7 @@
 
         },
         
-        eatBlood: function(pacman,blood){//pente
+        eatBleed: function(pacman,bleed){//pente
             blood.kill();
 	    this.score+=20;//anevasma sto score
                 this.bonus+=20//bonus
@@ -291,9 +291,9 @@
 	    this.bonusText.text= 'Bonus: ' + this.bonus;
 	    var audio = new Audio('assets/pacman_yum.mp3'); //mousiki sto fagwma
             audio.play()
-            *if(this.blood.total===0)
+            *if(this.bleed.total===0)
             {
-                this.blood.callAll('revive');
+                this.bleed.callAll('revive');
             }*/
             
 				
