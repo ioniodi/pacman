@@ -107,6 +107,9 @@
 		
 	    this.blood.setAll('x', 6, false, false, 1);
 	    this.blood.setAll('y', 6, false, false, 1);
+		
+		this.bleed.setAll('x', 6, false, false, 1);
+		this.bleed.setAll('y', 6, false, false, 1);
 
             //  Pacman should collide with everything except the safe tile
             this.map.setCollisionByExclusion([this.safetile], true, this.layer);
@@ -284,7 +287,7 @@
         },
         
         eatBleed: function(pacman,bleed){//pente
-            blood.kill();
+            bleed.kill();
 	    this.score+=20;//anevasma sto score
                 this.bonus+=20//bonus
             this.scoreText.text= 'Score: ' + this.score;
@@ -294,6 +297,19 @@
             *if(this.bleed.total===0)
             {
                 this.bleed.callAll('revive');
+            }*/
+		
+		eatBlood: function(pacman,blood){//pente
+            blood.kill();
+	    this.score+=20;//anevasma sto score
+                this.bonus+=20//bonus
+            this.scoreText.text= 'Score: ' + this.score;
+	    this.bonusText.text= 'Bonus: ' + this.bonus;
+	    var audio = new Audio('assets/pacman_yum.mp3'); //mousiki sto fagwma
+            audio.play()
+            *if(this.blood.total===0)
+            {
+                this.blood.callAll('revive');
             }*/
             
 				
@@ -305,6 +321,7 @@
             
             this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
             this.physics.arcade.overlap(this.pacman, this.dots, this.eatBlood, null, this);
+		this.physics.arcade.overlap(this.pacman, this.dots, this.eatBleed, null, this);
 		
                                     
             this.marker.x = this.math.snapToFloor(Math.floor(this.pacman.x), this.gridsize) / this.gridsize;
