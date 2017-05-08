@@ -18,11 +18,11 @@
   </audio>
         
     <script type="text/javascript">
-
+    var text;
     var game = new Phaser.Game(448, 496, Phaser.AUTO);
-    
+    var score=0;
     var Pacman = function (game) {
-       this.score=null;
+     
         this.lives=null;
         this.map = null;
         this.layer = null;
