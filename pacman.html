@@ -228,6 +228,8 @@
         eatDot: function (pacman, dot) {
 
             dot.kill();
+		score += 10;
+    scoreText.text = 'Score: ' + score;
 
             if (this.dots.total === 0)
             {
@@ -258,16 +260,7 @@
             }
 
         }
- 	function collectDot  (pacman, dot) {
-
-    // Removes the star from the screen
-    dot.kill();
-
-    //  Add and update the score
-    score += 10;
-    scoreText.text = 'Score: ' + score;
-
-}	
+ 	
     };
 
     game.state.add('Game', Pacman, true);
