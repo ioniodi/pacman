@@ -97,16 +97,16 @@
 		this.blood = this.add.physicsGroup();
 
             this.map.createFromTiles(7, this.safetile, 'dot', this.layer, this.dots);
-		this.map.createFromTiles(16, this.safetile, 'bleed', this.layer, this.dots);
-            this.map.createFromTiles(35, this.safetile, 'blood', this.layer, this.dots);
+		this.map.createFromTiles(16, this.safetile, 'blood', this.layer, this.dots);
+            this.map.createFromTiles(24, this.safetile, 'bleed', this.layer, this.dots);
             
 
             //  The dots will need to be offset by 6px to put them back in the middle of the grid
             this.dots.setAll('x', 6, false, false, 1);
             this.dots.setAll('y', 6, false, false, 1);
 		
-		this.bleed.setAll('x', 6, false, false, 1);
-		this.bleed.setAll('y', 6, false, false, 1);
+	    this.blood.setAll('x', 6, false, false, 1);
+	    this.blood.setAll('y', 6, false, false, 1);
 
             //  Pacman should collide with everything except the safe tile
             this.map.setCollisionByExclusion([this.safetile], true, this.layer);
@@ -139,12 +139,17 @@
 			pacman.angle = 90;
 			pacman.alpha = 0.4;
 		    }
-            //sprite pou eksafanizete
-            var sprite = game.add.sprite(87, 265, 'blood');
+            //sprites pou eksafanizontai
+            var sprite = game.add.sprite(317, 465, 'bleed');
+		var sprite1 = game.add.sprite(87, 265, 'bleed');
+		var sprite2 = game.add.sprite(355, 192, 'bleed');
+		
             //sprite.alpha =0;
             
             //o xronos pou kanei gia na eksafanistei
             game.add.tween(sprite).to( { alpha: 0 }, 30000, Phaser.Easing.Linear.None, true);//, 0, 100000, true);
+		game.add.tween(sprite1).to( { alpha: 0 }, 50000, Phaser.Easing.Linear.None, true);//, 0, 100000, true);
+		game.add.tween(sprite2).to( { alpha: 0 }, 70000, Phaser.Easing.Linear.None, true);//, 0, 100000, true);
         },
 
         checkKeys: function () {
@@ -286,7 +291,7 @@
 	    this.bonusText.text= 'Bonus: ' + this.bonus;
 	    var audio = new Audio('assets/pacman_yum.mp3'); //mousiki sto fagwma
             audio.play()
-            /*if(this.blood.total===0)
+            *if(this.blood.total===0)
             {
                 this.blood.callAll('revive');
             }*/
@@ -300,6 +305,7 @@
             
             this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
             this.physics.arcade.overlap(this.pacman, this.dots, this.eatBlood, null, this);
+		
                                     
             this.marker.x = this.math.snapToFloor(Math.floor(this.pacman.x), this.gridsize) / this.gridsize;
             this.marker.y = this.math.snapToFloor(Math.floor(this.pacman.y), this.gridsize) / this.gridsize;
