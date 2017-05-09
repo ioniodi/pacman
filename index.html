@@ -18,17 +18,17 @@
   </audio>
         
     <script type="text/javascript">
-    var text;
+    
     var game = new Phaser.Game(480, 496, Phaser.AUTO);
-    var score=0;
-    var Pacman = function (game) {
+        var Pacman = function (game) {
      
         this.lives=null;
         this.map = null;
         this.layer = null;
         this.pacman = null;
-        
-      
+        this.text1='';
+        this.score=0;
+       
         this.safetile = 14;
         this.gridsize = 16;
 
@@ -81,7 +81,7 @@
        
             count = 0;
 
-   text = this.add.text(0, 248, "Your score is -0 !", {
+   this.text1= this.add.text(0, 248, "Your score is -0 !", {
         font: "16px Arial",
         fill: "00aa44",
         align: "left"
@@ -242,11 +242,11 @@
 
         },
 
-        eatDot: function (pacman, dot,score) {
+        eatDot: function (pacman, dot) {
 
             dot.kill();
-            score+=300;
-            text.setText("Your score is -" + score + " !");
+            this.score+=300;
+            this.text1="Your score is -" + this.score + " !";
             
             if (this.dots.total === 0)
             {
@@ -254,7 +254,7 @@
             }
 
         },
-        eatEgg: function (pacman, egg,lives) {
+        eatEgg: function (pacman, egg) {
 
             egg.kill();
             this.lives+=1;
