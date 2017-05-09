@@ -81,13 +81,13 @@
        
             count = 0;
 
-   text = this.add.text(this.world.0, this.world.centerY, "- Your score is -0 !", {
+   text = this.add.text(0, 248, "Your score is -0 !", {
         font: "16px Arial",
         fill: "00aa44",
         align: "left"
     });
 
-   text.anchor.setTo(0, 0.5);
+ 
 
   this.lives=0;          
 
@@ -246,7 +246,7 @@
 
             dot.kill();
             score+=300;
-            text.setText("- Your score is -" + score + " !");
+            text.setText("Your score is -" + score + " !");
             
             if (this.dots.total === 0)
             {
