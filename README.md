@@ -44,3 +44,9 @@ Link : https://p13korb.github.io/pacman/
             dot.play()
             score = score + 1;
             TextScore.text='Score: ' + score;
+            
+Το τελικό αποτέλεσμα φαίνεται στην εικόνα:
+
+![alt text](https://github.com/p13korb/pacman/blob/%CE%A02013053-Final/screenshot.jpg)
+
+
