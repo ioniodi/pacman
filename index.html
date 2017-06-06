@@ -1,4 +1,5 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
+
 <html>
     <head>
         <title>Pacman</title>
@@ -16,7 +17,9 @@
 
         <script type="text/javascript">
             var game = new Phaser.Game(448, 550, Phaser.AUTO);
-            
+
+            var GhostMode = {Normal: 0, Scared: 1, Eaten: 2};
+
             var Pacman = function (game) {
                 this.map = null;
                 this.layer = null;
@@ -35,8 +38,32 @@
                 this.scoreText = '';
                 this.lives = 3;
                 this.livesText = '';
-                this.timer = null;
-                
+                this.gameOverText = '';
+
+                this.coins = null;
+                this.cross = null;
+
+
+
+
+                this.mode = GhostMode.Normal;
+                // for red ghost
+
+
+                this.redGhost = null;
+                this.ghostMarker = new Phaser.Point();
+                this.ghostTurnPoint = new Phaser.Point();
+                this.ghostDirections = [null, null, null, null, null];
+                this.ghostOpposites = [Phaser.NONE, Phaser.RIGHT, Phaser.LEFT, Phaser.DOWN, Phaser.UP];
+                this.ghostCurrent = Phaser.NONE;
+                this.ghostTurning = Phaser.NONE;
+
+                this.ghostSpeed = 100;
+
+
+
+
+
             };
             Pacman.prototype = {
                 init: function () {
@@ -52,11 +79,18 @@
                     this.load.baseURL = 'https://p09kont.github.io/pacman/';
                     this.load.crossOrigin = 'anonymous';
 
-                    
                     this.load.image('dot', 'assets/star.png');
                     this.load.image('diamond', 'assets/diamond.png');
                     this.load.image('tiles', 'assets/pacman-tiles.png');
+                    this.load.image('cross', 'assets/cross.png');
                     
+                    this.load.image('whiteghost', 'assets/whiteGhost.png');
+                    this.load.image('blueghost', 'assets/blueghost.png');
+                    this.load.image('redGhost', 'assets/redghost2.png');
+
+
+                    this.load.spritesheet('coin', 'assets/coin.png', 32, 32);
+
                     this.load.spritesheet('pacman', 'assets/pacmanDelux.png', 32, 32);
                     this.load.tilemap('map', 'assets/pacman-map.json', null, Phaser.Tilemap.TILED_JSON);
                     //  Needless to say, graphics (C)opyright Namco
@@ -71,22 +105,47 @@
                     this.diamonds = this.add.physicsGroup();
                     this.diamonds.enableBody = true;
                     this.map.createFromTiles(7, this.safetile, 'dot', this.layer, this.dots);
-                    
+
                     //  The dots will need to be offset by 6px to put them back in the middle of the grid
                     this.dots.setAll('x', 6, false, false, 1);
                     this.dots.setAll('y', 6, false, false, 1);
 
-                   
+                    this.coins = this.add.physicsGroup();
+                    this.coins.create(9, 9, 'coin', 0);
+                    this.coins.create(408, 9, 'coin', 0);
+                    this.coins.create(9, 454, 'coin', 0);
+                    this.coins.create(408, 454, 'coin', 0);
+                    this.physics.arcade.enable(this.coins);
 
-                    var repeat =0;
-                    this.time.events.add(5000+(repeat*10000), this.addDiamond, this);
+
+                    this.coins.callAll('animations.add', 'animations', 'spin', [0, 1, 2, 3, 4, 5], 10, true);
+                    this.coins.callAll('animations.play', 'animations', 'spin');
+
+
+
+                    var repeat = 0;
+                    this.time.events.add(5000 + (repeat * 10000), this.addDiamond, this);
                     repeat++;
-                    
+
+
+
                     //  Pacman should collide with everything except the safe tile
                     this.map.setCollisionByExclusion([this.safetile], true, this.layer);
+
+
                     //  Position Pacman at grid location 14x17 (the +8 accounts for his anchor)
+                    this.redGhost = this.add.sprite((4 * 16) + 8, (4 * 16) + 8, 'redGhost');
+                    this.redGhost.anchor.set(0.5);
+                    this.redGhost.scale.setTo(0.5, 0.5);
+                    this.physics.arcade.enable(this.redGhost);
 
 
+
+
+
+                    this.cross = this.add.sprite(207, 170, 'cross');
+
+                    this.physics.arcade.enable(this.cross);
 
                     this.pacman = this.add.sprite((14 * 16) + 8, (17 * 16) + 8, 'pacman', 0);
                     this.pacman.anchor.set(0.5);
@@ -94,13 +153,23 @@
                     this.physics.arcade.enable(this.pacman);
                     this.pacman.body.setSize(16, 16, 0, 0);
 
+
+
+
+
+                    this.time.events.loop(100, this.redGhostCheckTiles, this);
+
                     this.scoreText = game.add.text(0, 500, 'Score: 0', {fontSize: '32px', fill: 'red'});
-                    
+
                     this.livesText = game.add.text(300, 500, 'Lives: 3', {fontSize: '32px', fill: 'red'});
+
+                    this.gameOverText = game.add.text(135, 215, ' ', {fontSize: '32px', fill: 'red'});
 
                     this.cursors = this.input.keyboard.createCursorKeys();
                     this.pacman.play('munch');
                     this.move(Phaser.LEFT);
+                    this.ghostMove(Phaser.RIGHT);
+
 
 
                 },
@@ -123,11 +192,167 @@
                         this.turning = Phaser.NONE;
                     }
                 },
+
+                redGhostCheckTiles: function () {
+                    var curr = this.ghostCurrent;
+                    var safe = this.safetile;
+                    var left = this.ghostDirections[Phaser.LEFT].index;
+                    var right = this.ghostDirections[Phaser.RIGHT].index;
+                    var up = this.ghostDirections[Phaser.UP].index;
+                    var down = this.ghostDirections[Phaser.DOWN].index;
+                    var ch3 = this.rnd.between(1, 3);
+                    var ch2 = this.rnd.between(1, 2);
+
+                    switch (curr) {
+                        case Phaser.LEFT:
+                            if (left === safe && up === safe && down === safe) {
+                                if (ch3 === 1) {
+                                    this.ghostTurning = Phaser.NONE;
+                                } else if (ch3 === 2) {
+                                    this.ghostCheckDirection(Phaser.UP);
+                                } else {
+                                    this.ghostCheckDirection(Phaser.DOWN);
+                                }
+                            } else if (left === safe && up === safe && down !== safe) {
+                                if (ch2 === 1) {
+                                    this.ghostTurning = Phaser.NONE;
+                                } else {
+                                    this.ghostCheckDirection(Phaser.UP);
+                                }
+                            } else if (left === safe && up !== safe && down === safe) {
+                                if (ch2 === 1) {
+                                    this.ghostTurning = Phaser.NONE;
+                                } else {
+                                    this.ghostCheckDirection(Phaser.DOWN);
+                                    //this.move(Phaser.DOWN);
+                                }
+                            } else if (left === safe && up !== safe && down !== safe) {
+                                this.ghostTurning = Phaser.NONE;
+                            } else if (left !== safe && up === safe && down === safe) {
+                                if (ch2 === 1) {
+                                    this.ghostCheckDirection(Phaser.UP);
+                                } else {
+                                    this.ghostCheckDirection(Phaser.DOWN);
+                                }
+                            } else if (left !== safe && up === safe && down !== safe) {
+                                this.ghostCheckDirection(Phaser.UP);
+                            } else if (left !== safe && up !== safe && down === safe) {
+                                this.ghostCheckDirection(Phaser.DOWN);
+                            }
+                            break;
+                        case Phaser.RIGHT:
+                            if (right === safe && up === safe && down === safe) {
+                                if (ch3 === 1) {
+                                    this.ghostTurning = Phaser.NONE;
+                                } else if (ch3 === 2) {
+                                    this.ghostCheckDirection(Phaser.UP);
+                                } else {
+                                    this.ghostCheckDirection(Phaser.DOWN);
+                                }
+                            } else if (right === safe && up === safe && down !== safe) {
+                                if (ch2 === 1) {
+                                    this.ghostTurning = Phaser.NONE;
+                                } else {
+                                    this.ghostCheckDirection(Phaser.UP);
+                                }
+                            } else if (right === safe && up !== safe && down === safe) {
+                                if (ch2 === 1) {
+                                    this.ghostTurning = Phaser.NONE;
+                                } else {
+                                    this.ghostCheckDirection(Phaser.DOWN);
+                                }
+                            } else if (right === safe && up !== safe && down !== safe) {
+                                this.ghostTurning = Phaser.NONE;
+                            } else if (right !== safe && up === safe && down === safe) {
+                                if (ch2 === 1) {
+                                    this.ghostCheckDirection(Phaser.UP);
+                                } else {
+                                    this.ghostCheckDirection(Phaser.DOWN);
+                                }
+                            } else if (right !== safe && up === safe && down !== safe) {
+                                this.ghostCheckDirection(Phaser.UP);
+                            } else if (right !== safe && up !== safe && down === safe) {
+                                this.ghostCheckDirection(Phaser.DOWN);
+                            }
+                            break;
+                        case Phaser.UP:
+                            if (up === safe && left === safe && right === safe) {
+                                if (ch3 === 1) {
+                                    this.ghostTurning = Phaser.NONE;
+                                } else if (ch3 === 2) {
+                                    this.ghostCheckDirection(Phaser.LEFT);
+                                } else {
+                                    this.ghostCheckDirection(Phaser.RIGHT);
+                                }
+                            } else if (up === safe && left === safe && right !== safe) {
+                                if (ch2 === 1) {
+                                    this.ghostTurning = Phaser.NONE;
+                                } else {
+                                    this.ghostCheckDirection(Phaser.LEFT);
+                                }
+                            } else if (up === safe && left !== safe && right === safe) {
+                                if (ch2 === 1) {
+                                    this.ghostTurning = Phaser.NONE;
+                                } else {
+                                    this.ghostCheckDirection(Phaser.RIGHT);
+                                }
+                            } else if (up === safe && left !== safe && right !== safe) {
+                                this.ghostTurning = Phaser.NONE;
+                            } else if (up !== safe && left === safe && right === safe) {
+                                if (ch2 === 1) {
+                                    this.ghostCheckDirection(Phaser.LEFT);
+                                } else {
+                                    this.ghostCheckDirection(Phaser.RIGHT);
+                                }
+                            } else if (up !== safe && left === safe && right !== safe) {
+                                this.ghostCheckDirection(Phaser.LEFT);
+                            } else if (up !== safe && left !== safe && right === safe) {
+                                this.ghostCheckDirection(Phaser.RIGHT);
+                            }
+                            break;
+                        case Phaser.DOWN:
+                            if (down === safe && left === safe && right === safe) {
+                                if (ch3 === 1) {
+                                    this.ghostTurning = Phaser.NONE;
+                                } else if (ch3 === 2) {
+                                    this.ghostCheckDirection(Phaser.LEFT);
+                                } else {
+                                    this.ghostCheckDirection(Phaser.RIGHT);
+                                }
+                            } else if (down === safe && left === safe && right !== safe) {
+                                if (ch2 === 1) {
+                                    this.ghostTurning = Phaser.NONE;
+                                } else {
+                                    this.ghostCheckDirection(Phaser.LEFT);
+                                }
+                            } else if (down === safe && left !== safe && right === safe) {
+                                if (ch2 === 1) {
+                                    this.ghostTurning = Phaser.NONE;
+                                } else {
+                                    this.ghostCheckDirection(Phaser.RIGHT);
+                                }
+                            } else if (down === safe && left !== safe && right !== safe) {
+                                this.ghostTurning = Phaser.NONE;
+                            } else if (down !== safe && left === safe && right === safe) {
+                                if (ch2 === 1) {
+                                    this.ghostCheckDirection(Phaser.LEFT);
+                                } else {
+                                    this.ghostCheckDirection(Phaser.RIGHT);
+                                }
+                            } else if (down !== safe && left === safe && right !== safe) {
+                                this.ghostCheckDirection(Phaser.LEFT);
+                            } else if (down !== safe && left !== safe && right === safe) {
+                                this.ghostCheckDirection(Phaser.RIGHT);
+                            }
+                            break;
+                    }
+                },
+
                 checkDirection: function (turnTo) {
                     if (this.turning === turnTo || this.directions[turnTo] === null || this.directions[turnTo].index !== this.safetile)
                     {
-                        //  Invalid direction if they're already set to turn that way
-                        //  Or there is no tile there, or the tile isn't index 1 (a floor tile)
+                        //Invalid direction if they're already set to turn that way
+                        //Or there is no tile there, or the tile isn't index 1 (a floor tile)
                         return;
                     }
                     //  Check if they want to turn around and can
@@ -141,6 +366,21 @@
                         this.turnPoint.y = (this.marker.y * this.gridsize) + (this.gridsize / 2);
                     }
                 },
+                ghostCheckDirection: function (turnTo) {
+                    if (this.ghostTurning === turnTo || this.ghostDirections[turnTo] === null || this.ghostDirections[turnTo].index !== this.safetile)
+                    {
+                        //Invalid direction if they're already set to turn that way
+                        //Or there is no tile there, or the tile isn't index 1 (a floor tile)
+                        return;
+                    }
+
+
+                    this.ghostTurning = turnTo;
+                    this.ghostTurnPoint.x = (this.ghostMarker.x * this.gridsize) + (this.gridsize / 2);
+                    this.ghostTurnPoint.y = (this.ghostMarker.y * this.gridsize) + (this.gridsize / 2);
+
+                },
+
                 turn: function () {
                     var cx = Math.floor(this.pacman.x);
                     var cy = Math.floor(this.pacman.y);
@@ -157,6 +397,41 @@
                     this.turning = Phaser.NONE;
                     return true;
                 },
+
+                ghostTurn: function () {
+                    var cx = Math.floor(this.redGhost.x);
+                    var cy = Math.floor(this.redGhost.y);
+                    //  This needs a threshold, because at high speeds you can't turn because the coordinates skip past
+                    if (!this.math.fuzzyEqual(cx, this.ghostTurnPoint.x, this.threshold) || !this.math.fuzzyEqual(cy, this.ghostTurnPoint.y, this.threshold))
+                    {
+                        return false;
+                    }
+                    //  Grid align before turning
+                    this.redGhost.x = this.ghostTurnPoint.x;
+                    this.redGhost.y = this.ghostTurnPoint.y;
+                    this.redGhost.body.reset(this.ghostTurnPoint.x, this.ghostTurnPoint.y);
+                    this.ghostMove(this.ghostTurning);
+                    this.ghostTurning = Phaser.NONE;
+                    return true;
+                },
+
+                orangeGhostTurn: function () {
+                    var cx = Math.floor(this.orangeGhost.x);
+                    var cy = Math.floor(this.orangeGhost.y);
+                    //  This needs a threshold, because at high speeds you can't turn because the coordinates skip past
+                    if (!this.math.fuzzyEqual(cx, this.orangeGhostTurnPoint.x, this.threshold) || !this.math.fuzzyEqual(cy, this.orangeGhostTurnPoint.y, this.threshold))
+                    {
+                        return false;
+                    }
+                    //  Grid align before turning
+                    this.orangeGhost.x = this.orangeGhostTurnPoint.x;
+                    this.orangeGhost.y = this.orangeGhostTurnPoint.y;
+                    this.orangeGhost.body.reset(this.orangeGhostTurnPoint.x, this.orangeGhostTurnPoint.y);
+                    this.orangeGhostMove(this.orangeGhostTurning);
+                    this.orangeGhostTurning = Phaser.NONE;
+                    return true;
+                },
+
                 move: function (direction) {
                     var speed = this.speed;
                     if (direction === Phaser.LEFT || direction === Phaser.UP)
@@ -185,6 +460,25 @@
                     }
                     this.current = direction;
                 },
+
+                ghostMove: function (direction) {
+                    var speed = this.ghostSpeed;
+                    if (direction === Phaser.LEFT || direction === Phaser.UP)
+                    {
+                        speed = -speed;
+                    }
+                    if (direction === Phaser.LEFT || direction === Phaser.RIGHT)
+                    {
+                        this.redGhost.body.velocity.x = speed;
+                    } else
+                    {
+                        this.redGhost.body.velocity.y = speed;
+                    }
+
+
+                    this.ghostCurrent = direction;
+                },
+
                 eatDot: function (pacman, dot) {
                     dot.kill();
                     this.sound.play('sound');
@@ -194,6 +488,8 @@
                     if (this.dots.total === 0)
                     {
                         this.dots.callAll('revive');
+                        this.coins.callAll('revive');
+                        this.ghostSpeed += 10;
                     }
                     if (this.score % 10000 === 0) {
                         this.lives++;
@@ -210,19 +506,20 @@
 
                 },
                 addDiamond: function () {
-                    
-                            var side = this.rnd.between(0, 1);
-                            if (side === 0) {
-                                this.diamond = this.diamonds.create(382, this.rnd.between(65, 365), 'diamond');
-                                this.diamond.visible =true;
-                                this.time.events.add(7000, this.removeDiamond, this);
-                            } else {
-                                this.diamond = this.diamonds.create(45, this.rnd.between(65, 365), 'diamond');
-                                this.diamond.visible= true;
-                                this.time.events.add(7000, this.removeDiamond, this);
-                            }
-                            
-                    
+
+                    var side = this.rnd.between(0, 1);
+                    //this.livesText.text = side;
+                    if (side === 0) {
+                        this.diamond = this.diamonds.create(382, this.rnd.between(65, 365), 'diamond');
+                        this.diamond.visible = true;
+                        this.time.events.add(7000, this.removeDiamond, this);
+                    } else {
+                        this.diamond = this.diamonds.create(45, this.rnd.between(65, 365), 'diamond');
+                        this.diamond.visible = true;
+                        this.time.events.add(7000, this.removeDiamond, this);
+                    }
+
+
 
                 },
 
@@ -231,24 +528,158 @@
                     this.time.events.add(7000, this.addDiamond, this);
                 },
 
+                pacmanTeleport: function (object) {
+                    if (object.x <= 24 && (object.y === 152 || object.y === 280)) {
+                        object.x = 423;
+                        this.move(Phaser.LEFT);
+                    }
+                    if (object.x >= 424 && (object.y === 152 || object.y === 280)) {
+                        object.x = 25;
+                        this.move(Phaser.RIGHT);
+                    }
+                },
+
+                ghostTeleport: function (object) {
+                    if (object.x <= 24 && (object.y === 152 || object.y === 280)) {
+                        object.x = 423;
+                        this.ghostMove(Phaser.LEFT);
+                    }
+                    if (object.x >= 424 && (object.y === 152 || object.y === 280)) {
+                        object.x = 25;
+                        this.ghostMove(Phaser.RIGHT);
+                    }
+                },
+
+                collideGhost: function (pacman, ghost) {
+                    if (this.mode === GhostMode.Normal) {
+                        pacman.kill();
+
+                        if (this.lives > 0) {
+                            this.lives--;
+                            this.livesText.text = 'Lives: ' + this.lives;
+
+                            this.pacman.reset((14 * 16) + 8, (17 * 16) + 8);
+                            this.move(Phaser.LEFT);
+
+                            this.redGhost.kill();
+                            this.redGhost = this.add.sprite((4 * 16) + 8, (4 * 16) + 8, 'redGhost');
+                            this.redGhost.anchor.set(0.5);
+                            this.redGhost.scale.setTo(0.5, 0.5);
+
+                            this.physics.arcade.enable(this.redGhost);
+                            this.ghostMove(Phaser.RIGHT);
+
+                        } else {
+                            pacman.kill();
+                            this.gameOverText.text = 'GAME OVER';
+                        }
+                    } else if (this.mode === GhostMode.Scared) {
+                        this.mode = GhostMode.Eaten;
+                        ghost.kill();
+                        this.redGhost.kill();
+                        this.redGhost = this.add.sprite(this.redGhost.x, this.redGhost.y, 'whiteghost');
+                        this.redGhost.anchor.set(0.5);
+                        this.redGhost.scale.setTo(0.5, 0.5);
+
+                        this.physics.arcade.enable(this.redGhost);
+                        this.ghostMove(this.ghostCurrent);
+
+                    } else if (this.mode === GhostMode.Eaten) {
+                        return;
+                    }
+
+
+                },
+
+                eatCoin: function (pacman, coin) {
+                    var duration;
+                    coin.kill();
+                    this.score += 100;
+                    if (this.mode === GhostMode.Normal) {
+                        this.mode = GhostMode.Scared;
+                        this.redGhost.kill();
+                        this.redGhost = this.add.sprite(this.redGhost.x, this.redGhost.y, 'blueghost');
+                        this.redGhost.anchor.set(0.5);
+                        this.redGhost.scale.setTo(0.5, 0.5);
+
+                        this.physics.arcade.enable(this.redGhost);
+                        this.ghostMove(this.ghostOpposites[this.ghostCurrent]);
+
+
+                    }
+                },
+
+                reviveGhost: function (cross, ghost) {
+                    if (this.mode === GhostMode.Eaten || this.mode === GhostMode.Scared) {
+                        ghost.kill();
+
+                        this.redGhost = this.add.sprite(this.redGhost.x, this.redGhost.y, 'redGhost');
+                        this.redGhost.anchor.set(0.5);
+                        this.redGhost.scale.setTo(0.5, 0.5);
+
+                        this.physics.arcade.enable(this.redGhost);
+                        this.mode = GhostMode.Normal;
+                        this.ghostMove(this.ghostCurrent);
+                    } else {
+                        return;
+                    }
+
+
+                },
+
                 update: function () {
+                    //this.gm();
 
                     this.physics.arcade.collide(this.pacman, this.layer);
+                    this.physics.arcade.collide(this.redGhost, this.layer);
+
                     this.physics.arcade.collide(this.diamonds, this.layer);
                     this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
                     this.physics.arcade.overlap(this.pacman, this.diamonds, this.eatDiamond, null, this);
+                    this.physics.arcade.overlap(this.pacman, this.redGhost, this.collideGhost, null, this);
+                    this.physics.arcade.overlap(this.pacman, this.coins, this.eatCoin, null, this);
+                    this.physics.arcade.overlap(this.cross, this.redGhost, this.reviveGhost, null, this);
+
+
+
                     this.marker.x = this.math.snapToFloor(Math.floor(this.pacman.x), this.gridsize) / this.gridsize;
                     this.marker.y = this.math.snapToFloor(Math.floor(this.pacman.y), this.gridsize) / this.gridsize;
-                    
+
+                    this.ghostMarker.x = this.math.snapToFloor(Math.floor(this.redGhost.x), this.gridsize) / this.gridsize;
+                    this.ghostMarker.y = this.math.snapToFloor(Math.floor(this.redGhost.y), this.gridsize) / this.gridsize;
+
+
+
                     this.directions[1] = this.map.getTileLeft(this.layer.index, this.marker.x, this.marker.y);
                     this.directions[2] = this.map.getTileRight(this.layer.index, this.marker.x, this.marker.y);
                     this.directions[3] = this.map.getTileAbove(this.layer.index, this.marker.x, this.marker.y);
                     this.directions[4] = this.map.getTileBelow(this.layer.index, this.marker.x, this.marker.y);
+
+
+
+                    this.ghostDirections[1] = this.map.getTileLeft(this.layer.index, this.ghostMarker.x, this.ghostMarker.y);
+                    this.ghostDirections[2] = this.map.getTileRight(this.layer.index, this.ghostMarker.x, this.ghostMarker.y);
+                    this.ghostDirections[3] = this.map.getTileAbove(this.layer.index, this.ghostMarker.x, this.ghostMarker.y);
+                    this.ghostDirections[4] = this.map.getTileBelow(this.layer.index, this.ghostMarker.x, this.ghostMarker.y);
+
+
+
                     this.checkKeys();
+
                     if (this.turning !== Phaser.NONE)
                     {
                         this.turn();
                     }
+                    if (this.ghostTurning !== Phaser.NONE)
+                    {
+                        this.ghostTurn();
+                    }
+
+                    this.pacmanTeleport(this.pacman);
+                    this.ghostTeleport(this.redGhost);
+
+
+
                 }
             };
             game.state.add('Game', Pacman, true);
