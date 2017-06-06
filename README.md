@@ -1,8 +1,12 @@
 # Pacman
 Θέμα εργασίας: Pacman 
+
 Ονοματεπώνυμο: Παπαοικονόμου Νίκος
+
 ΑΜ: Π2014166
+
 Προσωπικό Αποθετηρίο: https://github.com/nikous/pacman
+
 Εκτελέσιμο: https://nikous.github.io/pacman/  
 
 # Σύνοψη
