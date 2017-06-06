@@ -13,17 +13,22 @@
     <script src="//cdn.jsdelivr.net/phaser/2.2.2/phaser.min.js"></script>
 </head>
 <body>
-
+   <audio controls>
+  <source src="assets/audio/01-metamorphosis-no .ogg" type="audio/ogg">
+  </audio>
+        
     <script type="text/javascript">
-
-    var game = new Phaser.Game(448, 496, Phaser.AUTO);
-
-    var Pacman = function (game) {
-
+    
+    var game = new Phaser.Game(700, 496, Phaser.AUTO);
+        var Pacman = function (game) {
+     
+        this.lives=2;
         this.map = null;
         this.layer = null;
         this.pacman = null;
-
+        this.text1='';
+        this.score=0;
+       this.txtl='';
         this.safetile = 14;
         this.gridsize = 16;
 
@@ -59,32 +64,50 @@
 
             //  We need this because the assets are on github pages
             //  Remove the next 2 lines if running locally
-            this.load.baseURL = 'https://ioniodi.github.io/pacman/';
+            this.load.baseURL = 'https://arachnavonfenrir.github.io/pacman/';
             this.load.crossOrigin = 'anonymous';
-
-            this.load.image('dot', 'assets/dot.png');
-            this.load.image('tiles', 'assets/pacman-tiles.png');
-            this.load.spritesheet('pacman', 'assets/pacman.png', 32, 32);
-            this.load.tilemap('map', 'assets/pacman-map.json', null, Phaser.Tilemap.TILED_JSON);
-
+            this.load.image('egg','assets/egg.png');
+            this.load.image('dot', 'assets/Candle.png');
+            this.load.image('tiles', 'assets/pacman-tiles2.png');
+            this.load.spritesheet('pacman', 'assets/Trevor.png', 32, 32);
+            this.load.tilemap('map', 'assets/map_of_spiders.json', null, Phaser.Tilemap.TILED_JSON);
             //  Needless to say, graphics (C)opyright Namco
 
         },
-
+        
+            
+        
         create: function () {
+       
+            this.score= 0;
 
+   this.text1= game.add.text(450,0, "Your score is -0 !", {
+        font: "16px Arial",
+        fill: "#005544"
+    });
+            this.txtl=game.add.text(450,200, "Your lives : 2", {
+        font: "16px Arial",
+        fill: "#550011"
+    });
+
+ 
             this.map = this.add.tilemap('map');
             this.map.addTilesetImage('pacman-tiles', 'tiles');
 
             this.layer = this.map.createLayer('Pacman');
 
             this.dots = this.add.physicsGroup();
+            this.eggs = this.add.physicsGroup();
 
             this.map.createFromTiles(7, this.safetile, 'dot', this.layer, this.dots);
+            this.map.createFromTiles(1, this.safetile, 'egg', this.layer, this.eggs);
 
             //  The dots will need to be offset by 6px to put them back in the middle of the grid
-            this.dots.setAll('x', 6, false, false, 1);
-            this.dots.setAll('y', 6, false, false, 1);
+            this.dots.setAll('x', -2, false, false, 1);
+            this.dots.setAll('y', 2, false, false, 1);
+            
+             this.eggs.setAll('x', -2, false, false, 1);
+            this.eggs.setAll('y', 2, false, false, 1);
 
             //  Pacman should collide with everything except the safe tile
             this.map.setCollisionByExclusion([this.safetile], true, this.layer);
@@ -92,10 +115,10 @@
             //  Position Pacman at grid location 14x17 (the +8 accounts for his anchor)
             this.pacman = this.add.sprite((14 * 16) + 8, (17 * 16) + 8, 'pacman', 0);
             this.pacman.anchor.set(0.5);
-            this.pacman.animations.add('munch', [0, 1, 2, 1], 20, true);
+            this.pacman.animations.add('munch', [0, 1, 2,3,4,5,6,7,6,5,4,3,2,1], 5, true);
 
             this.physics.arcade.enable(this.pacman);
-            this.pacman.body.setSize(16, 16, 0, 0);
+            this.pacman.body.setSize(8, 8, 0, 0);
 
             this.cursors = this.input.keyboard.createCursorKeys();
 
@@ -221,11 +244,20 @@
         eatDot: function (pacman, dot) {
 
             dot.kill();
-
+            this.score+=300;
+            this.text1.text="Your score is -" + this.score + " !";
+            
             if (this.dots.total === 0)
             {
                 this.dots.callAll('revive');
             }
+
+        },
+        eatEgg: function (pacman, egg) {
+
+            egg.kill();
+            this.lives+=1;
+            this.txtl.text="Your lives:" + this.lives ;
 
         },
 
@@ -233,7 +265,7 @@
           
             this.physics.arcade.collide(this.pacman, this.layer);
             this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
-
+            this.physics.arcade.overlap(this.pacman, this.eggs, this.eatEgg, null, this);
             this.marker.x = this.math.snapToFloor(Math.floor(this.pacman.x), this.gridsize) / this.gridsize;
             this.marker.y = this.math.snapToFloor(Math.floor(this.pacman.y), this.gridsize) / this.gridsize;
 
@@ -253,6 +285,11 @@
         }
 
     };
+        
+        
+
+
+
 
     game.state.add('Game', Pacman, true);
 
