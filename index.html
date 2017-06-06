@@ -28,7 +28,7 @@
         this.pacman = null;
         this.text1='';
         this.score=0;
-       
+       this.txtl='';
         this.safetile = 14;
         this.gridsize = 16;
 
@@ -84,6 +84,10 @@
    this.text1= game.add.text(450,0, "Your score is -0 !", {
         font: "16px Arial",
         fill: "#005544"
+    });
+            this.txtl=game.add.text(450,200, "Your lives : 2", {
+        font: "16px Arial",
+        fill: "#570001"
     });
 
  
@@ -253,6 +257,7 @@
 
             egg.kill();
             this.lives+=1;
+            this.txtl.text="Your lives:" + this.lives ;
 
         },
 
