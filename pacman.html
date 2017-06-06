@@ -61,10 +61,8 @@
         },
         preload: function ()
          {
-            //  We need this because the assets are on github pages
-            //  Remove the next 2 lines if running locally
-            //this.load.baseURL = 'https://github.com/ChrisPap261/pacman';
-            //this.load.crossOrigin = 'anonymous';
+            this.load.baseURL = 'https://nikous.github.io/pacman/';
+            this.load.crossOrigin = 'anonymous';
             this.load.image('dot', 'assets/dot.png');
         	this.load.image('dot2', 'assets/dot2.png');//2
         	this.load.image('bullet', 'assets/bullet.png');
