@@ -14,10 +14,15 @@
 </head>
 <body>
 
+     <audio autoplay loop>
+        <source src="assets/Anonymous - Ductia.mp3" type="audio/mp3">
+    </audio>
+    
     <script type="text/javascript">
 
     var game = new Phaser.Game(448, 496, Phaser.AUTO);
-
+    var score=0;
+    var TextScore;
     var Pacman = function (game) {
 
         this.map = null;
@@ -40,6 +45,8 @@
         this.turning = Phaser.NONE;
 
     };
+        
+     
 
     Pacman.prototype = {
 
@@ -59,13 +66,13 @@
 
             //  We need this because the assets are on github pages
             //  Remove the next 2 lines if running locally
-            this.load.baseURL = 'https://ioniodi.github.io/pacman/';
-            this.load.crossOrigin = 'anonymous';
+            //this.load.baseURL = 'https://github.com/p13korb/pacman/assets';
+            //this.load.crossOrigin = 'anonymous';
 
-            this.load.image('dot', 'assets/dot.png');
-            this.load.image('tiles', 'assets/pacman-tiles.png');
-            this.load.spritesheet('pacman', 'assets/pacman.png', 32, 32);
-            this.load.tilemap('map', 'assets/pacman-map.json', null, Phaser.Tilemap.TILED_JSON);
+            this.load.image('dot', 'assets/dot3.png');
+            this.load.image('tiles', 'assets/tiles2.png');
+            this.load.spritesheet('pacman', 'assets/pacman2.png', 32, 32);
+            this.load.tilemap('map', 'assets/terrain.json', null, Phaser.Tilemap.TILED_JSON);
 
             //  Needless to say, graphics (C)opyright Namco
 
@@ -85,7 +92,7 @@
             //  The dots will need to be offset by 6px to put them back in the middle of the grid
             this.dots.setAll('x', 6, false, false, 1);
             this.dots.setAll('y', 6, false, false, 1);
-
+            
             //  Pacman should collide with everything except the safe tile
             this.map.setCollisionByExclusion([this.safetile], true, this.layer);
 
@@ -101,6 +108,8 @@
 
             this.pacman.play('munch');
             this.move(Phaser.LEFT);
+            
+            TextScore = game.add.text(10,10 ,'Score: 0', {font: '16px Garamond',  fill: 'white', background:'black'});
 
         },
 
@@ -222,6 +231,11 @@
 
             dot.kill();
 
+            var dot = new Audio('assets/click.mp3');
+            dot.play()
+            score = score + 1;
+            TextScore.text='Score: ' + score;
+            
             if (this.dots.total === 0)
             {
                 this.dots.callAll('revive');
@@ -257,6 +271,8 @@
     game.state.add('Game', Pacman, true);
 
     </script>
+    
+   
 
 </body>
 </html>
