@@ -264,6 +264,8 @@
         eatDot: function (pacman, dot) {
 
             dot.kill();
+	    var audio = new Audio('assets/Minion Doo Sound Effect.mp3');
+	    audio.play();
             score += 1;
             scoretxt.text = 'Score' + score;
 
