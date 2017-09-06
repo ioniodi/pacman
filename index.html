@@ -24,6 +24,9 @@
 
     var game = new Phaser.Game(448, 496, Phaser.AUTO);
 
+    var score=0;
+    var scoretxt;
+	    
     var Pacman = function (game) {
 
         this.map = null;
@@ -68,6 +71,7 @@
             this.load.baseURL = 'https://p12vito.github.io/pacman/';
             this.load.crossOrigin = 'anonymous';
 
+	    this.load.spritesheet('ghost', 'assets/ghost.png', 32, 32);
             this.load.image('dot', 'assets/nana_16x16.png');
             this.load.image('tiles', 'assets/pacman-tiles.png');
             this.load.spritesheet('pacman', 'assets/minion.png', 32, 32);
@@ -247,6 +251,7 @@
 
         update: function () {
 		
+	     this.ghost.scale.x = 1;
 	     if(this.ghost.angle == 0)
              {
         		this.ghost.body.velocity.x = ghostSpeed;
