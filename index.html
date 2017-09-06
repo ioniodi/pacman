@@ -15,7 +15,7 @@
 <body>
     
     <audio autoplay loop>
-		<source src="assets/mminions Banana Song Full Song.mp3" type="audio/mp3">
+		<source src="assets/minions Banana Song Full Song.mp3" type="audio/mp3">
     </audio>
 
     <script type="text/javascript">
@@ -24,7 +24,7 @@
     var lifeTime = 0;
     var livesText = '';
 	    
-    var gghostSpeed = 75;
+    var ghostSpeed = 75;
 
     var game = new Phaser.Game(448, 496, Phaser.AUTO);
 
@@ -36,7 +36,7 @@
         this.map = null;
         this.layer = null;
         this.pacman = null;
-	this.gghost = null;
+	this.ghost = null;
 
         this.safetile = 14;
         this.gridsize = 16;
@@ -76,10 +76,10 @@
             this.load.baseURL = 'https://p12vito.github.io/pacman/';
             this.load.crossOrigin = 'anonymous';
 
-	    this.load.spritesheet('gghost', 'assets/ggghost.png', 32, 32);
+	    this.load.spritesheet('ghost', 'assets/gghost.png', 32, 32);
             this.load.image('dot', 'assets/nana_16x16.png');
             this.load.image('tiles', 'assets/pacman-tiles.png');
-            this.load.spritesheet('pacman', 'assets/mminion.png', 32, 32);
+            this.load.spritesheet('pacman', 'assets/minion.png', 32, 32);
             this.load.tilemap('map', 'assets/pacman-map.json', null, Phaser.Tilemap.TILED_JSON);
 
             //  Needless to say, graphics (C)opyright Namco
@@ -112,10 +112,10 @@
             this.physics.arcade.enable(this.pacman);
             this.pacman.body.setSize(16, 16, 0, 0);
 		
-	    this.gghost = this.add.sprite((14 * 16) + 8, (20 * 16) + 8, 'gghost', 0);
-            this.gghost.anchor.set(0.5);
-            this.physics.arcade.enable(this.gghost);
-            this.gghost.body.setSize(16, 16, 0, 0);
+	    this.ghost = this.add.sprite((14 * 16) + 8, (20 * 16) + 8, 'ghost', 0);
+            this.ghost.anchor.set(0.5);
+            this.physics.arcade.enable(this.ghost);
+            this.ghost.body.setSize(16, 16, 0, 0);
 
             this.cursors = this.input.keyboard.createCursorKeys();
 
@@ -129,18 +129,18 @@
 	    
 	    
 	 catchMe: function(){
-            var gghostSpeed = 75;
-            if (this.pacman.body.x < this.gghost.body.x) {
-                this.gghost.body.velocity.x = gghostSpeed * -1;
+            var ghostSpeed = 75;
+            if (this.pacman.body.x < this.ghost.body.x) {
+                this.ghost.body.velocity.x = ghostSpeed * -1;
             }
             else{
-                this.gghost.body.velocity.x = gghostSpeed;
+                this.ghost.body.velocity.x = ghostSpeed;
             }
-            if (this.pacman.body.y <this.gghost.body.y){
-                this.gghost.body.velocity.y = gghostSpeed * -1;
+            if (this.pacman.body.y <this.ghost.body.y){
+                this.ghost.body.velocity.y = ghostSpeed * -1;
             }
             else{
-                this.gghost.body.velocity.y = gghostSpeed;
+                this.ghost.body.velocity.y = ghostSpeed;
             }
         },
 
@@ -271,7 +271,7 @@
 
         },
 
-	getCaught: function (gghost, pacman){
+	getCaught: function (ghost, pacman){
 		if ( lives == 1 ) {
 			totalScore = score + bonusScore;
 			this.GameOver = game.add.text(105, 170, 'GAME OVER', {font: '35px Arial Black', fill: 'red'});
@@ -295,14 +295,14 @@
 		this.pacman.body.setSize(16, 16, 0, 0);
 		this.pacman.play('munch');
 			
-		//  Position gghost at starting position
-		this.gghost.destroy();
-		this.gghost = this.add.sprite((14 * 16) + 8, (11 * 16) + 8, 'gghost', 0);
-		this.gghost.anchor.set(0.5);
-		this.gghost.animations.add('munch', [0, 1, 2, 1], 20, true);
-		this.physics.arcade.enable(this.gghost);
-		this.gghost.body.setSize(16, 16, 0, 0);
-		this.gghost.play('munch');
+		//  Position ghost at starting position
+		this.ghost.destroy();
+		this.ghost = this.add.sprite((14 * 16) + 8, (11 * 16) + 8, 'ghost', 0);
+		this.ghost.anchor.set(0.5);
+		this.ghost.animations.add('munch', [0, 1, 2, 1], 20, true);
+		this.physics.arcade.enable(this.ghost);
+		this.ghost.body.setSize(16, 16, 0, 0);
+		this.ghost.play('munch');
 			
 		var audioLose = new Audio('assets/Buzzer.mp3');
 		audioLose.play();
@@ -313,40 +313,40 @@
 	    
         update: function () {
 		
-	     this.gghost.scale.x = 1;
-	     if(this.gghost.angle == 0)
+	     this.ghost.scale.x = 1;
+	     if(this.ghost.angle == 0)
              {
-        		this.gghost.body.velocity.x = gghostSpeed;
+        		this.ghost.body.velocity.x = ghostSpeed;
         	}
-        	if(this.gghost.angle == -180)
+        	if(this.ghost.angle == -180)
         	{
-        		this.gghost.body.velocity.x = -gghostSpeed;
+        		this.ghost.body.velocity.x = -ghostSpeed;
         	}
-        	if(this.gghost.angle == 90)
+        	if(this.ghost.angle == 90)
         	{
-        		this.gghost.body.velocity.y = gghostSpeed;
+        		this.ghost.body.velocity.y = ghostSpeed;
         	}
-        	if(this.gghost.angle == -90)
+        	if(this.ghost.angle == -90)
         	{
-        		this.gghost.body.velocity.y = -gghostSpeed;
+        		this.ghost.body.velocity.y = -ghostSpeed;
         	}       	
-        	if(this.physics.arcade.collide(this.gghost, this.layer))
+        	if(this.physics.arcade.collide(this.ghost, this.layer))
         	{
         		randomVar = Math.floor((Math.random() * 2) + 1);
         		if(randomVar == 1)
         		{
-        			this.gghost.angle = this.gghost.angle + 90;
+        			this.ghost.angle = this.ghost.angle + 90;
         		}
         		else
         		{
-        			this.gghost.angle = this.gghost.angle - 90;
+        			this.ghost.angle = this.ghost.angle - 90;
         		}        		
             }
           
             this.physics.arcade.collide(this.pacman, this.layer);
             this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
-	    this.physics.arcade.collide(this.gghost, this.layer);
-            this.physics.arcade.overlap(this.gghost, this.pacman, this.getCaught, null,this);
+	    this.physics.arcade.collide(this.ghost, this.layer);
+            this.physics.arcade.overlap(this.ghost, this.pacman, this.getCaught, null,this);
 
             this.marker.x = this.math.snapToFloor(Math.floor(this.pacman.x), this.gridsize) / this.gridsize;
             this.marker.y = this.math.snapToFloor(Math.floor(this.pacman.y), this.gridsize) / this.gridsize;
