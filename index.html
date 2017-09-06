@@ -121,6 +121,16 @@
 
             this.pacman.play('munch');
             this.move(Phaser.LEFT);
+		
+	    // create teleports from tiles
+	    this.map.createFromTiles(41, this.safetile, 'teleport', this.layer, this.teleport1);
+	    this.map.createFromTiles(42, this.safetile, 'teleport', this.layer, this.teleport2);
+		
+	   //  Teleporting placement
+	    this.teleport1.setAll('x', 3, false, false, 1);
+	    this.teleport1.setAll('y', 0, false, false, 1);
+	    this.teleport2.setAll('x', 3, false, false, 1);
+	    this.teleport2.setAll('y', 0, false, false, 1);
 	
 	    livesText = game.add.text(30, 0, ' ' + lives, {font: '16px Arial Black', fill: 'red'});
 	    scoretxt = game.add.text(290, -5, 'Score: 0', {fond: '11px Verdara', fill: '#ffffff'})
