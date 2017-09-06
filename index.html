@@ -20,6 +20,10 @@
 
     <script type="text/javascript">
 	    
+    var lives = 3;
+    var lifeTime = 0;
+    var livesText = '';
+	    
     var ghostSpeed = 75;
 
     var game = new Phaser.Game(448, 496, Phaser.AUTO);
@@ -32,6 +36,7 @@
         this.map = null;
         this.layer = null;
         this.pacman = null;
+	this.ghost = null;
 
         this.safetile = 14;
         this.gridsize = 16;
@@ -117,9 +122,27 @@
 
             this.pacman.play('munch');
             this.move(Phaser.LEFT);
-		
+	
+	    livesText = game.add.text(30, 0, ' ' + lives, {font: '16px Arial Black', fill: 'red'});
 	    scoretxt = game.add.text(290, -5, 'Score: 0', {fond: '11px Verdara', fill: '#ffffff'})
 
+        },
+	    
+	    
+	 catchMe: function(){
+            var ghostSpeed = 75;
+            if (this.pacman.body.x < this.ghost.body.x) {
+                this.ghost.body.velocity.x = ghostSpeed * -1;
+            }
+            else{
+                this.ghost.body.velocity.x = ghostSpeed;
+            }
+            if (this.pacman.body.y <this.ghost.body.y){
+                this.ghost.body.velocity.y = ghostSpeed * -1;
+            }
+            else{
+                this.ghost.body.velocity.y = ghostSpeed;
+            }
         },
 
         checkKeys: function () {
@@ -249,6 +272,46 @@
 
         },
 
+	getCaught: function (ghost, pacman){
+		if ( lives == 1 ) {
+			totalScore = score + bonusScore;
+			this.GameOver = game.add.text(105, 170, 'GAME OVER', {font: '35px Arial Black', fill: 'red'});
+			var audioGameOver = new Audio('assets/Joker Laugh.mp3');
+			audioGameOver.play();
+			totalScoreText = game.add.text(130, 265, 'Total Score: ' + totalScore, {font: '24px Verdana', fill: '#FF8000'});
+			extraText = game.add.text(130, 300, ' Score: ' + score + '\n Bonus: + ' + bonusScore, {font: '16px Verdana', fill: '#FF8000'});
+			restartText.text = game.add.text(145, 210, '(Press F5 to restart)', {font: '16px Verdana', fill: 'white'});
+			lives = 0;
+			livesText.text = ' ' + lives;
+			timer.stop();
+			pacman.kill();
+		}
+		else{
+		//  Position Pacman at starting position
+		this.pacman.destroy();
+		this.pacman = this.add.sprite((14 * 16) + 8, (17 * 16) + 8, 'pacman', 0);
+		this.pacman.anchor.set(0.5);
+		this.pacman.animations.add('munch', [0, 1, 2, 1], 20, true);
+		this.physics.arcade.enable(this.pacman);
+		this.pacman.body.setSize(16, 16, 0, 0);
+		this.pacman.play('munch');
+			
+		//  Position ghost at starting position
+		this.ghost.destroy();
+		this.ghost = this.add.sprite((14 * 16) + 8, (11 * 16) + 8, 'ghost', 0);
+		this.ghost.anchor.set(0.5);
+		this.ghost.animations.add('munch', [0, 1, 2, 1], 20, true);
+		this.physics.arcade.enable(this.ghost);
+		this.ghost.body.setSize(16, 16, 0, 0);
+		this.ghost.play('munch');
+			
+		var audioLose = new Audio('assets/Buzzer.mp3');
+		audioLose.play();
+		lives--;
+		livesText.text = ' ' + lives;
+		}
+        },
+	    
         update: function () {
 		
 	     this.ghost.scale.x = 1;
@@ -283,6 +346,8 @@
           
             this.physics.arcade.collide(this.pacman, this.layer);
             this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
+	    this.physics.arcade.collide(this.enemy, this.layer);
+            this.physics.arcade.overlap(this.enemy, this.pacman, this.getCaught, null,this);
 
             this.marker.x = this.math.snapToFloor(Math.floor(this.pacman.x), this.gridsize) / this.gridsize;
             this.marker.y = this.math.snapToFloor(Math.floor(this.pacman.y), this.gridsize) / this.gridsize;
