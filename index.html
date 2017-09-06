@@ -27,7 +27,7 @@
     var lifeTime = 0;
     var livesText = '';
 	    
-    var ghostSpeed = 75;
+    var ghostSpeed = 85;
 
     var game = new Phaser.Game(448, 496, Phaser.AUTO);
 
@@ -115,7 +115,7 @@
             this.physics.arcade.enable(this.pacman);
             this.pacman.body.setSize(16, 16, 0, 0);
 		
-	    this.ghost = this.add.sprite((14 * 16) + 8, (20 * 16) + 8, 'ghost', 0);
+	    this.ghost = this.add.sprite((3 * 16) + 8, (5 * 16) + 8, 'ghost', 0);
             this.ghost.anchor.set(0.5);
             this.physics.arcade.enable(this.ghost);
             this.ghost.body.setSize(16, 16, 0, 0);
