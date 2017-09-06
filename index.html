@@ -121,16 +121,6 @@
 
             this.pacman.play('munch');
             this.move(Phaser.LEFT);
-		
-	    // create teleports from tiles
-	    this.map.createFromTiles(41, this.safetile, 'teleport', this.layer, this.teleport1);
-	    this.map.createFromTiles(42, this.safetile, 'teleport', this.layer, this.teleport2);
-		
-	   //  Teleporting placement
-	    this.teleport1.setAll('x', 3, false, false, 1);
-	    this.teleport1.setAll('y', 0, false, false, 1);
-	    this.teleport2.setAll('x', 3, false, false, 1);
-	    this.teleport2.setAll('y', 0, false, false, 1);
 	
 	    livesText = game.add.text(30, 0, ' ' + lives, {font: '16px Arial Black', fill: 'red'});
 	    scoretxt = game.add.text(290, -5, 'Score: 0', {fond: '11px Verdara', fill: '#ffffff'})
@@ -267,30 +257,6 @@
             this.current = direction;
 
         },
-	    
-	// function that teleports Pacman from left-gate to right-gate
-	Left2Right: function() {
-		this.pacman.destroy();
-		this.pacman = this.add.sprite((22 * 16) + 8, (26 * 16) + 8, 'pacman', 0);
-		this.pacman.anchor.set(0.5);
-		this.pacman.animations.add('munch', [0, 1, 2, 1], 20, true);
-		this.physics.arcade.enable(this.pacman);
-		this.pacman.body.setSize(16, 16, 0, 0);
-		this.pacman.play('munch');
-		this.move(Phaser.LEFT);
-	},
-	
-	// function that teleports Pacman from right-gate to left-gate
-	Right2Left: function() {
-		this.pacman.destroy();
-		this.pacman = this.add.sprite((2 * 16) + 8, (2 * 16) + 8, 'pacman', 0);
-		this.pacman.anchor.set(0.5);
-		this.pacman.animations.add('munch', [0, 1, 2, 1], 20, true);
-		this.physics.arcade.enable(this.pacman);
-		this.pacman.body.setSize(16, 16, 0, 0);
-		this.pacman.play('munch');
-		this.move(Phaser.RIGHT);
-	},
 
         eatDot: function (pacman, dot) {
 
