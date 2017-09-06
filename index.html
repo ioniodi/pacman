@@ -19,6 +19,8 @@
    	</audio>
 
     <script type="text/javascript">
+	    
+    var ghostSpeed = 75;
 
     var game = new Phaser.Game(448, 496, Phaser.AUTO);
 
@@ -100,11 +102,19 @@
 
             this.physics.arcade.enable(this.pacman);
             this.pacman.body.setSize(16, 16, 0, 0);
+		
+	    this.ghost = this.add.sprite((14 * 16) + 8, (20 * 16) + 8, 'ghost', 0);
+            this.ghost.anchor.set(0.5);
+       
+            this.physics.arcade.enable(this.ghost);
+            this.ghost.body.setSize(16, 16, 0, 0);
 
             this.cursors = this.input.keyboard.createCursorKeys();
 
             this.pacman.play('munch');
             this.move(Phaser.LEFT);
+		
+	    scoretxt = game.add.text(290, -5, 'Score: 0', {fond: '11px Verdara', fill: '#ffffff'})
 
         },
 
@@ -225,6 +235,8 @@
         eatDot: function (pacman, dot) {
 
             dot.kill();
+            score += 1;
+            scoretxt.text = 'Score' + score;
 
             if (this.dots.total === 0)
             {
@@ -234,6 +246,35 @@
         },
 
         update: function () {
+		
+	     if(this.ghost.angle == 0)
+             {
+        		this.ghost.body.velocity.x = ghostSpeed;
+        	}
+        	if(this.ghost.angle == -180)
+        	{
+        		this.ghost.body.velocity.x = -ghostSpeed;
+        	}
+        	if(this.ghost.angle == 90)
+        	{
+        		this.ghost.body.velocity.y = ghostSpeed;
+        	}
+        	if(this.ghost.angle == -90)
+        	{
+        		this.ghost.body.velocity.y = -ghostSpeed;
+        	}       	
+        	if(this.physics.arcade.collide(this.ghost, this.layer))
+        	{
+        		randomVar = Math.floor((Math.random() * 2) + 1);
+        		if(randomVar == 1)
+        		{
+        			this.ghost.angle = this.ghost.angle + 90;
+        		}
+        		else
+        		{
+        			this.ghost.angle = this.ghost.angle - 90;
+        		}        		
+            }
           
             this.physics.arcade.collide(this.pacman, this.layer);
             this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
