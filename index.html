@@ -119,7 +119,7 @@
 
             //  Pacman should collide with everything except the safe tile
 		
-	     this.textTime = game.add.text(200, 210, "Time: "+Math.floor(this.game.time.totalElapsedSeconds()),
+	     this.textTime = game.add.text(190, 220, "Time: "+Math.floor(this.game.time.totalElapsedSeconds()),
                     { font: '15px Tahoma', 
                      fill: "purple" 
                     });	
@@ -292,8 +292,8 @@
 	 	this.GameOver = game.add.text(45, 170, 'YOU WON! :)', {font: '60px Tahoma', fill: 'purple'});
 		this.GameOver2 = game.add.text(45, 255, 'Refresh to play', { font: '50px Tahoma', fill: "purple"});
 		this.GameOver3 = game.add.text(150, 340, 'again!', { font: '50px Tahoma', fill: "purple"});
-		var audioWinning = new Audio('assets/Laugh 5 Minions [Sound Effect].mp3');
-		audioWinning.play();
+		var audio = new Audio('assets/win.mp3');
+		audio.play();
 		this.pacman.kill();
             }
 
