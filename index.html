@@ -305,7 +305,8 @@
 			
 			lives = 0;
 			livesText.text = ' ' + lives;
-			timer.stop();
+			var audio = new Audio('assets/Cartoon_Boing.mp3');
+	   		audio.play();
 			pacman.kill();
 		}
 		else{
