@@ -306,8 +306,8 @@
 
 	getCaught: function (ghost, pacman){
 		if ( lives == 1 ) {
-			this.GameOver = game.add.text(105, 170, 'GAME OVER :(', {font: '35px Arial Black', fill: 'purple'});
-			this.GameOver2 = game.add.text(160, 145, "Refresh to play again!", { fontSize: "80px", fill: "purple"});
+			this.GameOver = game.add.text(105, 170, 'GAME OVER :(', {font: '35px Tahoma', fill: 'purple'});
+			this.GameOver2 = game.add.text(120, 195, 'Refresh to play again!', { font: '25px Tahoma', fill: "purple"});
 			lives = 0;
 			livesText.text = ' ' + lives;
 			var audio = new Audio('assets/Cartoon_Boing.mp3');
