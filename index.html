@@ -27,7 +27,7 @@
     var lifeTime = 0;
     var livesText = '';
 	    
-    var ghostSpeed = 200;
+    var ghostSpeed = 100;
 
     var game = new Phaser.Game(448, 496, Phaser.AUTO);
 
@@ -143,7 +143,7 @@
 	    
 	    
 	 catchMe: function(){
-            var ghostSpeed = 200;
+            var ghostSpeed = 100;
             if (this.pacman.body.x < this.ghost.body.x) {
                 this.ghost.body.velocity.x = ghostSpeed * -1;
             }
