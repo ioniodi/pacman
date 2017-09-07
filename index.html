@@ -302,7 +302,7 @@
 
 	getCaught: function (ghost, pacman){
 		if ( lives == 1 ) {
-			
+			this.GameOver = game.add.text(105, 170, 'GAME OVER', {font: '35px Arial Black', fill: 'red'});
 			lives = 0;
 			livesText.text = ' ' + lives;
 			var audio = new Audio('assets/Cartoon_Boing.mp3');
