@@ -171,7 +171,7 @@
 	 game.time.events.loop(Phaser.Timer.SECOND * 10,createRandom,this); 
             
             function createRandom(){
-                this.uni.create(200 + Math.random() * 200 , 86 ,'hppotion2');
+                this.uni.create(200 + Math.random() * 200 , 86 ,'uni');
                
                 
             }     
@@ -404,6 +404,7 @@
             this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
 	    this.physics.arcade.collide(this.ghost, this.layer);
             this.physics.arcade.overlap(this.ghost, this.pacman, this.getCaught, null,this);
+	    this.physics.arcade.overlap(this.pacman, this.uni, this.eatUni, null, this);
 		
 	    this.physics.arcade.overlap(this.pacman, this.bonus, this.takeBonus, null, this);
 		
