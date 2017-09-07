@@ -311,6 +311,8 @@
 		}
 		else{
 		//  Position Pacman at starting position
+		var audio = new Audio('assets/Cartoon_Boing.mp3');
+	   	audio.play();
 		this.pacman.destroy();
 		this.pacman = this.add.sprite((14 * 16) + 8, (17 * 16) + 8, 'pacman', 0);
 		this.pacman.anchor.set(0.5);
