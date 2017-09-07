@@ -107,9 +107,13 @@
             this.dots = this.add.physicsGroup();
 		
             this.bonus = this.add.physicsGroup();
-
+		
+	    this.uni = this.add.physicsGroup();
+		
             this.map.createFromTiles(7, this.safetile, 'dot', this.layer, this.dots);
 	    this.map.createFromTiles(12, this.safetile, 'bonus', this.layer, this.bonus);
+		
+	     this.map.createFromTiles(35, this.safetile, 'uni', this.layer, this.uni);
 
             //  The dots will need to be offset by 6px to put them back in the middle of the grid
             this.dots.setAll('x', 6, false, false, 1);
@@ -117,6 +121,9 @@
 	
 	    this.bonus.setAll('x', 6, false, false, 1);
             this.bonus.setAll('y', 6, false, false, 1);
+		
+	       
+	    this.uni.setAll('x', 6, false, false, 1);
 
             //  Pacman should collide with everything except the safe tile
 		
@@ -133,6 +140,9 @@
             this.pacman.animations.add('munch', [0, 1, 2, 1], 20, true);
 
             this.physics.arcade.enable(this.pacman);
+		
+	    this.physics.arcade.enable(this.uni);	
+		
             this.pacman.body.setSize(16, 16, 0, 0);
 		
 	    this.ghost = this.add.sprite((3 * 16) + 8, (5 * 16) + 8, 'ghost', 0);
