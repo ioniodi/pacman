@@ -282,9 +282,11 @@
 
             if (this.dots.total === 0)
             {
-	 	this.GameOver = game.add.text(160, 175, "YOU WON! \n Refresh to play again :)", { fontSize: "80px", fill: "purple"});
+	 	this.GameOver = game.add.text(160, 175, "YOU WON! :)", { fontSize: "80px", fill: "purple"});
+		this.GameOver2 = game.add.text(160, 145, "Refresh to play again!", { fontSize: "80px", fill: "purple"});
 		var audioWinning = new Audio('assets/Laugh 5 Minions [Sound Effect].mp3');
 		audioWinning.play();
+		this.pacman.kill();
             }
 
         },
@@ -304,7 +306,8 @@
 
 	getCaught: function (ghost, pacman){
 		if ( lives == 1 ) {
-			this.GameOver = game.add.text(105, 170, 'GAME OVER :( \n Refresh to play again :)', {font: '35px Arial Black', fill: 'red'});
+			this.GameOver = game.add.text(105, 170, 'GAME OVER :(', {font: '35px Arial Black', fill: 'purple'});
+			this.GameOver2 = game.add.text(160, 145, "Refresh to play again!", { fontSize: "80px", fill: "purple"});
 			lives = 0;
 			livesText.text = ' ' + lives;
 			var audio = new Audio('assets/Cartoon_Boing.mp3');
