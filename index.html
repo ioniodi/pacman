@@ -143,7 +143,7 @@
 	    
 	    
 	 catchMe: function(){
-            var ghostSpeed = 75;
+            var ghostSpeed = 150;
             if (this.pacman.body.x < this.ghost.body.x) {
                 this.ghost.body.velocity.x = ghostSpeed * -1;
             }
@@ -302,13 +302,7 @@
 
 	getCaught: function (ghost, pacman){
 		if ( lives == 1 ) {
-			totalScore = score + bonusScore;
-			this.GameOver = game.add.text(105, 170, 'GAME OVER', {font: '35px Arial Black', fill: 'red'});
-			var audioGameOver = new Audio('assets/Joker Laugh.mp3');
-			audioGameOver.play();
-			totalScoreText = game.add.text(130, 265, 'Total Score: ' + totalScore, {font: '24px Verdana', fill: '#FF8000'});
-			extraText = game.add.text(130, 300, ' Score: ' + score + '\n Bonus: + ' + bonusScore, {font: '16px Verdana', fill: '#FF8000'});
-			restartText.text = game.add.text(145, 210, '(Press F5 to restart)', {font: '16px Verdana', fill: 'white'});
+			
 			lives = 0;
 			livesText.text = ' ' + lives;
 			timer.stop();
@@ -333,8 +327,7 @@
 		this.ghost.body.setSize(16, 16, 0, 0);
 		this.ghost.play('munch');
 			
-		var audioLose = new Audio('assets/Buzzer.mp3');
-		audioLose.play();
+		
 		lives--;
 		livesText.text = ' ' + lives;
 		}
