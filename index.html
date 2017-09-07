@@ -55,6 +55,9 @@
 
         this.current = Phaser.NONE;
         this.turning = Phaser.NONE;
+	    
+	this.Bonus = 0;
+        this.TextBonus= '';
 
     };
 
@@ -81,6 +84,7 @@
 
 	    this.load.spritesheet('ghost', 'assets/ggghost_32x32.png', 32, 32);
             this.load.image('dot', 'assets/nana_16x16.png');
+	    this.load.image('bonus', 'assets/banana-muffi-2.png');
             this.load.image('tiles', 'assets/pacman-tiles.png');
             this.load.spritesheet('pacman', 'assets/minion.png', 32, 32);
             this.load.tilemap('map', 'assets/newlevel.json', null, Phaser.Tilemap.TILED_JSON);
@@ -97,12 +101,18 @@
             this.layer = this.map.createLayer('Pacman');
 
             this.dots = this.add.physicsGroup();
+		
+            this.bonus = this.add.physicsGroup();
 
             this.map.createFromTiles(7, this.safetile, 'dot', this.layer, this.dots);
+	    this.map.createFromTiles(12, this.safetile, 'bonus', this.layer, this.bonus);
 
             //  The dots will need to be offset by 6px to put them back in the middle of the grid
             this.dots.setAll('x', 6, false, false, 1);
             this.dots.setAll('y', 6, false, false, 1);
+	
+	    this.bonus.setAll('x', 6, false, false, 1);
+            this.bonus.setAll('y', 6, false, false, 1);
 
             //  Pacman should collide with everything except the safe tile
             this.map.setCollisionByExclusion([this.safetile], true, this.layer);
@@ -127,6 +137,7 @@
 	
 	    livesText = game.add.text(360, -5, 'Lives: ' + lives, {font: '22px Tahoma', fill: 'green'});
 	    scoretxt = game.add.text(0, -5, 'Score: 0', {fond: '9px Tahoma', fill: 'red'})
+	    this.TextBonus = game.add.text(300, 500, 'Bonus: 0', { fontSize: '20px Tahoma', fill: 'blue' });
 
         },
 	    
@@ -275,6 +286,19 @@
             }
 
         },
+	    
+	takeBonus: function (pacman, bonus) {
+		     
+              bonus.kill()
+            
+            this.Bonus += 10;
+            this.TextBonus.text = 'Bonus:' + this.Bonus;
+        
+            if(this.bonus.total=== 0){
+           	 this.bonus.callAll('revive');
+            }
+		     
+        },
 
 	getCaught: function (ghost, pacman){
 		if ( lives == 1 ) {
@@ -352,7 +376,9 @@
             this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
 	    this.physics.arcade.collide(this.ghost, this.layer);
             this.physics.arcade.overlap(this.ghost, this.pacman, this.getCaught, null,this);
-
+		
+	    this.physics.arcade.overlap(this.pacman, this.bonus, this.takeBonus, null, this);
+		
             this.marker.x = this.math.snapToFloor(Math.floor(this.pacman.x), this.gridsize) / this.gridsize;
             this.marker.y = this.math.snapToFloor(Math.floor(this.pacman.y), this.gridsize) / this.gridsize;
 
