@@ -86,6 +86,7 @@
             this.load.crossOrigin = 'anonymous';
 
 	    this.load.spritesheet('ghost', 'assets/ggghost_40x40.png', 40, 40);
+	    this.load.image('uni', 'assets/uni.png');
             this.load.image('dot', 'assets/nana_16x16.png');
 	    this.load.image('bonus', 'assets/banana-muffi-2_16x16.png');
             this.load.image('tiles', 'assets/pacman-tiles.png');
@@ -167,6 +168,14 @@
             }
         },
 
+	 game.time.events.loop(Phaser.Timer.SECOND * 10,createRandom,this); 
+            
+            function createRandom(){
+                this.uni.create(200 + Math.random() * 200 , 86 ,'hppotion2');
+               
+                
+            }     
+	    
         checkKeys: function () {
 
             if (this.cursors.left.isDown && this.current !== Phaser.LEFT)
@@ -298,7 +307,16 @@
             }
 
         },
-	    
+	   
+	eatUni: function (pacman, uni) {
+            uni.kill();
+            this.bonus += 5;
+            if (this.uni.total === 0)
+            {
+                this.uni.callAll('revive');
+            }
+        },	
+		
 	takeBonus: function (pacman, bonus) {
 		     
               bonus.kill()
