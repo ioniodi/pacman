@@ -86,7 +86,6 @@
             this.load.crossOrigin = 'anonymous';
 
 	    this.load.spritesheet('ghost', 'assets/ggghost_40x40.png', 40, 40);
-	    this.load.image('uni', 'assets/uni.png');
             this.load.image('dot', 'assets/nana_16x16.png');
 	    this.load.image('bonus', 'assets/banana-muffi-2_16x16.png');
             this.load.image('tiles', 'assets/pacman-tiles.png');
@@ -108,13 +107,9 @@
 		
             this.bonus = this.add.physicsGroup();
 		
-	    this.uni = this.add.physicsGroup();
-		
             this.map.createFromTiles(7, this.safetile, 'dot', this.layer, this.dots);
 	    this.map.createFromTiles(12, this.safetile, 'bonus', this.layer, this.bonus);
 		
-	     this.map.createFromTiles(35, this.safetile, 'uni', this.layer, this.uni);
-
             //  The dots will need to be offset by 6px to put them back in the middle of the grid
             this.dots.setAll('x', 6, false, false, 1);
             this.dots.setAll('y', 6, false, false, 1);
@@ -122,9 +117,6 @@
 	    this.bonus.setAll('x', 6, false, false, 1);
             this.bonus.setAll('y', 6, false, false, 1);
 		
-	       
-	    this.uni.setAll('x', 6, false, false, 1);
-
             //  Pacman should collide with everything except the safe tile
 		
 	     this.textTime = game.add.text(195, 220, "Time: "+Math.floor(this.game.time.totalElapsedSeconds()),
@@ -140,8 +132,6 @@
             this.pacman.animations.add('munch', [0, 1, 2, 1], 20, true);
 
             this.physics.arcade.enable(this.pacman);
-		
-	    this.physics.arcade.enable(this.uni);	
 		
             this.pacman.body.setSize(16, 16, 0, 0);
 		
@@ -176,15 +166,7 @@
             else{
                 this.ghost.body.velocity.y = ghostSpeed;
             }
-        },
-
-	 game.time.events.loop(Phaser.Timer.SECOND * 10,createRandom,this); 
-            
-            function createRandom(){
-                this.uni.create(200 + Math.random() * 200 , 86 ,'uni');
-               
-                
-            }     
+        },    
 	    
         checkKeys: function () {
 
@@ -318,15 +300,6 @@
 
         },
 	   
-	eatUni: function (pacman, uni) {
-            uni.kill();
-            this.bonus += 5;
-            if (this.uni.total === 0)
-            {
-                this.uni.callAll('revive');
-            }
-        },	
-		
 	takeBonus: function (pacman, bonus) {
 		     
               bonus.kill()
@@ -414,8 +387,6 @@
             this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
 	    this.physics.arcade.collide(this.ghost, this.layer);
             this.physics.arcade.overlap(this.ghost, this.pacman, this.getCaught, null,this);
-	    this.physics.arcade.overlap(this.pacman, this.uni, this.eatUni, null, this);
-		
 	    this.physics.arcade.overlap(this.pacman, this.bonus, this.takeBonus, null, this);
 		
 	    this.textTime.text = "Time: "+Math.floor(this.game.time.totalElapsedSeconds()); 
