@@ -119,7 +119,7 @@
 
             //  Pacman should collide with everything except the safe tile
 		
-	     this.scoreTime = game.add.text(160, 170, "Seconds: "+Math.floor(this.game.time.totalElapsedSeconds()),
+	     this.textTime = game.add.text(200, 210, "Time: "+Math.floor(this.game.time.totalElapsedSeconds()),
                     { font: '15px Tahoma', 
                      fill: "purple" 
                     });	
@@ -388,6 +388,8 @@
             this.physics.arcade.overlap(this.ghost, this.pacman, this.getCaught, null,this);
 		
 	    this.physics.arcade.overlap(this.pacman, this.bonus, this.takeBonus, null, this);
+		
+	    this.textTime.text = "Time: "+Math.floor(this.game.time.totalElapsedSeconds()); 
 		
             this.marker.x = this.math.snapToFloor(Math.floor(this.pacman.x), this.gridsize) / this.gridsize;
             this.marker.y = this.math.snapToFloor(Math.floor(this.pacman.y), this.gridsize) / this.gridsize;
