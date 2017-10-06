@@ -59,7 +59,7 @@
 
             //  We need this because the assets are on github pages
             //  Remove the next 2 lines if running locally
-            this.load.baseURL = 'https://ioniodi.github.io/pacman/';
+            this.load.baseURL = 'https://ShtHappens796.github.io/pacman/';
             this.load.crossOrigin = 'anonymous';
 
             this.load.image('dot', 'assets/dot.png');
@@ -230,7 +230,7 @@
         },
 
         update: function () {
-          
+
             this.physics.arcade.collide(this.pacman, this.layer);
             this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
 
