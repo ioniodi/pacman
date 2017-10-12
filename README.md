@@ -2,6 +2,9 @@
 
 Αριθμός Μητρώου: Π2014024
 
-1ο Παραδοτέο : Επιλογή Project
+Επιλογή Project : Pacman
 
-Το Project με το οποίο θα ασχοληθώ ειναι το Pacman..
+Αντίγραφο του αποθετηρίου της εργασίας: https://github.com/ioniodi/pacman
+
+Το δικό μου αντίγραφο του αποθετηρίου της εργασίας:  https://github.com/BigiSemi/pacman
+
