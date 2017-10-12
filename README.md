@@ -1,16 +1,10 @@
-# Pacman
+Όνομα: Ασημίνα Μπιγιλάκη
 
-## Initial Settings
-- Από την στιγμή που έχεις κάνει αντιγραφή (fork) το [αποθετήριο](https://github.com/ioniodi/pacman) του παιχνιδιού, θα πρέπει να έχει κατέβει στο προσωπικό σου github αποθετήριο ο [κώδικας του παιχνιδιού](index.html) και ο φάκελος [assets](/assets/) με τα αντικείμενα (πίστες, εικόνες) που θα χρησιμοποιήσεις στο παιχνίδι σου.
+Αριθμός Μητρώου: Π2014024
 
-- Ενεργοποίησε το Github Pages στα setting του προσωπικού σου repository και *άλλαξε το λινκ στην κορυφή του αποθετηρίου σου ώστε να δείχνει στην σελίδα του παιχνιδιού σου.*
-![ScreenShot](1.png)
+Επιλογή Project : Pacman
 
-- Στο [index.html](index.html) άλλαξε το ioniodi με το δικό σου username.
-![ScreenShot](2.png)
+Αντίγραφο του αποθετηρίου της εργασίας: https://github.com/ioniodi/pacman
 
-## Resources
-- [Phaser Tutorial](http://phaser.io/learn)
-- [Official Phaser Tutorials](https://phaser.io/learn/official-tutorials)
-- [Phaser Examples](http://phaser.io/examples)
-- [Javascript tutorial](http://www.w3schools.com/js/)
+Το δικό μου αντίγραφο του αποθετηρίου της εργασίας:  https://github.com/BigiSemi/pacman
+
