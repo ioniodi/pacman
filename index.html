@@ -18,6 +18,8 @@
 
     var game = new Phaser.Game(976, 976, Phaser.AUTO);
 
+    var counter = 0;
+
     var Pacman = function (game) {
 
         this.map = null;
@@ -239,7 +241,7 @@
             this.current = direction;
 
         },
-        var counter = 0;
+
         eatDot: function (pacman, dot) {
 
             dot.kill();
