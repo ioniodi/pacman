@@ -249,33 +249,26 @@
         eatDot: function (pacman, dot) {
 
             dot.kill();
-            console.log(this.counter);
+
             if (this.switch.isPlaying != true && this.switch2.isPlaying != true) {
                 this.switch.play();
-                console.log("switchX");
                 this.counter = 1;
             }
             else {
                 if (this.counter % 6 == 0) {
                     this.switch.play();
-                    console.log("switch");
                 }
                 if (this.counter % 6 == 3) {
                     this.switch2.play();
-                    console.log("switch2");
                 }
                 this.counter++;
             }
 
-
-
-            if (this.dots.total === 0)
-            {
+            if (this.dots.total === 0) {
                 this.dots.callAll('revive');
                 this.strawberries.callAll('revive');
                 this.bananas.callAll('revive');
                 setTimeout(function(){ this.win.play(); }, 500);
-
             }
 
         },
@@ -284,13 +277,19 @@
 
             strawberry.kill();
 
-            if (this.counter % 6 == 0) {
+            if (this.switch.isPlaying != true && this.switch2.isPlaying != true) {
                 this.switch.play();
+                this.counter = 1;
             }
-            if (this.counter % 6 == 3) {
-                this.switch2.play();
+            else {
+                if (this.counter % 6 == 0) {
+                    this.switch.play();
+                }
+                if (this.counter % 6 == 3) {
+                    this.switch2.play();
+                }
+                this.counter++;
             }
-            this.counter++;
 
         },
 
@@ -298,13 +297,19 @@
 
             banana.kill();
 
-            if (this.counter % 6 == 0) {
+            if (this.switch.isPlaying != true && this.switch2.isPlaying != true) {
                 this.switch.play();
+                this.counter = 1;
             }
-            if (this.counter % 6 == 3) {
-                this.switch2.play();
+            else {
+                if (this.counter % 6 == 0) {
+                    this.switch.play();
+                }
+                if (this.counter % 6 == 3) {
+                    this.switch2.play();
+                }
+                this.counter++;
             }
-            this.counter++;
 
         },
 
