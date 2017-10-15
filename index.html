@@ -64,6 +64,7 @@
 
             this.load.image('dot', 'assets/dot.png');
             this.load.image('strawberry', 'assets/strawberry.png');
+            this.load.image('banana', 'assets/banana.png');
             this.load.image('tiles', 'assets/pacman-tiles.png');
             this.load.spritesheet('pacman', 'assets/pacman.png', 32, 32);
             this.load.tilemap('map', 'assets/pacman-map2.json', null, Phaser.Tilemap.TILED_JSON);
@@ -82,10 +83,13 @@
             this.dots = this.add.physicsGroup();
 
             this.strawberries = this.add.physicsGroup();
+            this.bananas = this.add.physicsGroup();
 
             this.map.createFromTiles(7, this.safetile, 'dot', this.layer, this.dots);
 
             this.map.createFromTiles(35, this.safetile, 'strawberry', this.layer, this.strawberries);
+
+            this.map.createFromTiles(36, this.safetile, 'banana', this.layer, this.bananas);
 
             //  The dots will need to be offset by 6px to put them back in the middle of the grid
             this.dots.setAll('x', 6, false, false, 1);
@@ -93,6 +97,9 @@
 
             this.strawberries.setAll('x', 0, false, false, 1);
             this.strawberries.setAll('y', 0, false, false, 1);
+
+            this.bananas.setAll('x', 0, false, false, 1);
+            this.bananas.setAll('y', 0, false, false, 1);
 
             //  Pacman should collide with everything except the safe tile
             this.map.setCollisionByExclusion([this.safetile], true, this.layer);
@@ -234,6 +241,7 @@
             {
                 this.dots.callAll('revive');
                 this.strawberries.callAll('revive');
+                this.bananas.callAll('revive');
             }
 
         },
@@ -244,12 +252,19 @@
 
         },
 
+        eatBanana: function (pacman, strawberry) {
+
+            banana.kill();
+
+        },
+
         update: function () {
 
             this.physics.arcade.collide(this.pacman, this.layer);
             this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
 
             this.physics.arcade.overlap(this.pacman, this.strawberries, this.eatStrawberry, null, this);
+            this.physics.arcade.overlap(this.pacman, this.bananas, this.eatBanana, null, this);
 
             this.marker.x = this.math.snapToFloor(Math.floor(this.pacman.x), this.gridsize) / this.gridsize;
             this.marker.y = this.math.snapToFloor(Math.floor(this.pacman.y), this.gridsize) / this.gridsize;
