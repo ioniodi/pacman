@@ -274,7 +274,8 @@
                 this.dots.callAll('revive');
                 this.strawberries.callAll('revive');
                 this.bananas.callAll('revive');
-                this.win.play();
+                setTimeout(function(){ this.win.play(); }, 500);
+
             }
 
         },
