@@ -250,7 +250,7 @@
 
             dot.kill();
             console.log(this.counter);
-            if (this.switch.isPlaying !== true || this.switch2.isPlaying !== true) {
+            if (this.switch.isPlaying !== true && this.switch2.isPlaying !== true) {
                 this.switch.play();
                 this.counter = 0;
             }
