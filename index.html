@@ -244,7 +244,11 @@
 
             dot.kill();
 
-            this.fx.play();
+
+
+            if (!isPlaying(this.fx)) {
+                this.fx.play();
+            }
 
             if (this.dots.total === 0)
             {
