@@ -239,15 +239,17 @@
             this.current = direction;
 
         },
-
+        var counter = 0;
         eatDot: function (pacman, dot) {
 
             dot.kill();
 
-
+            if (counter % 3 == 0) {
+                this.fx.play();
+            }
 
             //if (this.fx.isPlaying != true) {
-                this.fx.play();
+
             //}
 
             if (this.dots.total === 0)
