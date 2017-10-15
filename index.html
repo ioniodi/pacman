@@ -249,11 +249,10 @@
         eatDot: function (pacman, dot) {
 
             dot.kill();
-
-            if (this.switch.isPlaying !== true) {
-                console.log(this.counter);
+            console.log(this.counter);
+            if (this.switch.isPlaying !== true || this.switch2.isPlaying !== true) {
                 this.switch.play();
-                //this.counter = 0;
+                this.counter = 0;
             }
             else {
                 if (this.counter % 6 == 0) {
