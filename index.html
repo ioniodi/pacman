@@ -99,6 +99,7 @@
             this.map.createFromTiles(36, this.safetile, 'banana', this.layer, this.bananas);
 
             this.switch = game.add.audio('switch');
+            this.switch2 = game.add.audio('switch');
 
             //  The dots will need to be offset by 6px to put them back in the middle of the grid
             this.dots.setAll('x', 6, false, false, 1);
@@ -246,8 +247,12 @@
 
             dot.kill();
 
-            if (this.counter % 3 == 0) {
+            if (this.counter % 6 == 0) {
                 this.switch.play();
+            }
+
+            if (this.counter % 6 == 3) {
+                this.switch2.play();
             }
 
             this.counter++;
