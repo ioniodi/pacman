@@ -18,8 +18,6 @@
 
     var game = new Phaser.Game(976, 976, Phaser.AUTO);
 
-    var fx;
-
     var Pacman = function (game) {
 
         this.map = null;
@@ -98,9 +96,7 @@
 
             this.map.createFromTiles(36, this.safetile, 'banana', this.layer, this.bananas);
 
-            fx = this.add.audio('fx');
-
-            this.sound.setDecodedCallback([ fx ], start, this);
+            this.fx = game.add.audio('fx');
 
             //  The dots will need to be offset by 6px to put them back in the middle of the grid
             this.dots.setAll('x', 6, false, false, 1);
@@ -127,8 +123,6 @@
 
             this.pacman.play('munch');
             this.move(Phaser.LEFT);
-
-            keys.fx.onDown.add(playFx, this);
 
         },
 
@@ -250,9 +244,7 @@
 
             dot.kill();
 
-            //fx.onStop.add(soundStopped, this);
-
-            fx.play();
+            this.fx.play();
 
             if (this.dots.total === 0)
             {
@@ -262,8 +254,6 @@
             }
 
         },
-
-
 
         eatStrawberry: function (pacman, strawberry) {
 
