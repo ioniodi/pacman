@@ -18,9 +18,9 @@
 
     var game = new Phaser.Game(976, 976, Phaser.AUTO);
 
-    var counter = 0;
-
     var Pacman = function (game) {
+
+        this.counter = 0;
 
         this.map = null;
         this.layer = null;
@@ -246,9 +246,11 @@
 
             dot.kill();
 
-            if (counter % 3 == 0) {
+            if (this.counter % 3 == 0) {
                 this.fx.play();
             }
+
+            this.counter++;
 
             //if (this.fx.isPlaying != true) {
 
