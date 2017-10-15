@@ -252,14 +252,17 @@
             console.log(this.counter);
             if (this.switch.isPlaying != true && this.switch2.isPlaying != true) {
                 this.switch.play();
+                console.log("switchX");
                 this.counter = 0;
             }
             else {
                 if (this.counter % 6 == 0) {
                     this.switch.play();
+                    console.log("switch");
                 }
                 if (this.counter % 6 == 3) {
                     this.switch2.play();
+                    console.log("switch2");
                 }
                 this.counter++;
             }
