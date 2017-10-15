@@ -268,7 +268,8 @@
                 this.dots.callAll('revive');
                 this.strawberries.callAll('revive');
                 this.bananas.callAll('revive');
-                this.win.play();
+                game.time.events.add(Phaser.Timer.SECOND / 2, win.play(), this);
+
             }
 
         },
