@@ -11,29 +11,27 @@
          "x":0,
          "y":0
         }],
+ "nextobjectid":1,
  "orientation":"orthogonal",
- "properties":
-    {
-
-    },
+ "renderorder":"right-down",
+ "tiledversion":"1.0.3",
  "tileheight":16,
  "tilesets":[
         {
+         "columns":16,
          "firstgid":1,
-         "image":"..\/pacman-tiles.png",
+         "image":"pacman-tiles.png",
          "imageheight":48,
          "imagewidth":256,
          "margin":0,
          "name":"pacman-tiles",
-         "properties":
-            {
-
-            },
          "spacing":0,
+         "tilecount":48,
          "tileheight":16,
          "tilewidth":16
         }],
  "tilewidth":16,
+ "type":"map",
  "version":1,
  "width":28
 }
