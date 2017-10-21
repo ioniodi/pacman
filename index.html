@@ -83,7 +83,7 @@
 
             this.map = this.add.tilemap('map');
             this.map.addTilesetImage('pacman-tiles', 'tiles');
-            //this.map.addTilesetImage('blackberry', 'blackberry-tiles');
+            this.map.addTilesetImage('blackberry', 'blackberry-tiles');
             this.map.addTilesetImage('cherry', 'cherry-tiles');
             this.map.addTilesetImage('kiwi', 'kiwi-tiles');
 
@@ -242,16 +242,16 @@
 
         },
 
-        eatDot: function (pacman, dot) {
+        //eatDot: function (pacman, dot) {
 
-            dot.kill();
+            //dot.kill();
 
-            if (this.dots.total === 0)
-            {
-                this.dots.callAll('revive');
-            }
+            //if (this.dots.total === 0)
+            //{
+                //this.dots.callAll('revive');
+            //}
 
-        },
+        //},
         
         eatBlackberry: function (pacman, blackberry) {
 
