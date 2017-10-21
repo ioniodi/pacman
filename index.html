@@ -112,7 +112,7 @@
             //  Position Pacman at grid location 13x11 (the +8 accounts for his anchor)
             this.pacman = this.add.sprite((13 * 16) + 8, (11 * 16) + 8, 'pacman', 0);
             this.pacman.anchor.set(0.5);
-            this.pacman.animations.add('munch', [0, 1, 2, 1], 20, true);
+            //this.pacman.animations.add('munch', [0, 1, 2, 1], 20, true);
 
             this.physics.arcade.enable(this.pacman);
             this.pacman.body.setSize(16, 16, 0, 0);
@@ -228,8 +228,14 @@
         
         eatDot: function (pacman, dot) {
 
-            dot.kill();
+            if(dot.kill();) {
             music.play();
+            this.pacman.animations.add('munch', [0, 1, 2, 1], 20, true);
+            }
+            else {
+            this.pacman.animations.add('munch', [0, 1, 2, 1], 0, true);
+            }
+           
 
             if (this.dots.total === 0 && this.blackberries.total === 0 && this.cherries.total === 0 && this.kiwis.total === 0) {
                 
