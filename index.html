@@ -83,13 +83,13 @@
 
             this.map = this.add.tilemap('map');
             this.map.addTilesetImage('pacman-tiles', 'tiles');
-            this.map.addTilesetImage('blackberry', 'blackberry-tiles');
+            //this.map.addTilesetImage('blackberry', 'blackberry-tiles');
             this.map.addTilesetImage('cherry', 'cherry-tiles');
             this.map.addTilesetImage('kiwi', 'kiwi-tiles');
 
             this.layer = this.map.createLayer('Pacman');
 
-            //this.dots = this.add.physicsGroup();
+            this.dots = this.add.physicsGroup();
             this.blackberries = this.add.physicsGroup();
             this.cherries = this.add.physicsGroup();
             this.kiwis = this.add.physicsGroup();
@@ -100,11 +100,11 @@
             this.dots.setAll('x', 6, false, false, 1);
             this.dots.setAll('y', 6, false, false, 1);
             
-            //this.blackberries.setAll('x', 6, false, false, 1);
-            //this.blackberries.setAll('y', 6, false, false, 1);
+            this.blackberries.setAll('x', 6, false, false, 1);
+            this.blackberries.setAll('y', 6, false, false, 1);
             
-            //this.cherries.setAll('x', 6, false, false, 1);
-            //this.cherries.setAll('y', 6, false, false, 1);
+            this.cherries.setAll('x', 6, false, false, 1);
+            this.cherries.setAll('y', 6, false, false, 1);
             
             this.kiwis.setAll('x', 6, false, false, 1);
             this.kiwis.setAll('y', 6, false, false, 1);
