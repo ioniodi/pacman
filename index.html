@@ -88,14 +88,13 @@
             this.map.addTilesetImage('kiwi', 'kiwi-tiles');
 
             this.layer = this.map.createLayer('Pacman');
-            this.layer = this.map.createLayer()
             
             this.dots = this.add.physicsGroup();
             this.blackberries = this.add.physicsGroup();
             this.cherries = this.add.physicsGroup();
             this.kiwis = this.add.physicsGroup();
             
-            this.map.createFromTiles(8, this.safetile, 'dot', this.layer, this.dots);// change 100 to 7
+            this.map.createFromTiles(0, this.safetile, 'dot', this.layer, this.dots);
       
             //  The dots will need to be offset by 6px to put them back in the middle of the grid
             this.dots.setAll('x', 6, false, false, 1);
