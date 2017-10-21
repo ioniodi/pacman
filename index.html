@@ -63,10 +63,13 @@
             this.load.crossOrigin = 'anonymous';
 
             this.load.image('dot', 'assets/dot.png');
+            this.load.image('blackberrie', 'assets/blackberrie.png');
+            this.load.image('cherry', 'assets/cherry.png');
+            this.load.image('kiwi', 'assets/kiwi.png');
             
-            this.load.image('tiles', 'assets/blackberrie.png');
-            this.load.image('tiles', 'assets/cherry.png');
-            this.load.image('tiles', 'assets/kiwi.png');
+            this.load.image('blackberrie-tiles', 'assets/blackberrie.png');
+            this.load.image('cherry-tiles', 'assets/cherry.png');
+            this.load.image('kiwi-tiles', 'assets/kiwi.png');
             this.load.image('tiles', 'assets/pacman-tiles.png');
             
             this.load.spritesheet('pacman', 'assets/giannis_rambo_scaled_flipped.png', 32, 32);
@@ -80,6 +83,11 @@
 
             this.map = this.add.tilemap('map');
             this.map.addTilesetImage('pacman-tiles', 'tiles');
+            this.map.addTilesetImage('blackberrie', 'blackberrie-tiles');
+            this.map.addTilesetImage('cherry', 'cherry-tiles');
+            this.map.addTilesetImage('kiwi', 'kiwi-tiles');
+            
+            
 
             this.layer = this.map.createLayer('Pacman');
 
