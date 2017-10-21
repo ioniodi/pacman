@@ -99,7 +99,6 @@
             this.map.createFromTiles(50, this.safetile, 'cherry', this.layer, this.cherries);
             this.map.createFromTiles(51, this.safetile, 'kiwi', this.layer, this.kiwis);
             
-            
             //  The dots will need to be offset by 6px to put them back in the middle of the grid
             this.dots.setAll('x', 6, false, false, 1);
             this.dots.setAll('y', 6, false, false, 1);
@@ -124,24 +123,19 @@
 
         checkKeys: function () {
 
-            if (this.cursors.left.isDown && this.current !== Phaser.LEFT)
-            {
+            if (this.cursors.left.isDown && this.current !== Phaser.LEFT) {
                 this.checkDirection(Phaser.LEFT);
             }
-            else if (this.cursors.right.isDown && this.current !== Phaser.RIGHT)
-            {
+            else if (this.cursors.right.isDown && this.current !== Phaser.RIGHT) {
                 this.checkDirection(Phaser.RIGHT);
             }
-            else if (this.cursors.up.isDown && this.current !== Phaser.UP)
-            {
+            else if (this.cursors.up.isDown && this.current !== Phaser.UP) {
                 this.checkDirection(Phaser.UP);
             }
-            else if (this.cursors.down.isDown && this.current !== Phaser.DOWN)
-            {
+            else if (this.cursors.down.isDown && this.current !== Phaser.DOWN) {
                 this.checkDirection(Phaser.DOWN);
             }
-            else
-            {
+            else {
                 //  This forces them to hold the key down to turn the corner
                 this.turning = Phaser.NONE;
             }
@@ -150,20 +144,17 @@
 
         checkDirection: function (turnTo) {
 
-            if (this.turning === turnTo || this.directions[turnTo] === null || this.directions[turnTo].index !== this.safetile)
-            {
+            if (this.turning === turnTo || this.directions[turnTo] === null || this.directions[turnTo].index !== this.safetile) {
                 //  Invalid direction if they're already set to turn that way
                 //  Or there is no tile there, or the tile isn't index 1 (a floor tile)
                 return;
             }
-
+            
             //  Check if they want to turn around and can
-            if (this.current === this.opposites[turnTo])
-            {
+            if (this.current === this.opposites[turnTo]) {
                 this.move(turnTo);
             }
-            else
-            {
+            else {
                 this.turning = turnTo;
 
                 this.turnPoint.x = (this.marker.x * this.gridsize) + (this.gridsize / 2);
@@ -201,17 +192,14 @@
 
             var speed = this.speed;
 
-            if (direction === Phaser.LEFT || direction === Phaser.UP)
-            {
+            if (direction === Phaser.LEFT || direction === Phaser.UP) {
                 speed = -speed;
             }
-
-            if (direction === Phaser.LEFT || direction === Phaser.RIGHT)
-            {
+            
+            if (direction === Phaser.LEFT || direction === Phaser.RIGHT) {
                 this.pacman.body.velocity.x = speed;
             }
-            else
-            {
+            else {
                 this.pacman.body.velocity.y = speed;
             }
 
@@ -219,19 +207,16 @@
             this.pacman.scale.x = 1;
             this.pacman.angle = 0;
 
-            if (direction === Phaser.LEFT)
-            {
+            if (direction === Phaser.LEFT) {
                 this.pacman.scale.x = -1;
             }
-            else if (direction === Phaser.UP)
-            {
+            else if (direction === Phaser.UP) {
                 this.pacman.angle = 270;
             }
-            else if (direction === Phaser.DOWN)
-            {
+            else if (direction === Phaser.DOWN) {
                 this.pacman.angle = 90;
             }
-
+            
             this.current = direction;
 
         },
@@ -240,11 +225,14 @@
 
             dot.kill();
 
-            if (this.dots.total === 0 && this.blackberries.total === 0 && this.cherries.total === 0 && this.kiwis.total === 0)
-            {
+            if (this.dots.total === 0 && this.blackberries.total === 0 && this.cherries.total === 0 && this.kiwis.total === 0) {
+                
                 this.dots.callAll('revive');
+                
                 this.blackberries.callAll('revive');
+                
                 this.cherries.callAll('revive');
+                
                 this.kiwis.callAll('revive');
             }
 
@@ -282,8 +270,7 @@
 
             this.checkKeys();
 
-            if (this.turning !== Phaser.NONE)
-            {
+            if (this.turning !== Phaser.NONE) {
                 this.turn();
             }
 
