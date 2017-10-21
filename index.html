@@ -112,7 +112,7 @@
             //  Position Pacman at grid location 13x11 (the +8 accounts for his anchor)
             this.pacman = this.add.sprite((13 * 16) + 8, (11 * 16) + 8, 'pacman', 0);
             this.pacman.anchor.set(0.5);
-            //this.pacman.animations.add('munch', [0, 1, 2, 1], 20, true);
+            this.pacman.animations.add('munch', [0, 1, 2, 1], 0, true);
 
             this.physics.arcade.enable(this.pacman);
             this.pacman.body.setSize(16, 16, 0, 0);
