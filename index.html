@@ -63,11 +63,11 @@
             this.load.crossOrigin = 'anonymous';
 
             this.load.image('dot', 'assets/dot.png');
-            this.load.image('blackberrie', 'assets/blackberrie.png');
+            this.load.image('blackberry', 'assets/blackberry.png');
             this.load.image('cherry', 'assets/cherry.png');
             this.load.image('kiwi', 'assets/kiwi.png');
             
-            this.load.image('blackberrie-tiles', 'assets/blackberrie.png');
+            this.load.image('blackberry-tiles', 'assets/blackberry.png');
             this.load.image('cherry-tiles', 'assets/cherry.png');
             this.load.image('kiwi-tiles', 'assets/kiwi.png');
             this.load.image('tiles', 'assets/pacman-tiles.png');
@@ -83,22 +83,36 @@
 
             this.map = this.add.tilemap('map');
             this.map.addTilesetImage('pacman-tiles', 'tiles');
-            this.map.addTilesetImage('blackberrie', 'blackberrie-tiles');
+            this.map.addTilesetImage('blackberry', 'blackberry-tiles');
             this.map.addTilesetImage('cherry', 'cherry-tiles');
             this.map.addTilesetImage('kiwi', 'kiwi-tiles');
-            
-            
 
             this.layer = this.map.createLayer('Pacman');
 
             this.dots = this.add.physicsGroup();
-
+            this.blackberries = this.add.physicsGroup();
+            this.cherries = this.add.physicsGroup();
+            this.kiwis = this.add.physicsGroup();
+            
             this.map.createFromTiles(7, this.safetile, 'dot', this.layer, this.dots);
-
+            this.map.createFromTiles(7, this.safetile, 'blackberry', this.layer, this.blackberries);
+            this.map.createFromTiles(7, this.safetile, 'cherry', this.layer, this.cherries);
+            this.map.createFromTiles(7, this.safetile, 'kiwi', this.layer, this.kiwis);
+            
             //  The dots will need to be offset by 6px to put them back in the middle of the grid
             this.dots.setAll('x', 6, false, false, 1);
             this.dots.setAll('y', 6, false, false, 1);
-
+            
+            this.blackberries.setAll('x', 6, false, false, 1);
+            this.blackberries.setAll('y', 6, false, false, 1);
+            
+            this.cherries.setAll('x', 6, false, false, 1);
+            this.cherries.setAll('y', 6, false, false, 1);
+            
+            this.kiwis.setAll('x', 6, false, false, 1);
+            this.kiwis.setAll('y', 6, false, false, 1);
+            
+            
             //  Pacman should collide with everything except the safe tile
             this.map.setCollisionByExclusion([this.safetile], true, this.layer);
 
@@ -241,11 +255,49 @@
             }
 
         },
+        
+        eatBlackberry: function (pacman, blackberry) {
+
+            blackberry.kill();
+
+            if (this.blackberries.total === 0)
+            {
+                this.blackberries.callAll('revive');
+            }
+
+        },
+        
+        eatCherry: function (pacman, cherry) {
+
+            cherry.kill();
+
+            if (this.cherries.total === 0)
+            {
+                this.cherries.callAll('revive');
+            }
+
+        },
+        
+        eatKiwi: function (pacman, kiwi) {
+
+            kiwi.kill();
+
+            if (this.kiwis.total === 0)
+            {
+                this.kiwis.callAll('revive');
+            }
+
+        },
+        
 
         update: function () {
           
             this.physics.arcade.collide(this.pacman, this.layer);
             this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
+            this.physics.arcade.overlap(this.pacman, this.blackberries, this.eatBlackberry, null, this);
+            this.physics.arcade.overlap(this.pacman, this.cherries, this.eatCherry, null, this);
+            this.physics.arcade.overlap(this.pacman, this.kiwis, this.eatKiwi, null, this);
+            
 
             this.marker.x = this.math.snapToFloor(Math.floor(this.pacman.x), this.gridsize) / this.gridsize;
             this.marker.y = this.math.snapToFloor(Math.floor(this.pacman.y), this.gridsize) / this.gridsize;
