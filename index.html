@@ -228,15 +228,9 @@
         
         eatDot: function (pacman, dot) {
 
-            if (dot.kill()) {
-                music.play();
-                this.pacman.animations.play('munch', [0, 1, 2, 1], 20, true);
-            }
-            else {
-                this.pacman.animations.pause('munch', [0, 1, 2, 1], 0, true);
-            }
-           
-
+            dot.kill()
+            music.play();
+            
             if (this.dots.total === 0 && this.blackberries.total === 0 && this.cherries.total === 0 && this.kiwis.total === 0) {
                 
                 this.dots.callAll('revive');
