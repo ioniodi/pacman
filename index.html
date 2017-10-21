@@ -245,16 +245,16 @@
 
         },
 
-        //eatDot: function (pacman, dot) {
+        eatDot: function (pacman, dot) {
 
-            //dot.kill();
+            dot.kill();
 
-            //if (this.dots.total === 0)
-            //{
-                //this.dots.callAll('revive');
-            //}
+            if (this.dots.total === 0)
+            {
+                this.dots.callAll('revive');
+            }
 
-        //},
+        },
         
         eatBlackberry: function (pacman, blackberry) {
 
@@ -294,7 +294,7 @@
           
             this.physics.arcade.collide(this.pacman, this.layer);
             this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
-            //this.physics.arcade.overlap(this.pacman, this.blackberries, this.eatBlackberry, null, this);
+            this.physics.arcade.overlap(this.pacman, this.blackberries, this.eatBlackberry, null, this);
             this.physics.arcade.overlap(this.pacman, this.cherries, this.eatCherry, null, this);
             this.physics.arcade.overlap(this.pacman, this.kiwis, this.eatKiwi, null, this);
             
