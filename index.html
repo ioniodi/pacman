@@ -95,8 +95,9 @@
             this.kiwis = this.add.physicsGroup();
             
             this.map.createFromTiles(7, this.safetile, 'dot', this.layer, this.dots);
-            this.map.createFromTiles(0, this.safetile, 'blackberry', this.layer, this.blackberries);
-            
+            this.map.createFromTiles(49, this.safetile, 'blackberry', this.layer, this.blackberries);
+            this.map.createFromTiles(50, this.safetile, 'cherry', this.layer, this.cherries);
+            this.map.createFromTiles(51, this.safetile, 'kiwi', this.layer, this.kiwis);
             
             
             //  The dots will need to be offset by 6px to put them back in the middle of the grid
