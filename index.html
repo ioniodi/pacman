@@ -235,57 +235,10 @@
             this.current = direction;
 
         },
-        /*
+        
         eatDot: function (pacman, dot) {
 
             dot.kill();
-
-            if (this.dots.total === 0)
-            {
-                this.dots.callAll('revive');
-            }
-
-        },
-        
-        eatBlackberry: function (pacman, blackberry) {
-
-            blackberry.kill();
-
-            if (this.blackberries.total === 0 && this.dots.total === 0)
-            {
-                this.blackberries.callAll('revive');
-            }
-
-        },
-        
-        eatCherry: function (pacman, cherry) {
-
-            cherry.kill();
-
-            if (this.cherries.total === 0 && this.dots.total === 0)
-            {
-                this.cherries.callAll('revive');
-            }
-
-        },
-        
-        eatKiwi: function (pacman, kiwi) {
-
-            kiwi.kill();
-
-            if (this.kiwis.total === 0 && this.dots.total === 0)
-            {
-                this.kiwis.callAll('revive');
-            }
-
-        },
-        */
-        eatAll: function (pacman, dot, blackberry, cherry, kiwi) {
-                
-            dot.kill();
-            blackberry.kill();
-            cherry.kill();
-            kiwi.kill();
 
             if (this.dots.total === 0 && this.blackberries.total === 0 && this.cherries.total === 0 && this.kiwis.total === 0)
             {
@@ -297,14 +250,46 @@
 
         },
         
+        eatBlackberry: function (pacman, blackberry) {
+
+            blackberry.kill();
+            /*
+            if (this.blackberries.total === 0 && this.dots.total === 0)
+            {
+                this.blackberries.callAll('revive');
+            }
+            */
+        },
+        
+        eatCherry: function (pacman, cherry) {
+
+            cherry.kill();
+            /*
+            if (this.cherries.total === 0 && this.dots.total === 0)
+            {
+                this.cherries.callAll('revive');
+            }
+            */
+        },
+        
+        eatKiwi: function (pacman, kiwi) {
+
+            kiwi.kill();
+            /*
+            if (this.kiwis.total === 0 && this.dots.total === 0)
+            {
+                this.kiwis.callAll('revive');
+            }
+            */
+        },
 
         update: function () {
           
             this.physics.arcade.collide(this.pacman, this.layer);
-            this.physics.arcade.overlap(this.pacman, this.dots, this.eatAll, null, this);
-            this.physics.arcade.overlap(this.pacman, this.blackberries, this.eatAll, null, this);
-            this.physics.arcade.overlap(this.pacman, this.cherries, this.eatAll, null, this);
-            this.physics.arcade.overlap(this.pacman, this.kiwis, this.eatAll, null, this);
+            this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
+            this.physics.arcade.overlap(this.pacman, this.blackberries, this.eatBlackberry, null, this);
+            this.physics.arcade.overlap(this.pacman, this.cherries, this.eatCherry, null, this);
+            this.physics.arcade.overlap(this.pacman, this.kiwis, this.eatKiwi, null, this);
             
 
             this.marker.x = this.math.snapToFloor(Math.floor(this.pacman.x), this.gridsize) / this.gridsize;
