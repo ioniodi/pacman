@@ -33,11 +33,11 @@
         {
          "columns":1,
          "firstgid":49,
-         "image":"pacman-master\/assets\/blackberrie.png",
+         "image":"pacman-master\/assets\/blackberry.png",
          "imageheight":16,
          "imagewidth":16,
          "margin":0,
-         "name":"blackberrie",
+         "name":"blackberry",
          "spacing":0,
          "tilecount":1,
          "tileheight":16,
