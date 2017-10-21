@@ -17,7 +17,9 @@
     <script type="text/javascript">
 
     var game = new Phaser.Game(448, 496, Phaser.AUTO);
-
+    
+    var music;
+        
     var Pacman = function (game) {
 
         this.map = null;
@@ -74,9 +76,10 @@
             
             this.load.spritesheet('pacman', 'assets/giannis_rambo_scaled_flipped.png', 32, 32);
             this.load.tilemap('map', 'assets/pacman-map_fruits.json', null, Phaser.Tilemap.TILED_JSON);
-
             //  Needless to say, graphics (C)opyright Namco
 
+            game.load.audio('chopping', ['assets/giannakis_is_chopping.mp3']);
+            
         },
 
         create: function () {
@@ -118,6 +121,8 @@
 
             this.pacman.play('munch');
             this.move(Phaser.LEFT);
+            
+            music = game.add.audio('chopping');
 
         },
 
@@ -224,6 +229,7 @@
         eatDot: function (pacman, dot) {
 
             dot.kill();
+            music.play();
 
             if (this.dots.total === 0 && this.blackberries.total === 0 && this.cherries.total === 0 && this.kiwis.total === 0) {
                 
@@ -240,14 +246,17 @@
         
         eatBlackberry: function (pacman, blackberry) {
             blackberry.kill();
+            music.play();
         },
         
         eatCherry: function (pacman, cherry) {
             cherry.kill();
+            music.play();
         },
         
         eatKiwi: function (pacman, kiwi) {
             kiwi.kill();
+            music.play();
         },
 
         update: function () {
