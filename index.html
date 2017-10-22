@@ -232,13 +232,9 @@
             music.play();
             
             if (this.dots.total === 0 && this.blackberries.total === 0 && this.cherries.total === 0 && this.kiwis.total === 0) {
-                
                 this.dots.callAll('revive');
-                
                 this.blackberries.callAll('revive');
-                
                 this.cherries.callAll('revive');
-                
                 this.kiwis.callAll('revive');
             }
 
@@ -247,16 +243,40 @@
         eatBlackberry: function (pacman, blackberry) {
             blackberry.kill();
             music.play();
+            
+             if (this.dots.total === 0 && this.blackberries.total === 0 && this.cherries.total === 0 && this.kiwis.total === 0) {
+                this.dots.callAll('revive');
+                this.blackberries.callAll('revive');
+                this.cherries.callAll('revive');
+                this.kiwis.callAll('revive');
+            }
+            
         },
         
         eatCherry: function (pacman, cherry) {
             cherry.kill();
             music.play();
+            
+             if (this.dots.total === 0 && this.blackberries.total === 0 && this.cherries.total === 0 && this.kiwis.total === 0) {
+                this.dots.callAll('revive');
+                this.blackberries.callAll('revive');
+                this.cherries.callAll('revive');
+                this.kiwis.callAll('revive');
+            }
+            
         },
         
         eatKiwi: function (pacman, kiwi) {
             kiwi.kill();
             music.play();
+            
+             if (this.dots.total === 0 && this.blackberries.total === 0 && this.cherries.total === 0 && this.kiwis.total === 0) {
+                this.dots.callAll('revive');
+                this.blackberries.callAll('revive');
+                this.cherries.callAll('revive');
+                this.kiwis.callAll('revive');
+            }
+            
         },
 
         update: function () {
