@@ -246,43 +246,43 @@
         eatBlackberry: function (pacman, blackberry) {
             blackberry.kill();
             music.play();
-            
              if (this.dots.total === 0 && this.blackberries.total === 0 && this.cherries.total === 0 && this.kiwis.total === 0) {
                 this.dots.callAll('revive');
                 this.blackberries.callAll('revive');
                 this.cherries.callAll('revive');
                 this.kiwis.callAll('revive');
-                
+                this.game.time.reset();
             }
-            
         },
         
         eatCherry: function (pacman, cherry) {
             cherry.kill();
             music.play();
-            
              if (this.dots.total === 0 && this.blackberries.total === 0 && this.cherries.total === 0 && this.kiwis.total === 0) {
                 this.dots.callAll('revive');
                 this.blackberries.callAll('revive');
                 this.cherries.callAll('revive');
                 this.kiwis.callAll('revive');
-            }
-            
+                this.game.time.reset();
+            }   
         },
         
         eatKiwi: function (pacman, kiwi) {
             kiwi.kill();
             music.play();
-            
              if (this.dots.total === 0 && this.blackberries.total === 0 && this.cherries.total === 0 && this.kiwis.total === 0) {
                 this.dots.callAll('revive');
                 this.blackberries.callAll('revive');
                 this.cherries.callAll('revive');
                 this.kiwis.callAll('revive');
+                this.game.time.reset();
             }
-            
         },
             
+        totalElapsedSeconds: function() {
+            return (this.time - this._started);
+        },
+        
         update: function () {
             
             game.debug.text('Time: ' + this.game.time.totalElapsedSeconds(), 10, 10);
