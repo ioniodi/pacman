@@ -285,6 +285,7 @@
             
             game.debug.text('Time: ' + time + ' seconds', 10, 10);
             game.debug.text('Score: ' + 'NaN' + ' points', 180, 10);
+            game.debug.text('Lives: ' + 'NaN', 300, 10);
             
             this.physics.arcade.collide(this.pacman, this.layer);
             this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
