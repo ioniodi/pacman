@@ -129,6 +129,10 @@
             music = game.add.audio('chopping');
             
             timer = game.add.bitmapText(250, 250, '00:00:00', textStyle);
+            
+            seconds = Math.floor(game.time.time / 1000) % 60;
+ 
+            timer.setText(seconds);
 
         },
 
@@ -242,7 +246,6 @@
                 this.blackberries.callAll('revive');
                 this.cherries.callAll('revive');
                 this.kiwis.callAll('revive');
-                //updateTimer(); to be added
             }
 
         },
@@ -285,13 +288,6 @@
                 this.kiwis.callAll('revive');
             }
             
-        },
-        
-        function updateTimer() {
-    
-            seconds = Math.floor(game.time.time / 1000) % 60;
- 
-            timer.setText(seconds);
         },
             
         update: function () {
