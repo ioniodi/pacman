@@ -279,15 +279,11 @@
             }
         },
         
-        totalElapsedSecondsMINE: function() {
-            var time = (this.time - this._started) * 0.001;
-            var time_to_return = parseInt(time, 1000); 
-            return (time_to_return);
-        },
-        
         update: function () {
             
-            game.debug.text('Time: ' + parseInt(this.game.time.totalElapsedSeconds(), 1000), 10, 10);
+            var time = this.game.time.totalElapsedSeconds()
+            
+            game.debug.text('Time: ' + parseInt(time, 1000), 10, 10);
             
             this.physics.arcade.collide(this.pacman, this.layer);
             this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
