@@ -124,7 +124,7 @@
             
             music = game.add.audio('chopping');
             
-            game.debug.text('Elapsed seconds: ' + this.game.time.totalElapsedSeconds(), 32, 32);
+            
      
         },
 
@@ -283,7 +283,9 @@
         },
             
         update: function () {
-          
+            
+            game.debug.text('Time: ' + this.game.time.totalElapsedSeconds(), 32, 32);
+            
             this.physics.arcade.collide(this.pacman, this.layer);
             this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
             this.physics.arcade.overlap(this.pacman, this.blackberries, this.eatBlackberry, null, this);
