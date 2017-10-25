@@ -281,7 +281,7 @@
         
         update: function () {
             
-            game.debug.text('Time: ' + this.game.time.totalElapsedSeconds() * 0.2, 10, 10);
+            game.debug.text('Time: ' + this.game.time.totalElapsedSeconds() * 0.001, 10, 10);
             
             this.physics.arcade.collide(this.pacman, this.layer);
             this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
