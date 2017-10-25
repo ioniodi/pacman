@@ -20,10 +20,6 @@
     
     var music;
         
-    var textStyle = { font: '64px Desyrel', align: 'center'};
-    var timer;
-    var seconds = 0;  
-        
     var Pacman = function (game) {
 
         this.map = null;
@@ -127,13 +123,7 @@
             this.move(Phaser.LEFT);
             
             music = game.add.audio('chopping');
-            
-            timer = game.add.bitmapText(250, 250, '00:00:00', textStyle);
-            
-            seconds = Math.floor(game.time.time / 1000) % 60;
- 
-            timer.setText(seconds);
-
+     
         },
 
         checkKeys: function () {
