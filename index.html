@@ -20,6 +20,10 @@
     
     var music;
         
+    var textStyle = { font: '64px Desyrel', align: 'center'};
+    var timer;
+    var seconds = 0;  
+        
     var Pacman = function (game) {
 
         this.map = null;
@@ -123,9 +127,19 @@
             this.move(Phaser.LEFT);
             
             music = game.add.audio('chopping');
+            
+            timer = game.add.bitmapText(250, 250, '00:00:00', textStyle);
 
         },
 
+        function updateCounter() {
+
+            counter++;
+
+            text.setText('Counter: ' + counter);
+
+        },
+        
         checkKeys: function () {
 
             if (this.cursors.left.isDown && this.current !== Phaser.LEFT) {
@@ -236,6 +250,7 @@
                 this.blackberries.callAll('revive');
                 this.cherries.callAll('revive');
                 this.kiwis.callAll('revive');
+                //updateTimer(); to be added
             }
 
         },
@@ -249,6 +264,7 @@
                 this.blackberries.callAll('revive');
                 this.cherries.callAll('revive');
                 this.kiwis.callAll('revive');
+                
             }
             
         },
@@ -278,7 +294,14 @@
             }
             
         },
-
+        
+        function updateTimer() {
+    
+            seconds = Math.floor(game.time.time / 1000) % 60;
+ 
+            timer.setText(seconds);
+        },
+            
         update: function () {
           
             this.physics.arcade.collide(this.pacman, this.layer);
