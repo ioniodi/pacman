@@ -238,6 +238,7 @@
                 this.blackberries.callAll('revive');
                 this.cherries.callAll('revive');
                 this.kiwis.callAll('revive');
+                this.game.time.refresh();
             }
 
         },
@@ -284,7 +285,7 @@
             
         update: function () {
             
-            game.debug.text('Time: ' + this.game.time.ElapsedSeconds(), 10, 10);
+            game.debug.text('Time: ' + this.game.time.totalElapsedSeconds(), 10, 10);
             
             this.physics.arcade.collide(this.pacman, this.layer);
             this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
