@@ -123,12 +123,6 @@
             this.move(Phaser.LEFT);
             
             music = game.add.audio('chopping');
-            
-            var time = this.game.time.totalElapsedSeconds()|0;
-            
-            game.debug.text('Time: ' + time + ' seconds', 10, 12);
-            game.debug.text('Score: ' + 'NaN' + ' points', 180, 12);
-            game.debug.text('Lives: ' + 'NaN', 350, 12);
         },
 
         checkKeys: function () {
@@ -295,6 +289,12 @@
             if (this.turning !== Phaser.NONE) {
                 this.turn();
             }
+            
+            var time = this.game.time.totalElapsedSeconds()|0;
+            
+            game.debug.text('Time: ' + time + ' seconds', 10, 11);
+            game.debug.text('Score: ' + 'NaN' + ' points', 180, 11);
+            game.debug.text('Lives: ' + 'NaN', 350, 11);
         }
     };
 
