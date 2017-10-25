@@ -124,8 +124,11 @@
             
             music = game.add.audio('chopping');
             
+            var time = this.game.time.totalElapsedSeconds()|0;
             
-     
+            game.debug.text('Time: ' + time + ' seconds', 10, 12);
+            game.debug.text('Score: ' + 'NaN' + ' points', 180, 12);
+            game.debug.text('Lives: ' + 'NaN', 350, 12);
         },
 
         checkKeys: function () {
@@ -146,7 +149,6 @@
                 //  This forces them to hold the key down to turn the corner
                 this.turning = Phaser.NONE;
             }
-
         },
 
         checkDirection: function (turnTo) {
@@ -167,17 +169,14 @@
                 this.turnPoint.x = (this.marker.x * this.gridsize) + (this.gridsize / 2);
                 this.turnPoint.y = (this.marker.y * this.gridsize) + (this.gridsize / 2);
             }
-
         },
 
         turn: function () {
-
             var cx = Math.floor(this.pacman.x);
             var cy = Math.floor(this.pacman.y);
 
             //  This needs a threshold, because at high speeds you can't turn because the coordinates skip past
-            if (!this.math.fuzzyEqual(cx, this.turnPoint.x, this.threshold) || !this.math.fuzzyEqual(cy, this.turnPoint.y, this.threshold))
-            {
+            if (!this.math.fuzzyEqual(cx, this.turnPoint.x, this.threshold) || !this.math.fuzzyEqual(cy, this.turnPoint.y, this.threshold)) {
                 return false;
             }
 
@@ -202,14 +201,12 @@
             if (direction === Phaser.LEFT || direction === Phaser.UP) {
                 speed = -speed;
             }
-            
             if (direction === Phaser.LEFT || direction === Phaser.RIGHT) {
                 this.pacman.body.velocity.x = speed;
             }
             else {
                 this.pacman.body.velocity.y = speed;
             }
-
             //  Reset the scale and angle (Pacman is facing to the right in the sprite sheet)
             this.pacman.scale.x = 1;
             this.pacman.angle = 0;
@@ -223,9 +220,7 @@
             else if (direction === Phaser.DOWN) {
                 this.pacman.angle = 90;
             }
-            
             this.current = direction;
-
         },
         
         eatDot: function (pacman, dot) {
@@ -280,23 +275,15 @@
         },
         
         update: function () {
-            
-            var time = this.game.time.totalElapsedSeconds()|0;
-            
-            game.debug.text('Time: ' + time + ' seconds', 10, 10);
-            game.debug.text('Score: ' + 'NaN' + ' points', 180, 10);
-            game.debug.text('Lives: ' + 'NaN', 350, 10);
-            
             this.physics.arcade.collide(this.pacman, this.layer);
             this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
             this.physics.arcade.overlap(this.pacman, this.blackberries, this.eatBlackberry, null, this);
             this.physics.arcade.overlap(this.pacman, this.cherries, this.eatCherry, null, this);
             this.physics.arcade.overlap(this.pacman, this.kiwis, this.eatKiwi, null, this);
             
-
             this.marker.x = this.math.snapToFloor(Math.floor(this.pacman.x), this.gridsize) / this.gridsize;
             this.marker.y = this.math.snapToFloor(Math.floor(this.pacman.y), this.gridsize) / this.gridsize;
-
+            
             //  Update our grid sensors
             this.directions[1] = this.map.getTileLeft(this.layer.index, this.marker.x, this.marker.y);
             this.directions[2] = this.map.getTileRight(this.layer.index, this.marker.x, this.marker.y);
@@ -308,9 +295,7 @@
             if (this.turning !== Phaser.NONE) {
                 this.turn();
             }
-
         }
-
     };
 
     game.state.add('Game', Pacman, true);
