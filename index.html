@@ -18,9 +18,7 @@
 
     var game = new Phaser.Game(448, 496, Phaser.AUTO);
     
-    var music;
-        
-    var time = this.game.time.totalElapsedSeconds()|0;    
+    var music;    
         
     var score = 0;
         
@@ -128,7 +126,8 @@
             
             music = game.add.audio('chopping');
             
-            game.add.text(10, 11, 'Time: '+ this.time, {font: "20pt Robboto", fill: "#FFFFFF"});
+            var time = this.game.time.totalElapsedSeconds()|0;
+            game.add.text(10, 11, 'Time: '+ this.time + 'seconds', {font: "10pt Robboto", fill: "#FFFFFF"});
         },
 
         checkKeys: function () {
