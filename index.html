@@ -232,7 +232,7 @@
             dot.kill()
             music.play();
             score ++;
-            score_text.text = 'Score: ' + score + 'points';
+            score_text.text = 'Score: ' + score + ' points';
             if (this.dots.total === 0 && this.blackberries.total === 0 && this.cherries.total === 0 && this.kiwis.total === 0) {
                 this.dots.callAll('revive');
                 this.blackberries.callAll('revive');
@@ -246,6 +246,7 @@
         eatBlackberry: function (pacman, blackberry) {
             blackberry.kill();
             music.play();
+            score += 10;
              if (this.dots.total === 0 && this.blackberries.total === 0 && this.cherries.total === 0 && this.kiwis.total === 0) {
                 this.dots.callAll('revive');
                 this.blackberries.callAll('revive');
