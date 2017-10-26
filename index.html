@@ -20,6 +20,8 @@
     
     var music;
         
+    var score = 0;
+        
     var Pacman = function (game) {
 
         this.map = null;
@@ -221,7 +223,7 @@
 
             dot.kill()
             music.play();
-            
+            this.score++;
             if (this.dots.total === 0 && this.blackberries.total === 0 && this.cherries.total === 0 && this.kiwis.total === 0) {
                 this.dots.callAll('revive');
                 this.blackberries.callAll('revive');
@@ -293,7 +295,7 @@
             var time = this.game.time.totalElapsedSeconds()|0;
             
             game.debug.text('Time: ' + time + ' seconds', 10, 11);
-            game.debug.text('Score: ' + 'NaN' + ' points', 180, 11);
+            game.debug.text('Score: ' + score + ' points', 180, 11);
             game.debug.text('Lives: ' + 'NaN', 350, 11);
         }
     };
