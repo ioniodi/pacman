@@ -130,8 +130,7 @@
             
             music = game.add.audio('chopping');
             
-            //this.time = this.game.time.totalElapsedSeconds()|0;
-            //this.displayed_time = game.add.text(10, 11, 'Time: 0 seconds', {font: "10pt Robboto", fill: "#FFFFFF"});
+            score = game.add.text(10, 11, 'Score: 0 points', { fontSize: '32px', fill: '#000' });
             
         },
         
@@ -228,10 +227,10 @@
         },
         
         eatDot: function (pacman, dot) {
-
             dot.kill()
             music.play();
-            this.counter++;
+            score ++;
+            score.text = 'Score: ' + score + 'points';
             if (this.dots.total === 0 && this.blackberries.total === 0 && this.cherries.total === 0 && this.kiwis.total === 0) {
                 this.dots.callAll('revive');
                 this.blackberries.callAll('revive');
@@ -307,8 +306,8 @@
             var time = this.game.time.totalElapsedSeconds()|0;
             
             game.debug.text('Time: ' + time + ' seconds', 10, 11);
-            this.score = game.debug.text('Score: ' + this.updateScore() + ' points', 180, 11);
-            game.debug.text('Lives: ' + 'NaN', 350, 11);
+            //this.score = game.debug.text('Score: ' + this.updateScore() + ' points', 180, 11);
+            //game.debug.text('Lives: ' + 'NaN', 350, 11);
         }
     };
 
