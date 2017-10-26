@@ -20,6 +20,10 @@
     
     var music;    
         
+    var displayed_time;    
+        
+    var time;    
+        
     var score = 0;
         
     var Pacman = function (game) {
@@ -126,10 +130,15 @@
             
             music = game.add.audio('chopping');
             
-            var time = this.game.time.totalElapsedSeconds()|0;
-            game.add.text(10, 11, 'Time: '+ time + ' seconds', {font: "10pt Robboto", fill: "#FFFFFF"});
+            //this.time = this.game.time.totalElapsedSeconds()|0;
+            //this.displayed_time = game.add.text(10, 11, 'Time: 0 seconds', {font: "10pt Robboto", fill: "#FFFFFF"});
+            
         },
 
+        //updateText : function (displayed_time) {
+            //displayed_time.setText('Time: ' + this.time + ' seconds');
+        //},
+        
         checkKeys: function () {
 
             if (this.cursors.left.isDown && this.current !== Phaser.LEFT) {
@@ -294,10 +303,14 @@
             if (this.turning !== Phaser.NONE) {
                 this.turn();
             }
-            
+             
+            var time = this.game.time.totalElapsedSeconds()|0;
+             
             //game.debug.text('Time: ' + time + ' seconds', 10, 11);
-            //game.debug.text('Score: ' + score.setText(score); + ' points', 180, 11);
-            //game.debug.text('Lives: ' + 'NaN', 350, 11);
+            game.add.text(10, 11, 'Time: ' + time + 'seconds', {font: "10pt Robboto", fill: "#FFFFFF"});
+            
+            game.debug.text('Score: ' + 'NaN' + ' points', 180, 11);
+            game.debug.text('Lives: ' + 'NaN', 350, 11);
         }
     };
 
