@@ -277,10 +277,6 @@
             }
         },
         
-        updateScore : function () {
-            this.score.setText('Score: ' + this.score + ' points');
-        },
-        
         update: function () {
             this.physics.arcade.collide(this.pacman, this.layer);
             this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
