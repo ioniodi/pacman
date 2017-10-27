@@ -18,9 +18,7 @@
 
     var game = new Phaser.Game(448, 496, Phaser.AUTO);
     
-    var music;    
-        
-    var displayed_time;    
+    var music;        
         
     var time;    
     
@@ -29,6 +27,10 @@
     var score = 0;
         
     var score_text;
+        
+    var lives;
+        
+    var lives_texted;
         
     var Pacman = function (game) {
 
@@ -136,6 +138,7 @@
             
             score_text = game.add.text(180, -2, 'Score: 0 points', { font: '14px Arial', fill: '#FFFFFF' });
             time_text = game.add.text(10, -2, 'Time: 0 seconds', { font: '14px Arial', fill: '#FFFFFF' });
+            lives_text = game.add.text(10, -2, 'Lives: TODO', { font: '14px Arial', fill: '#FFFFFF' });
             
         },
         
@@ -319,7 +322,9 @@
             }
              
             time = this.game.time.totalElapsedSeconds()|0;
-            time_text.text = 'Time: ' + time + ' seconds ';
+            time_text.text = 'Time: ' + time + ' seconds';
+            //time_text.text = 'Lives: ' + lives;
+            
         }
     };
 
