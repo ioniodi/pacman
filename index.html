@@ -18,64 +18,48 @@
 
     var game = new Phaser.Game(448, 496, Phaser.AUTO);
     
-    var music;        
-        
-    var time;    
+    var music;           
     
-    var time_text;    
-        
-    var score = 0;
-        
-    var score_text;
-        
-    var lives;
-        
+    var time;    
+    var time_text;        
+    
+    var score = 0;   
+    var score_text;   
+    
+    var lives;   
     var lives_texted;
         
     var Pacman = function (game) {
-
         this.map = null;
         this.layer = null;
         this.pacman = null;
-
         this.safetile = 14;
         this.gridsize = 16;
-
         this.speed = 150;
         this.threshold = 3;
-
         this.marker = new Phaser.Point();
         this.turnPoint = new Phaser.Point();
-
         this.directions = [ null, null, null, null, null ];
         this.opposites = [ Phaser.NONE, Phaser.RIGHT, Phaser.LEFT, Phaser.DOWN, Phaser.UP ];
-
         this.current = Phaser.NONE;
         this.turning = Phaser.NONE;
-
     };
 
     Pacman.prototype = {
-
         init: function () {
-
             this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
             this.scale.pageAlignHorizontally = true;
             this.scale.pageAlignVertically = true;
-
             Phaser.Canvas.setImageRenderingCrisp(this.game.canvas);
-
             this.physics.startSystem(Phaser.Physics.ARCADE);
-
         },
 
         preload: function () {
-
             //  We need this because the assets are on github pages
             //  Remove the next 2 lines if running locally
             this.load.baseURL = 'https://geocfu.github.io/pacman/';
             this.load.crossOrigin = 'anonymous';
-
+            
             this.load.image('dot', 'assets/dot.png');
             this.load.image('blackberry', 'assets/blackberry.png');
             this.load.image('cherry', 'assets/cherry.png');
@@ -88,14 +72,12 @@
             
             this.load.spritesheet('pacman', 'assets/giannis_rambo_scaled_flipped.png', 32, 32);
             this.load.tilemap('map', 'assets/pacman-map_fruits.json', null, Phaser.Tilemap.TILED_JSON);
-            //  Needless to say, graphics (C)opyright Namco
-
-            game.load.audio('chopping', 'assets/giannakis_is_cutting.mp3');
             
+            game.load.audio('chopping', 'assets/giannakis_is_cutting.mp3');
+            //  Needless to say, graphics (C)opyright Namco
         },
 
         create: function () {
-
             this.map = this.add.tilemap('map');
             this.map.addTilesetImage('pacman-tiles', 'tiles');
             this.map.addTilesetImage('blackberry', 'blackberry-tiles');
@@ -139,12 +121,10 @@
             
             time_text = game.add.text(10, -2, 'Time: 0 seconds', { font: '14px Arial', fill: '#FFFFFF' });
             score_text = game.add.text(180, -2, 'Score: 0 points', { font: '14px Arial', fill: '#FFFFFF' });
-            lives_text = game.add.text(360, -2, 'Lives: 3', { font: '14px Arial', fill: '#FFFFFF' });
-            
+            lives_text = game.add.text(360, -2, 'Lives: 3', { font: '14px Arial', fill: '#FFFFFF' });  
         },
         
         checkKeys: function () {
-
             if (this.cursors.left.isDown && this.current !== Phaser.LEFT) {
                 this.checkDirection(Phaser.LEFT);
             }
@@ -164,7 +144,6 @@
         },
 
         checkDirection: function (turnTo) {
-
             if (this.turning === turnTo || this.directions[turnTo] === null || this.directions[turnTo].index !== this.safetile) {
                 //  Invalid direction if they're already set to turn that way
                 //  Or there is no tile there, or the tile isn't index 1 (a floor tile)
@@ -207,7 +186,6 @@
         },
 
         move: function (direction) {
-
             var speed = this.speed;
 
             if (direction === Phaser.LEFT || direction === Phaser.UP) {
