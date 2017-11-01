@@ -294,24 +294,21 @@
             }
         },
         
-        
         eatDynamite: function (pacman, dynamite) {
-            if (this.time > 10) {  
-                  dynamite.kill();
-                  music.play();
-                  score += 10;
+              dynamite.kill();
+              music.play();
+              score += 10;
+              score_text.text = 'Score: ' + score + ' points';
+              if (this.dots.total === 0 && this.blackberries.total === 0 && this.cherries.total === 0 && this.kiwis.total === 0 && this.dynamites.total === 0) {
+                  this.dots.callAll('revive');
+                  this.blackberries.callAll('revive');
+                  this.cherries.callAll('revive');
+                  this.kiwis.callAll('revive');
+                  this.dynamites.callAll('revive');
+                  this.game.time.reset();
+                  score = 0;
                   score_text.text = 'Score: ' + score + ' points';
-                  if (this.dots.total === 0 && this.blackberries.total === 0 && this.cherries.total === 0 && this.kiwis.total === 0 && this.dynamites.total === 0) {
-                      this.dots.callAll('revive');
-                      this.blackberries.callAll('revive');
-                      this.cherries.callAll('revive');
-                      this.kiwis.callAll('revive');
-                      this.dynamites.callAll('revive');
-                      this.game.time.reset();
-                      score = 0;
-                      score_text.text = 'Score: ' + score + ' points';
-                  }
-            }
+              }
          },
                 
         update: function () {
@@ -320,7 +317,7 @@
             this.physics.arcade.overlap(this.pacman, this.blackberries, this.eatBlackberry, null, this);
             this.physics.arcade.overlap(this.pacman, this.cherries, this.eatCherry, null, this);
             this.physics.arcade.overlap(this.pacman, this.kiwis, this.eatKiwi, null, this);
-            //this.physics.arcade.overlap(this.pacman, this.dynamites, this.eatDynamite, null, this);
+            this.physics.arcade.overlap(this.pacman, this.dynamites, this.eatDynamite, null, this);
             
             this.marker.x = this.math.snapToFloor(Math.floor(this.pacman.x), this.gridsize) / this.gridsize;
             this.marker.y = this.math.snapToFloor(Math.floor(this.pacman.y), this.gridsize) / this.gridsize;
@@ -339,13 +336,10 @@
              
             time = this.game.time.totalElapsedSeconds()|0;
             time_text.text = 'Time: ' + time + ' seconds';
-            //time_text.text = 'Lives: ' + lives;
+            //lives_text.text = 'Lives: ' + lives;
         
             if (time > 10) {
-                lives = 2;
-                lives_text.text = 'Lives: ' + lives;
-                //this.dynamites = this.add.physicsGroup();
-                //this.physics.arcade.overlap(this.pacman, this.dynamites, this.eatDynamite, null, this);
+                this.dynamites = this.add.physicsGroup();
             }
         }
     };
