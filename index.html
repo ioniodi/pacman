@@ -85,7 +85,7 @@
             this.map.addTilesetImage('blackberry', 'blackberry-tiles');
             this.map.addTilesetImage('cherry', 'cherry-tiles');
             this.map.addTilesetImage('kiwi', 'kiwi-tiles');
-            this.map.addTilesetImage('dynamite', 'dynamite-tiles');
+            //this.map.addTilesetImage('dynamite', 'dynamite-tiles');
 
             this.layer = this.map.createLayer('Pacman');
             
@@ -130,7 +130,7 @@
             lives_text = game.add.text(360, -2, 'Lives: 3', { font: '14px Arial', fill: '#FFFFFF' });
             
             if (time > 50) {
-                //this.map.addTilesetImage('dynamite', 'dynamite-tiles');
+                this.map.addTilesetImage('dynamite', 'dynamite-tiles');
                 this.dynamites = this.add.physicsGroup();
                 this.map.createFromTiles(52, this.safetile, 'dynamite', this.layer, this.dynamites);
             }
