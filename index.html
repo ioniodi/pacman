@@ -333,6 +333,13 @@
             time_text.text = 'Time: ' + time + ' seconds';
             //time_text.text = 'Lives: ' + lives;
             
+            if (this.dynamites.visible == false) {
+                this.dynamites.kill();
+            }
+            else {
+                this.dynamites.visible = true;
+            }
+            
         }
     };
 
