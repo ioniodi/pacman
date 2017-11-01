@@ -296,7 +296,7 @@
         
         
         eatDynamite: function (pacman, dynamite) {
-            if (time > 50) {  
+            if (this.time > 10) {  
                   dynamite.kill();
                   music.play();
                   score += 10;
@@ -341,7 +341,7 @@
             time_text.text = 'Time: ' + time + ' seconds';
             //time_text.text = 'Lives: ' + lives;
         
-            if (time > 50) {
+            if (time > 10) {
                 this.dynamites = this.add.physicsGroup();
                 this.physics.arcade.overlap(this.pacman, this.dynamites, this.eatDynamite, null, this);
             }
