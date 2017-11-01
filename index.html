@@ -281,12 +281,7 @@
             }
         },
         
-        eatDynamite: function (pacman, dynamite) {
-            dynamite.kill();
-            music.play();
-            score += 100;
-            score_text.text = 'Score: ' + score + ' points';
-        },
+        
         
         update: function () {
             this.physics.arcade.collide(this.pacman, this.layer);
@@ -294,7 +289,12 @@
             this.physics.arcade.overlap(this.pacman, this.blackberries, this.eatBlackberry, null, this);
             this.physics.arcade.overlap(this.pacman, this.cherries, this.eatCherry, null, this);
             this.physics.arcade.overlap(this.pacman, this.kiwis, this.eatKiwi, null, this);
-            this.physics.arcade.overlap(this.pacman, this.dynamite,this.eatDynamite, null, this);
+            
+            if (this.pacman.overlap(this.dynamite)) {
+                music.play();
+                score += 10;
+                score_text.text = 'Score: ' + score + ' points';
+            }
             
             this.marker.x = this.math.snapToFloor(Math.floor(this.pacman.x), this.gridsize) / this.gridsize;
             this.marker.y = this.math.snapToFloor(Math.floor(this.pacman.y), this.gridsize) / this.gridsize;
