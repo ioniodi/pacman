@@ -25,6 +25,7 @@
     var text3;
     var text4;
     var score = 0;
+    var lives = 3;
     var timer;
     var total = 0;
 
@@ -153,14 +154,22 @@
                 fill: "#ffffff"
             });
 
-            text.anchor.set(0, -21.5);
+            text.anchor.set(0, -21.4);
 
-            text2 = game.add.text(game.world.x, game.world.y, "Timer: 0" + " seconds", {
+            text2 = game.add.text(game.world.x, game.world.y, "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Timer: 0" + " seconds", {
+                font: "15px Arial",
+                fill: "#ffffff",
+                align: "left"
+            });
+
+            text2.anchor.set(0, -21.4);
+
+            text3 = game.add.text(game.world.x, game.world.y, "Lives: " + lives, {
                 font: "15px Arial",
                 fill: "#ffffff",
             });
 
-            text2.anchor.set(-1, -21.5);
+            text3.anchor.set(0, -21.4);
 
             timer = game.time.create(false);
 
@@ -289,6 +298,14 @@
             score++;
             text.setText("Score: " + score);
 
+            lives--;
+            if (lives >= 0) {
+                text3.setText("Lives: " + lives);
+            }
+            else {
+                // display loss message and nullify text3
+                text3.setText("");
+            }
 
 
             dot.kill();
@@ -325,6 +342,9 @@
 
         eatStrawberry: function (pacman, strawberry) {
 
+            score = score + 3;
+            text.setText("Score: " + score);
+
             strawberry.kill();
 
             if (this.switch.isPlaying != true && this.switch2.isPlaying != true) {
@@ -344,6 +364,9 @@
         },
 
         eatBanana: function (pacman, banana) {
+
+            score = score + 5;
+            text.setText("Score: " + score);
 
             banana.kill();
 
