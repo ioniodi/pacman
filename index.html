@@ -108,7 +108,7 @@
             this.pacman = this.add.sprite((13 * 16) + 8, (11 * 16) + 8, 'pacman', 0);
             
             this.dynamite = this.add.sprite((11 * 16), (11 * 16), 'dynamite', 0);
-            //this.dynamite.body.enable = false;
+            this.dynamite.visible = false;
             
             this.pacman.anchor.set(0.5);
             this.pacman.animations.add('munch', [0, 1, 2, 1], 15, true);
@@ -288,11 +288,17 @@
             this.physics.arcade.overlap(this.pacman, this.cherries, this.eatCherry, null, this);
             this.physics.arcade.overlap(this.pacman, this.kiwis, this.eatKiwi, null, this);
             
-            if (this.pacman.overlap(this.dynamite)) {
-                music.play();
-                score += 10;
-                score_text.text = 'Score: ' + score + ' points';
-                this.dynamite.body.enable = false;
+            if (time > 20 &&  time <35) {
+                this.dynamite.visible = true;
+                if (this.pacman.overlap(this.dynamite)) {
+                    counter = 1;
+                    if (counter != 1) {
+                        music.play();
+                        score += 10;
+                        score_text.text = 'Score: ' + score + ' points';
+                        this.dynamite.visible = false;
+                    }
+                }
             }
             
             this.marker.x = this.math.snapToFloor(Math.floor(this.pacman.x), this.gridsize) / this.gridsize;
