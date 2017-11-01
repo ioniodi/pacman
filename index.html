@@ -221,7 +221,7 @@
         },
         
         eatDot: function (pacman, dot) {
-            dot.kill()
+            dot.kill();
             music.play();
             score++;
             score_text.text = 'Score: ' + score + ' points';
@@ -307,7 +307,7 @@
         },
         
         hideDynamite: function(pacman, dynamite) {
-            dynamite.kill()
+            dynamite.kill();
         },
         
         update: function () {
