@@ -93,11 +93,15 @@
             this.blackberries = this.add.physicsGroup();
             this.cherries = this.add.physicsGroup();
             this.kiwis = this.add.physicsGroup();
+            
+            this.updateBonus();
+            /*
             if (time > 10) {
                 lives = 2;
                 lives_text.text = 'Lives: ' + lives;
                 this.dynamites = this.add.physicsGroup();
             }
+            */
             
             this.map.createFromTiles(7, this.safetile, 'dot', this.layer, this.dots);
             this.map.createFromTiles(49, this.safetile, 'blackberry', this.layer, this.blackberries);
@@ -314,6 +318,14 @@
                   score_text.text = 'Score: ' + score + ' points';
               }
          },
+        
+        updateBonus: function () {
+            if (time > 10) {
+                lives = 2;
+                lives_text.text = 'Lives: ' + lives;
+                this.dynamites = this.add.physicsGroup();
+            }
+        },
                 
         update: function () {
             this.physics.arcade.collide(this.pacman, this.layer);
