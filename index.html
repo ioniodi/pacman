@@ -234,7 +234,7 @@
                 this.blackberries.callAll('revive');
                 this.cherries.callAll('revive');
                 this.kiwis.callAll('revive');
-                //this.dynamites.callAll('revive');
+                this.dynamites.callAll('revive');
                 this.game.time.reset();
                 score = 0;
                 score_text.text = 'Score: ' + score + ' points';
@@ -252,7 +252,7 @@
                 this.blackberries.callAll('revive');
                 this.cherries.callAll('revive');
                 this.kiwis.callAll('revive');
-                //this.dynamites.callAll('revive');
+                this.dynamites.callAll('revive');
                 this.game.time.reset();
                 score = 0;
                 score_text.text = 'Score: ' + score + ' points';
@@ -269,7 +269,7 @@
                 this.blackberries.callAll('revive');
                 this.cherries.callAll('revive');
                 this.kiwis.callAll('revive');
-                //this.dynamites.callAll('revive');
+                this.dynamites.callAll('revive');
                 this.game.time.reset();
                 score = 0;
                 score_text.text = 'Score: ' + score + ' points';
@@ -286,12 +286,29 @@
                 this.blackberries.callAll('revive');
                 this.cherries.callAll('revive');
                 this.kiwis.callAll('revive');
-                //this.dynamites.callAll('revive');
+                this.dynamites.callAll('revive');
                 this.game.time.reset();
                 score = 0;
                 score_text.text = 'Score: ' + score + ' points';
             }
         },
+        
+        eatDynamite: function (pacman, dynamite) {
+ -            dynamite.kill();
+ -            music.play();
+ -            score += 100;
+ -            score_text.text = 'Score: ' + score + ' points';
+ -            if (this.dots.total === 0 && this.blackberries.total === 0 && this.cherries.total === 0 && this.kiwis.total === 0 && this.dynamites.total === 0) {
+ -                this.dots.callAll('revive');
+ -                this.blackberries.callAll('revive');
+ -                this.cherries.callAll('revive');
+ -                this.kiwis.callAll('revive');
+ -                this.dynamites.callAll('revive');
+ -                this.game.time.reset();
+ -                score = 0;
+ -                score_text.text = 'Score: ' + score + ' points';
+ -            }
+ -        },
         
         update: function () {
             this.physics.arcade.collide(this.pacman, this.layer);
