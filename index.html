@@ -85,7 +85,7 @@
             this.map.addTilesetImage('blackberry', 'blackberry-tiles');
             this.map.addTilesetImage('cherry', 'cherry-tiles');
             this.map.addTilesetImage('kiwi', 'kiwi-tiles');
-            //this.map.addTilesetImage('dynamite', 'dynamite-tiles');
+            this.map.addTilesetImage('dynamite', 'dynamite-tiles');
 
             this.layer = this.map.createLayer('Pacman');
             
@@ -99,7 +99,7 @@
             this.map.createFromTiles(49, this.safetile, 'blackberry', this.layer, this.blackberries);
             this.map.createFromTiles(50, this.safetile, 'cherry', this.layer, this.cherries);
             this.map.createFromTiles(51, this.safetile, 'kiwi', this.layer, this.kiwis);
-            //this.map.createFromTiles(52, this.safetile, 'dynamite', this.layer, this.dynamites);
+            this.map.createFromTiles(52, this.safetile, 'dynamite', this.layer, this.dynamites);
             
             
             //  The dots will need to be offset by 6px to put them back in the middle of the grid
@@ -130,9 +130,7 @@
             lives_text = game.add.text(360, -2, 'Lives: 3', { font: '14px Arial', fill: '#FFFFFF' });
             
             if (time > 50) {
-                this.map.addTilesetImage('dynamite', 'dynamite-tiles');
                 this.dynamites = this.add.physicsGroup();
-                this.map.createFromTiles(52, this.safetile, 'dynamite', this.layer, this.dynamites);
             }
             
         },
