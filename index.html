@@ -293,11 +293,11 @@
             if (time > 20 &&  time <35) {
                 this.dynamite.visible = true;
                 if (this.pacman.overlap(this.dynamite)) {
-                    counter = 1;
                     if (counter != 1) {
                         music.play();
                         score += 10;
                         score_text.text = 'Score: ' + score + ' points';
+                        counter = 1;
                         this.dynamite.visible = false;
                     }
                 }
