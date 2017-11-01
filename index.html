@@ -64,14 +64,16 @@
             this.load.image('blackberry', 'assets/blackberry.png');
             this.load.image('cherry', 'assets/cherry.png');
             this.load.image('kiwi', 'assets/kiwi.png');
+            this.load.image('dynamite', 'assets/dynamite.png');
             
             this.load.image('blackberry-tiles', 'assets/blackberry.png');
             this.load.image('cherry-tiles', 'assets/cherry.png');
             this.load.image('kiwi-tiles', 'assets/kiwi.png');
             this.load.image('tiles', 'assets/pacman-tiles.png');
+            this.load.image('dynamite-tiles', 'assets/dynamite.png');
             
             this.load.spritesheet('pacman', 'assets/giannis_rambo_scaled_flipped.png', 32, 32);
-            this.load.tilemap('map', 'assets/pacman-map_fruits.json', null, Phaser.Tilemap.TILED_JSON);
+            this.load.tilemap('map', 'assets/pacman-map_fruits_bonus.json', null, Phaser.Tilemap.TILED_JSON);
             
             game.load.audio('chopping', 'assets/giannakis_is_cutting.mp3');
             //  Needless to say, graphics (C)opyright Namco
@@ -83,6 +85,7 @@
             this.map.addTilesetImage('blackberry', 'blackberry-tiles');
             this.map.addTilesetImage('cherry', 'cherry-tiles');
             this.map.addTilesetImage('kiwi', 'kiwi-tiles');
+            this.map.addTilesetImage('dynamite', 'dynamite-tiles');
 
             this.layer = this.map.createLayer('Pacman');
             
@@ -90,11 +93,14 @@
             this.blackberries = this.add.physicsGroup();
             this.cherries = this.add.physicsGroup();
             this.kiwis = this.add.physicsGroup();
+            this.dynamites = this.add.physicsGroup();
             
             this.map.createFromTiles(7, this.safetile, 'dot', this.layer, this.dots);
             this.map.createFromTiles(49, this.safetile, 'blackberry', this.layer, this.blackberries);
             this.map.createFromTiles(50, this.safetile, 'cherry', this.layer, this.cherries);
             this.map.createFromTiles(51, this.safetile, 'kiwi', this.layer, this.kiwis);
+            this.map.createFromTiles(52, this.safetile, 'dynamite', this.layer, this.dynamites);
+            
             
             //  The dots will need to be offset by 6px to put them back in the middle of the grid
             this.dots.setAll('x', 6, false, false, 1);
@@ -107,7 +113,6 @@
             this.pacman = this.add.sprite((13 * 16) + 8, (11 * 16) + 8, 'pacman', 0);
             this.pacman.anchor.set(0.5);
             this.pacman.animations.add('munch', [0, 1, 2, 1], 15, true);
-            this.pacman.animations.stop();
 
             this.physics.arcade.enable(this.pacman);
             this.pacman.body.setSize(16, 16, 0, 0);
@@ -218,11 +223,12 @@
             music.play();
             score++;
             score_text.text = 'Score: ' + score + ' points';
-            if (this.dots.total === 0 && this.blackberries.total === 0 && this.cherries.total === 0 && this.kiwis.total === 0) {
+            if (this.dots.total === 0 && this.blackberries.total === 0 && this.cherries.total === 0 && this.kiwis.total === 0 && this.dynamites.total === 0) {
                 this.dots.callAll('revive');
                 this.blackberries.callAll('revive');
                 this.cherries.callAll('revive');
                 this.kiwis.callAll('revive');
+                this.dynamites.callALL('revive');
                 this.game.time.reset();
                 score = 0;
                 score_text.text = 'Score: ' + score + ' points';
@@ -235,11 +241,12 @@
             music.play();
             score += 10;
             score_text.text = 'Score: ' + score + ' points';
-             if (this.dots.total === 0 && this.blackberries.total === 0 && this.cherries.total === 0 && this.kiwis.total === 0) {
+            if (this.dots.total === 0 && this.blackberries.total === 0 && this.cherries.total === 0 && this.kiwis.total === 0 && this.dynamites.total === 0) {
                 this.dots.callAll('revive');
                 this.blackberries.callAll('revive');
                 this.cherries.callAll('revive');
                 this.kiwis.callAll('revive');
+                this.dynamites.callALL('revive');
                 this.game.time.reset();
                 score = 0;
                 score_text.text = 'Score: ' + score + ' points';
@@ -251,15 +258,16 @@
             music.play();
             score += 10;
             score_text.text = 'Score: ' + score + ' points';
-             if (this.dots.total === 0 && this.blackberries.total === 0 && this.cherries.total === 0 && this.kiwis.total === 0) {
+            if (this.dots.total === 0 && this.blackberries.total === 0 && this.cherries.total === 0 && this.kiwis.total === 0 && this.dynamites.total === 0) {
                 this.dots.callAll('revive');
                 this.blackberries.callAll('revive');
                 this.cherries.callAll('revive');
                 this.kiwis.callAll('revive');
+                this.dynamites.callALL('revive');
                 this.game.time.reset();
                 score = 0;
                 score_text.text = 'Score: ' + score + ' points';
-            }   
+            } 
         },
         
         eatKiwi: function (pacman, kiwi) {
@@ -267,11 +275,29 @@
             music.play();
             score += 10;
             score_text.text = 'Score: ' + score + ' points';
-             if (this.dots.total === 0 && this.blackberries.total === 0 && this.cherries.total === 0 && this.kiwis.total === 0) {
+            if (this.dots.total === 0 && this.blackberries.total === 0 && this.cherries.total === 0 && this.kiwis.total === 0 && this.dynamites.total === 0) {
                 this.dots.callAll('revive');
                 this.blackberries.callAll('revive');
                 this.cherries.callAll('revive');
                 this.kiwis.callAll('revive');
+                this.dynamites.callALL('revive');
+                this.game.time.reset();
+                score = 0;
+                score_text.text = 'Score: ' + score + ' points';
+            }
+        },
+        
+        eatDynamite: function (pacman, dynamite) {
+            dynamite.kill();
+            music.play();
+            score += 100;
+            score_text.text = 'Score: ' + score + ' points';
+            if (this.dots.total === 0 && this.blackberries.total === 0 && this.cherries.total === 0 && this.kiwis.total === 0 && this.dynamites.total === 0) {
+                this.dots.callAll('revive');
+                this.blackberries.callAll('revive');
+                this.cherries.callAll('revive');
+                this.kiwis.callAll('revive');
+                this.dynamites.callALL('revive');
                 this.game.time.reset();
                 score = 0;
                 score_text.text = 'Score: ' + score + ' points';
@@ -284,6 +310,7 @@
             this.physics.arcade.overlap(this.pacman, this.blackberries, this.eatBlackberry, null, this);
             this.physics.arcade.overlap(this.pacman, this.cherries, this.eatCherry, null, this);
             this.physics.arcade.overlap(this.pacman, this.kiwis, this.eatKiwi, null, this);
+            this.physics.arcade.overlap(this.pacman, this.dynamites, this.eatDynamite, null, this);
             
             this.marker.x = this.math.snapToFloor(Math.floor(this.pacman.x), this.gridsize) / this.gridsize;
             this.marker.y = this.math.snapToFloor(Math.floor(this.pacman.y), this.gridsize) / this.gridsize;
