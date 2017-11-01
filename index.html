@@ -316,7 +316,7 @@
             this.physics.arcade.overlap(this.pacman, this.blackberries, this.eatBlackberry, null, this);
             this.physics.arcade.overlap(this.pacman, this.cherries, this.eatCherry, null, this);
             this.physics.arcade.overlap(this.pacman, this.kiwis, this.eatKiwi, null, this);
-            //this.physics.arcade.overlap(this.pacman, this.dynamites, this.eatDynamite, null, this);
+            this.physics.arcade.overlap(this.pacman, this.dynamites, this.eatDynamite, null, this);
             
             this.marker.x = this.math.snapToFloor(Math.floor(this.pacman.x), this.gridsize) / this.gridsize;
             this.marker.y = this.math.snapToFloor(Math.floor(this.pacman.y), this.gridsize) / this.gridsize;
