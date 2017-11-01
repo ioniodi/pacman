@@ -112,7 +112,7 @@
             this.pacman = this.add.sprite((13 * 16) + 8, (11 * 16) + 8, 'pacman', 0);
             
             this.dynamite = this.add.sprite((11 * 16), (11 * 16), 'dynamite');
-            this.dynamites.collision = false;
+            dynamite.body.enable = false;
             
             this.pacman.anchor.set(0.5);
             this.pacman.animations.add('munch', [0, 1, 2, 1], 15, true);
@@ -292,6 +292,18 @@
                 score_text.text = 'Score: ' + score + ' points';
             }
         },
+        
+        toggleCollision: function() {
+
+                if (dynamite.body.enable) {
+                    sprite2.body.enable = false;
+                }
+                else {
+                    sprite2.body.enable = true;
+                }
+
+        };
+        
         /*
         eatDynamite: function (pacman, dynamite) {
               dynamite.kill();
