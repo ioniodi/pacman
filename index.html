@@ -64,7 +64,7 @@
             this.load.image('blackberry', 'assets/blackberry.png');
             this.load.image('cherry', 'assets/cherry.png');
             this.load.image('kiwi', 'assets/kiwi.png');
-            //this.load.image('dynamite', 'assets/dynamite.png');
+            this.load.image('dynamite', 'assets/dynamite.png');
             
             this.load.image('blackberry-tiles', 'assets/blackberry.png');
             this.load.image('cherry-tiles', 'assets/cherry.png');
@@ -85,7 +85,7 @@
             this.map.addTilesetImage('blackberry', 'blackberry-tiles');
             this.map.addTilesetImage('cherry', 'cherry-tiles');
             this.map.addTilesetImage('kiwi', 'kiwi-tiles');
-            //this.map.addTilesetImage('dynamite', 'dynamite-tiles');
+            this.map.addTilesetImage('dynamite', 'dynamite-tiles');
 
             this.layer = this.map.createLayer('Pacman');
             
@@ -111,7 +111,6 @@
 
             //  Position Pacman at grid location 13x11 (the +8 accounts for his anchor)
             this.pacman = this.add.sprite((13 * 16) + 8, (11 * 16) + 8, 'pacman', 0);
-            //this.dynamites.visible = false;
             
             this.pacman.anchor.set(0.5);
             this.pacman.animations.add('munch', [0, 1, 2, 1], 15, true);
@@ -129,13 +128,13 @@
             time_text = game.add.text(10, -2, 'Time: 0 seconds', { font: '14px Arial', fill: '#FFFFFF' });
             score_text = game.add.text(180, -2, 'Score: 0 points', { font: '14px Arial', fill: '#FFFFFF' });
             lives_text = game.add.text(360, -2, 'Lives: 3', { font: '14px Arial', fill: '#FFFFFF' });
-            /*
+            
             if (time > 50) {
-                this.map.addTilesetImage('dynamite', 'dynamite-tiles');
+                //this.map.addTilesetImage('dynamite', 'dynamite-tiles');
                 this.dynamites = this.add.physicsGroup();
                 this.map.createFromTiles(52, this.safetile, 'dynamite', this.layer, this.dynamites);
             }
-            */
+            
         },
         
         checkKeys: function () {
