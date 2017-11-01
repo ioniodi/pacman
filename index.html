@@ -27,7 +27,7 @@
     var score_text;   
     
     var lives;   
-    var lives_texted;
+    var lives_text;
         
     var Pacman = function (game) {
         this.map = null;
@@ -342,8 +342,10 @@
             //time_text.text = 'Lives: ' + lives;
         
             if (time > 10) {
-                this.dynamites = this.add.physicsGroup();
-                this.physics.arcade.overlap(this.pacman, this.dynamites, this.eatDynamite, null, this);
+                lives = 2;
+                lives_text.text = 'Lives: ' + lives;
+                //this.dynamites = this.add.physicsGroup();
+                //this.physics.arcade.overlap(this.pacman, this.dynamites, this.eatDynamite, null, this);
             }
         }
     };
