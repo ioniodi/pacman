@@ -309,21 +309,20 @@
             time_text.text = 'Time: ' + time + ' seconds';
             //lives_text.text = 'Lives: ' + lives;
             
-            if (counter == 0) {
-                if (time >= 10 && time < 16) {
-                    console.log('test');
-                    this.dynamite.visible = true;
-                    if (this.pacman.overlap(this.dynamite)) {
-                        music.play();
-                        this.dynamite.visible = false;
-                        score += 100;
-                        score_text.text = 'Score: ' + score + ' points';
-                        counter = 1;
-                    }
-                }
-                else {
+            
+            if (time >= 10 && time < 16) {
+                console.log('test');
+                this.dynamite.visible = true;
+                if (this.pacman.overlap(this.dynamite)) {
+                    music.play();
                     this.dynamite.visible = false;
+                    score += 100;
+                    score_text.text = 'Score: ' + score + ' points';
+                    counter = 1;
                 }
+            }
+            else {
+                this.dynamite.visible = false;
             }
         }
     };
