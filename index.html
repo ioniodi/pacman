@@ -311,6 +311,8 @@
             
             if (time => 20) {           
                 this.dynamite.visible = true;
+                lives--;
+                lives_text.text = 'Lives: ' + lives;
                 /*
                 if (this.pacman.overlap(this.dynamite)) {                    
                     counter = 1;
