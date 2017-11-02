@@ -111,7 +111,6 @@
             
             this.dynamite = this.add.sprite((11 * 16), (11 * 16), 'dynamite', 0);
             this.dynamite.visible = false;
-            this.bonus();
                     
             this.pacman.anchor.set(0.5);
             this.pacman.animations.add('munch', [0, 1, 2, 1], 15, true);
@@ -285,7 +284,7 @@
         },        
         
         bonus: function() {
-            if (time => 20 && time < 25) {
+            while (time => 20 && time < 25) {
                 if (counter != 1) {                    
                     this.dynamite.visible = true;
                     if (this.pacman.overlap(this.dynamite)) {                    
@@ -329,7 +328,7 @@
             time_text.text = 'Time: ' + time + ' seconds';
             //lives_text.text = 'Lives: ' + lives;
             
-            //this.bonus();
+            this.bonus();
             
             /*
             */
