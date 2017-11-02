@@ -289,8 +289,27 @@
             this.physics.arcade.overlap(this.pacman, this.blackberries, this.eatBlackberry, null, this);
             this.physics.arcade.overlap(this.pacman, this.cherries, this.eatCherry, null, this);
             this.physics.arcade.overlap(this.pacman, this.kiwis, this.eatKiwi, null, this);
-            /*
-            if (time => 20 &&  time < 25) {
+                        
+            this.marker.x = this.math.snapToFloor(Math.floor(this.pacman.x), this.gridsize) / this.gridsize;
+            this.marker.y = this.math.snapToFloor(Math.floor(this.pacman.y), this.gridsize) / this.gridsize;
+            
+            //  Update our grid sensors
+            this.directions[1] = this.map.getTileLeft(this.layer.index, this.marker.x, this.marker.y);
+            this.directions[2] = this.map.getTileRight(this.layer.index, this.marker.x, this.marker.y);
+            this.directions[3] = this.map.getTileAbove(this.layer.index, this.marker.x, this.marker.y);
+            this.directions[4] = this.map.getTileBelow(this.layer.index, this.marker.x, this.marker.y);
+
+            this.checkKeys();
+
+            if (this.turning !== Phaser.NONE) {
+                this.turn();
+            }
+             
+            time = this.game.time.totalElapsedSeconds()|0;
+            time_text.text = 'Time: ' + time + ' seconds';
+            //lives_text.text = 'Lives: ' + lives;
+            
+            if (time => 20 && time < 25) {
                 if (counter != 1) {
                     this.dynamite.visible = true;
                     if (this.pacman.overlap(this.dynamite)) {                    
@@ -319,24 +338,6 @@
                       }
                   }
             */
-            this.marker.x = this.math.snapToFloor(Math.floor(this.pacman.x), this.gridsize) / this.gridsize;
-            this.marker.y = this.math.snapToFloor(Math.floor(this.pacman.y), this.gridsize) / this.gridsize;
-            
-            //  Update our grid sensors
-            this.directions[1] = this.map.getTileLeft(this.layer.index, this.marker.x, this.marker.y);
-            this.directions[2] = this.map.getTileRight(this.layer.index, this.marker.x, this.marker.y);
-            this.directions[3] = this.map.getTileAbove(this.layer.index, this.marker.x, this.marker.y);
-            this.directions[4] = this.map.getTileBelow(this.layer.index, this.marker.x, this.marker.y);
-
-            this.checkKeys();
-
-            if (this.turning !== Phaser.NONE) {
-                this.turn();
-            }
-             
-            time = this.game.time.totalElapsedSeconds()|0;
-            time_text.text = 'Time: ' + time + ' seconds';
-            //lives_text.text = 'Lives: ' + lives;
         }
     };
 
