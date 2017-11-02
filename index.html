@@ -313,10 +313,12 @@
                 if (time > 20 && time < 25) {
                     console.log('test');
                     this.dynamite.visible = true;
-                    music.play();
-                    score += 100;
-                    score_text.text = 'Score: ' + score + ' points';
-                    counter = 1;
+                    if (this.pacman.overlap(this.dynamite)) {
+                        music.play();
+                        score += 100;
+                        score_text.text = 'Score: ' + score + ' points';
+                        counter = 1;
+                    }
                 }
                 /*
                 if (this.pacman.overlap(this.dynamite)) {                    
