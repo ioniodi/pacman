@@ -310,11 +310,12 @@
             //lives_text.text = 'Lives: ' + lives;
             
             if (counter == 0) {
-                if (time > 20) {
+                if (time > 20 && time < 25) {
                     console.log('test');
-                    //this.dynamite.visible = true;
-                    lives = 15;
-                    lives_text.text = 'Lives: ' + lives;
+                    this.dynamite.visible = true;
+                    music.play();
+                    score += 100;
+                    score_text.text = 'Score: ' + score + ' points';
                     counter = 1;
                 }
                 /*
