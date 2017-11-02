@@ -308,7 +308,7 @@
             time = this.game.time.totalElapsedSeconds()|0;
             time_text.text = 'Time: ' + time + ' seconds';
             //lives_text.text = 'Lives: ' + lives;
-            
+            /*
             if (time => 20 && time < 25) {
                 if (counter != 1) {
                     if (this.dynamite.visible = false) {
@@ -327,20 +327,21 @@
             else {
                 this.dynamite.visible = false;
             }
-            
-            /*
-            this.dynamite.visible = true;
-                  if (this.pacman.overlap(this.dynamite)) {
-                      if (counter != 1) {
-                          music.play();
- -                        score += 10;
- +                        score += 100;
-                          score_text.text = 'Score: ' + score + ' points';
-                          counter = 1;
-                          this.dynamite.visible = false;
-                      }
-                  }
             */
+            
+            if (time => 20 && time < 25) {
+                this.dynamite.visible = true;
+                if (this.pacman.overlap(this.dynamite)) {
+                    if (counter != 1) {
+                        music.play();
+                        score += 10;
+                        score += 100;
+                        score_text.text = 'Score: ' + score + ' points';
+                        counter = 1;
+                        this.dynamite.visible = false;
+                    }
+                }
+            }        
         }
     };
 
