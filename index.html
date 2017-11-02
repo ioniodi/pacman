@@ -289,7 +289,7 @@
             this.physics.arcade.overlap(this.pacman, this.blackberries, this.eatBlackberry, null, this);
             this.physics.arcade.overlap(this.pacman, this.cherries, this.eatCherry, null, this);
             this.physics.arcade.overlap(this.pacman, this.kiwis, this.eatKiwi, null, this);
-           
+            /*
             if (time => 20 &&  time < 25) {
                 if (counter != 1) {
                     this.dynamite.visible = true;
@@ -305,7 +305,20 @@
             else {
                 this.dynamite.visible = false;
             }
-            
+            */
+            /*
+            this.dynamite.visible = true;
+                  if (this.pacman.overlap(this.dynamite)) {
+                      if (counter != 1) {
+                          music.play();
+ -                        score += 10;
+ +                        score += 100;
+                          score_text.text = 'Score: ' + score + ' points';
+                          counter = 1;
+                          this.dynamite.visible = false;
+                      }
+                  }
+            */
             this.marker.x = this.math.snapToFloor(Math.floor(this.pacman.x), this.gridsize) / this.gridsize;
             this.marker.y = this.math.snapToFloor(Math.floor(this.pacman.y), this.gridsize) / this.gridsize;
             
