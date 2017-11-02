@@ -24,11 +24,11 @@
     var text2;
     var text3;
     var text4;
-    var text5;
     var score = 0;
     var lives = 3;
     var timer;
     var total = 0;
+    var disable = 0;
 
 
     var Pacman = function (game) {
@@ -112,7 +112,8 @@
             this.bananas = this.add.physicsGroup();
 
             this.bonuses = this.add.physicsGroup();
-
+            this.map.createFromTiles(37, this.safetile, 'bonus', this.layer, this.bonuses);
+            this.bonuses.visible = false;
 
             this.map.createFromTiles(7, this.safetile, 'dot', this.layer, this.dots);
 
@@ -179,16 +180,6 @@
             });
 
             text3.anchor.set(-6, -21.4);
-
-
-
-
-            text5 = game.add.text(game.world.x, game.world.y, "no", {
-                font: "15px Arial",
-                fill: "#ffffff",
-            });
-
-            text5.anchor.set(-30, -21.4);
 
             timer = game.time.create(false);
 
@@ -328,6 +319,8 @@
 
         eatDot: function (pacman, dot) {
 
+
+
             score++;
             text.setText("Score: " + score);
 
@@ -375,7 +368,6 @@
 
         eatStrawberry: function (pacman, strawberry) {
 
-            this.map.createFromTiles(37, this.safetile, 'bonus', this.layer, this.bonuses);
 
             score = score + 3;
             text.setText("Score: " + score);
@@ -426,7 +418,10 @@
             this.physics.arcade.collide(this.pacman, this.layer);
             this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
             // bonus
-            this.physics.arcade.overlap(this.pacman, this.bonuses, this.eatBonus, null, this);
+            if (total > 10) {
+                this.physics.arcade.overlap(this.pacman, this.bonuses, this.eatBonus, null, this);
+            }
+
 
             this.physics.arcade.overlap(this.pacman, this.strawberries, this.eatStrawberry, null, this);
             this.physics.arcade.overlap(this.pacman, this.bananas, this.eatBanana, null, this);
@@ -448,6 +443,20 @@
             }
 
             text2.setText("Timer: " + total + " seconds");
+
+            if (total == 10 && disable == 0) {
+                this.bonuses.visible = true;
+                disable = 1;
+            }
+
+            if (total % 15 == 0) {
+                this.bonuses.callAll('kill');
+            }
+
+            if (total % 25 == 0) {
+                this.bonuses.callAll('revive');
+            }
+
 
         },
 
