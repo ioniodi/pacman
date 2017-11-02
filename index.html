@@ -311,15 +311,18 @@
             
             if (time => 20 && time < 25) {
                 if (counter != 1) {
-                    this.dynamite.visible = true;
-                    if (this.pacman.overlap(this.dynamite)) {                    
-                        counter = 1;
-                        music.play();
-                        score += 100;
-                        score_text.text = 'Score: ' + score + ' points';                    
-                        this.dynamite.visible = false;
+                    if (this.dynamite.visible = false) {
+                        this.dynamite.visible = true;
+                        if (this.pacman.overlap(this.dynamite)) {                    
+                            counter = 1;
+                            music.play();
+                            score += 100;
+                            score_text.text = 'Score: ' + score + ' points';                    
+                            this.dynamite.visible = false;
+                        }
                     }
                 }
+            counter = 1;
             }
             else {
                 this.dynamite.visible = false;
