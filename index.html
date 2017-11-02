@@ -16,14 +16,15 @@
 
     <script type="text/javascript">
     // new
-    //var game = new Phaser.Game(976, 976, Phaser.AUTO);
+    var game = new Phaser.Game(976, 976, Phaser.AUTO);
     // old
-    var game = new Phaser.Game(512, 512, Phaser.AUTO);
+    //var game = new Phaser.Game(512, 512, Phaser.AUTO);
 
     var text;
     var text2;
     var text3;
     var text4;
+    var text5;
     var score = 0;
     var lives = 3;
     var timer;
@@ -78,6 +79,7 @@
 
             this.load.image('dot', 'assets/dot.png');
 
+            this.load.image('bonus', 'assets/bonus.png');
 
             this.load.image('strawberry', 'assets/strawberry.png');
             this.load.image('banana', 'assets/banana.png');
@@ -87,8 +89,9 @@
             this.load.audio('win', 'assets/audio/switch.mp3');
 
             this.load.image('tiles', 'assets/pacman-tiles.png');
+
             this.load.spritesheet('pacman', 'assets/pacman.png', 32, 32);
-            this.load.tilemap('map', 'assets/pacman-map.json', null, Phaser.Tilemap.TILED_JSON);
+            this.load.tilemap('map', 'assets/pacman-map2.json', null, Phaser.Tilemap.TILED_JSON);
 
 
 
@@ -108,11 +111,18 @@
             this.strawberries = this.add.physicsGroup();
             this.bananas = this.add.physicsGroup();
 
+            this.bonuss = this.add.physicsGroup();
+
+
             this.map.createFromTiles(7, this.safetile, 'dot', this.layer, this.dots);
 
             this.map.createFromTiles(35, this.safetile, 'strawberry', this.layer, this.strawberries);
 
             this.map.createFromTiles(36, this.safetile, 'banana', this.layer, this.bananas);
+
+            this.map.createFromTiles(37, this.safetile, 'bonus', this.layer, this.bonuss);
+
+
 
             this.switch = game.add.audio('switch');
             this.switch2 = game.add.audio('switch');
@@ -134,9 +144,9 @@
             //  Position Pacman at grid location 14x17 (the +8 accounts for his anchor)
 
             // new map coords
-            //this.pacman = this.add.sprite((30 * 16) + 8, (35 * 16) + 8, 'pacman', 0);
+            this.pacman = this.add.sprite((30 * 16) + 8, (35 * 16) + 8, 'pacman', 0);
             // old map coords
-            this.pacman = this.add.sprite((11 * 16) + 8, (11 * 16) + 8, 'pacman', 0);
+            //this.pacman = this.add.sprite((11 * 16) + 8, (11 * 16) + 8, 'pacman', 0);
 
             this.pacman.anchor.set(0.5);
             this.pacman.animations.add('munch', [0, 1, 2], 5, true);
@@ -170,11 +180,26 @@
 
             text3.anchor.set(-6, -21.4);
 
+
+
+
+            text5 = game.add.text(game.world.x, game.world.y, "no", {
+                font: "15px Arial",
+                fill: "#ffffff",
+            });
+
+            text5.anchor.set(-30, -21.4);
+
             timer = game.time.create(false);
 
             timer.loop(1000, updateCounter, this);
 
             timer.start();
+
+
+
+
+
 
         },
 
@@ -292,6 +317,12 @@
 
         },
 
+        eatBonus: function (pacman, bonus) {
+            console.log("eaten");
+            text5.setText("no2");
+
+        },
+
         eatDot: function (pacman, dot) {
 
             score++;
@@ -389,6 +420,8 @@
 
             this.physics.arcade.collide(this.pacman, this.layer);
             this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
+            // bonus
+            this.physics.arcade.overlap(this.pacman, this.bonuss, this.eatBonus, null, this);
 
             this.physics.arcade.overlap(this.pacman, this.strawberries, this.eatStrawberry, null, this);
             this.physics.arcade.overlap(this.pacman, this.bananas, this.eatBanana, null, this);
