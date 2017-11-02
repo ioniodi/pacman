@@ -111,7 +111,7 @@
             this.strawberries = this.add.physicsGroup();
             this.bananas = this.add.physicsGroup();
 
-            this.bonuss = this.add.physicsGroup();
+            this.bonuses = this.add.physicsGroup();
 
 
             this.map.createFromTiles(7, this.safetile, 'dot', this.layer, this.dots);
@@ -120,7 +120,7 @@
 
             this.map.createFromTiles(36, this.safetile, 'banana', this.layer, this.bananas);
 
-            this.map.createFromTiles(37, this.safetile, 'bonus', this.layer, this.bonuss);
+
 
 
 
@@ -318,8 +318,11 @@
         },
 
         eatBonus: function (pacman, bonus) {
-            console.log("eaten");
-            text5.setText("no2");
+
+            bonus.kill();
+
+            score = score + 10;
+            text.setText("Score: " + score);
 
         },
 
@@ -372,6 +375,8 @@
 
         eatStrawberry: function (pacman, strawberry) {
 
+            this.map.createFromTiles(37, this.safetile, 'bonus', this.layer, this.bonuses);
+
             score = score + 3;
             text.setText("Score: " + score);
 
@@ -421,7 +426,7 @@
             this.physics.arcade.collide(this.pacman, this.layer);
             this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
             // bonus
-            this.physics.arcade.overlap(this.pacman, this.bonuss, this.eatBonus, null, this);
+            this.physics.arcade.overlap(this.pacman, this.bonuses, this.eatBonus, null, this);
 
             this.physics.arcade.overlap(this.pacman, this.strawberries, this.eatStrawberry, null, this);
             this.physics.arcade.overlap(this.pacman, this.bananas, this.eatBanana, null, this);
