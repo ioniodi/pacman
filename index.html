@@ -292,9 +292,9 @@
                     score += 100;
                     score_text.text = 'Score: ' + score + ' points';                    
                     this.dynamite.visible = false;
-                    }
-                }
+                 }
             }
+            this.dynamite.visible = false;
         },
         
         update: function () {
@@ -305,7 +305,7 @@
             this.physics.arcade.overlap(this.pacman, this.kiwis, this.eatKiwi, null, this);
            
             if (time => 20 &&  time < 25) {
-                this.Bonus();
+                ,Bonus();
             }
             else {
                 this.dynamite.visible = false;
