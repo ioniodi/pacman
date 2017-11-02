@@ -315,6 +315,7 @@
                     this.dynamite.visible = true;
                     if (this.pacman.overlap(this.dynamite)) {
                         music.play();
+                        this.dynamite.visible = false;
                         score += 100;
                         score_text.text = 'Score: ' + score + ' points';
                         counter = 1;
