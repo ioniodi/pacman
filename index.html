@@ -310,7 +310,7 @@
             //lives_text.text = 'Lives: ' + lives;
             
             if (counter == 0) {
-                if (time > 20 && time < 25) {
+                if ((time => 10 && time < 16) || (time => 30 && time < 36)) {
                     console.log('test');
                     this.dynamite.visible = true;
                     if (this.pacman.overlap(this.dynamite)) {
@@ -322,13 +322,9 @@
                     }
                 }
                 else {
-                    console.log('test2');
                     this.dynamite.visible = false;
                 }
             }
-           
-            /*
-            */
         }
     };
 
