@@ -31,7 +31,7 @@
  "tilesets":[
         {
          "firstgid":1,
-         "image":"tiles.png",
+         "image":"pacman-tiles.png",
          "imageheight":320,
          "imagewidth":448,
          "margin":0,
