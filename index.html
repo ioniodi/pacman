@@ -13,10 +13,14 @@
     <script src="//cdn.jsdelivr.net/phaser/2.2.2/phaser.min.js"></script>
 </head>
 <body>
+    
+    <audio autoplay loop>
+        <source src="assets/Sound Effects.mp3" type="audio/mp3">
+    </audio>
 
     <script type="text/javascript">
 
-    var game = new Phaser.Game(448, 496, Phaser.AUTO);
+    var game = new Phaser.Game(500, 520, Phaser.AUTO);
 
     var Pacman = function (game) {
 
@@ -59,13 +63,13 @@
 
             //  We need this because the assets are on github pages
             //  Remove the next 2 lines if running locally
-            this.load.baseURL = 'https://ioniodi.github.io/pacman/';
+            this.load.baseURL = 'https://siotasandreas.github.io/pacman/';
             this.load.crossOrigin = 'anonymous';
 
-            this.load.image('dot', 'assets/dot.png');
+            this.load.image('dot', 'assets/strawberry.png');
             this.load.image('tiles', 'assets/pacman-tiles.png');
-            this.load.spritesheet('pacman', 'assets/pacman.png', 32, 32);
-            this.load.tilemap('map', 'assets/pacman-map.json', null, Phaser.Tilemap.TILED_JSON);
+            this.load.spritesheet('pacman', 'assets/newchar.png', 32, 32);
+            this.load.tilemap('map', 'assets/pacman new..json', null, Phaser.Tilemap.TILED_JSON);
 
             //  Needless to say, graphics (C)opyright Namco
 
