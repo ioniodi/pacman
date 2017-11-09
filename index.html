@@ -79,8 +79,8 @@
 
             //  We need this because the assets are on github pages
             //  Remove the next 2 lines if running locally
-           this.load.baseURL = 'https://Manolis-Tasiopoulos.github.io/pacman/';
-           this.load.crossOrigin = 'anonymous';
+          //  this.load.baseURL = 'https://ioniodi.github.io/pacman/';
+          //  this.load.crossOrigin = 'anonymous';
 
             this.load.image('background', 'assets/background.jpg');
             
@@ -117,8 +117,8 @@
             this.logo.scale.setTo(0.2,0.2);
             
             music = game.add.audio('pacman-music');
+            music.volume = 0.2;
             music.play();
-            music.volume = 0.5;
             this.layer = this.map.createLayer('Pacman');
 
             this.dots = this.add.physicsGroup();
@@ -371,7 +371,7 @@
             bonus.kill();                                   //kill bonus sprite
             
             b_sound = game.add.audio('bonus_sound');        //play a sound when you eat bonus apple
-            b_sound.volume = 0.5;
+            b_sound.volume = 1;
             b_sound.play();
             
             
