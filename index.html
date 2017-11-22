@@ -325,15 +325,16 @@
             time_text.text = 'Time: ' + time + ' seconds';
             //lives_text.text = 'Lives: ' + lives;
             
-			if (this.pacman.overlap(this.knife)) {
-				music.play();
-				this.knife.kill();
-				knife_eaten = 1;
-			}
-			
-			if (knife_eaten == 1) {
-				atm_time = time;
-				after_10_time = time + 10;
+			if (knife_eaten == 0) {
+				if (this.pacman.overlap(this.knife)) {
+					music.play();
+					this.knife.kill();
+					knife_eaten = 1;
+					atm_time = time
+					after_10_time = time + 10;
+				}
+			} 
+			else {
 				if (time <= after_10_time ) {
 					console.log('test2');
 					if (this.pacman.overlap(this.soldier)) {
@@ -343,8 +344,6 @@
 					}
 				}
 			}
-			
-			
 			
             if (this.pacman.overlap(this.teleport_portal_left)) {
 				this.pacman.reset((27 * 16) + 8, (21 * 16) + 8);
