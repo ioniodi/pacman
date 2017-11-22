@@ -324,16 +324,15 @@
             time = this.game.time.totalElapsedSeconds()|0;
             time_text.text = 'Time: ' + time + ' seconds';
             //lives_text.text = 'Lives: ' + lives;
-            
-			if (this.pacman.overlap(this.knife)) {
-				console.log('test');
+            if (this.pacman.overlap(this.knife)) {
+		    	console.log('test');
 				music.play();
 				this.knife.visible = false;
 				atm_time = time;
 				after_5_time = time + 5;
 				while (atm_time + i <= after_5_time) {
 					i++;
-					if (this.pacman.overlap(this.soldier)) }
+					if (this.pacman.overlap(this.soldier)) {
 						this.soldier.visible = false;
 						score += 250;
 						score_text.text = 'Score: ' + score + ' points';
