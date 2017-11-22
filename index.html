@@ -68,7 +68,7 @@
             this.load.image('kiwi', 'assets/kiwi.png');
             this.load.image('dynamite', 'assets/dynamite.png');
             this.load.image('soldier', 'assets/soldier.png');
-		    this.load.image('teleport', 'assets/teleport.png');
+			this.load.image('teleport', 'assets/teleport.png');
             
             this.load.image('blackberry-tiles', 'assets/blackberry.png');
             this.load.image('cherry-tiles', 'assets/cherry.png');
@@ -120,9 +120,7 @@
             this.pacman.animations.add('munch', [0, 1, 2, 1], 15, true);
 
             this.physics.arcade.enable(this.pacman);
-			this.physics.arcade.enable(this.soldier);
             this.pacman.body.setSize(16, 16, 0, 0);
-			this.soldier.body.setSize(16, 16, 0, 0);
 
             this.cursors = this.input.keyboard.createCursorKeys();
 
@@ -322,7 +320,7 @@
             if (this.pacman.overlap(this.teleport)) {
                 this.pacman.reset(25 * 16, 21 * 16);
                 this.move(Phaser.LEFT);
-                this.pacman.play('munch');
+                this.physics.arcade.enable(this.pacman);
             }
             
             if (counter == 0) {
