@@ -318,8 +318,9 @@
             //lives_text.text = 'Lives: ' + lives;
             
             if (this.pacman.overlap(this.teleport)) {
-                this.pacman.kill();
-		this.pacman.reset(24 * 16, 21 * 16);
+		        this.pacman.reset(24 * 16, 21 * 16);
+                this.pacman.anchor.set(0.5);
+                this.pacman.body.setSize(16, 16, 0, 0);
             }
             
             if (counter == 0) {
