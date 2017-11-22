@@ -328,7 +328,7 @@
 			if (this.pacman.overlap(this.knife)) {
 		    	console.log('test');
 				music.play();
-				this.knife.visible = false;
+				this.knife.kill();
 				atm_time = time;
 				after_10_time = time + 10;
 				while (atm_time + i <= after_10_time) {
