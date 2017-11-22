@@ -120,9 +120,9 @@
             this.dynamite = this.add.sprite((11 * 16), (11 * 16), 'dynamite', 0);
             this.teleport_portal_left = this.add.sprite((-2 * 16), (12 * 16), 'teleport_portal_left', 0);
             this.teleport_portal_right = this.add.sprite((29 * 16), (21 * 16), 'teleport_portal_right', 0);
-	    this.knife = this.add.sprite((14 * 16) + 8, (29 * 16) + 8, 'knife', 0);
+	    	this.knife = this.add.sprite((14 * 16), (29 * 16), 'knife', 0);
             
-	    this.dynamite.visible = false;
+	    	this.dynamite.visible = false;
                     
             this.pacman.anchor.set(0.5);
             this.pacman.animations.add('munch', [0, 1, 2, 1], 15, true);
@@ -324,13 +324,14 @@
             time = this.game.time.totalElapsedSeconds()|0;
             time_text.text = 'Time: ' + time + ' seconds';
             //lives_text.text = 'Lives: ' + lives;
-            if (this.pacman.overlap(this.knife)) {
+            
+			if (this.pacman.overlap(this.knife)) {
 		    	console.log('test');
 				music.play();
 				this.knife.visible = false;
 				atm_time = time;
-				after_5_time = time + 5;
-				while (atm_time + i <= after_5_time) {
+				after_5_time = time + 10;
+				while (atm_time + i <= after_10_time) {
 					i++;
 					if (this.pacman.overlap(this.soldier)) {
 						this.soldier.visible = false;
