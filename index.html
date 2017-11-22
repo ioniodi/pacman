@@ -319,7 +319,6 @@
             
             if (this.pacman.overlap(this.teleport)) {
                 this.pacman.reset(25 * 16, 21 * 16);
-                this.move(Phaser.LEFT);
                 this.physics.arcade.enable(this.pacman);
             }
             
