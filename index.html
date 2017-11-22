@@ -332,7 +332,7 @@
 					this.knife.kill();
 					atm_time = time;
 					after_10_time = time + 10;
-					while (time <= after_10_time) {
+					if (time <= after_10_time) {
 						console.log('test2');
 						if (this.pacman.overlap(this.soldier)) {
 							this.soldier.visible = false;
