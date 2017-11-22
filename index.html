@@ -68,7 +68,8 @@
             this.load.image('kiwi', 'assets/kiwi.png');
             this.load.image('dynamite', 'assets/dynamite.png');
             this.load.image('soldier', 'assets/soldier.png');
-			this.load.image('teleport', 'assets/teleport.png');
+			this.load.image('teleport_portal_left', 'assets/teleport_portal_left.png');
+			this.load.image('teleport_portal_right', 'assets/teleport_portal_right.png');
             
             this.load.image('blackberry-tiles', 'assets/blackberry.png');
             this.load.image('cherry-tiles', 'assets/cherry.png');
@@ -112,7 +113,8 @@
             this.pacman = this.add.sprite((13 * 16) + 8, (11 * 16) + 8, 'pacman', 0);
             this.soldier = this.add.sprite((8 * 16), (10 * 16), 'soldier', 0);
             this.dynamite = this.add.sprite((11 * 16), (11 * 16), 'dynamite', 0);
-            this.teleport = this.add.sprite((1 * 16), (12 * 16), 'teleport', 0);
+            this.teleport_portal_left = this.add.sprite((0 * 16), (12 * 16), 'teleport_portal_left', 0);
+			this.teleport_portal_right = this.add.sprite((26 * 16), (21 * 16), 'teleport_portal_right', 0);
             
 	    	this.dynamite.visible = false;
                     
@@ -317,10 +319,14 @@
             time_text.text = 'Time: ' + time + ' seconds';
             //lives_text.text = 'Lives: ' + lives;
             
-            if (this.pacman.overlap(this.teleport)) {
-		this.pacman.reset((25 * 16) + 8, (21 * 16) + 8);
-		this.move(Phaser.LEFT);
-                
+            if (this.pacman.overlap(this.teleport_portal_left)) {
+				this.pacman.reset((25 * 16) + 8, (21 * 16) + 8);
+				this.move(Phaser.LEFT);
+            }
+			
+			if (this.pacman.overlap(this.teleport_portal_right)) {
+				this.pacman.reset((2 * 16) + 8, (12 * 16) + 8);
+				this.move(Phaser.RIGHT);
             }
             
             if (counter == 0) {
