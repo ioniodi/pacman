@@ -325,20 +325,17 @@
             time_text.text = 'Time: ' + time + ' seconds';
             //lives_text.text = 'Lives: ' + lives;
             
-			if (this.knife.visible = true) {
-				if (this.pacman.overlap(this.knife)) {
-					console.log('knife eaten');
-					music.play();
-					this.knife.kill();
-					atm_time = time;
-					after_10_time = time + 10;
-					if (time <= after_10_time) {
-						console.log('test2');
-						if (this.pacman.overlap(this.soldier)) {
-							this.soldier.visible = false;
-							score += 250;
-							score_text.text = 'Score: ' + score + ' points';
-						}
+			if (this.pacman.overlap(this.knife)) {
+				music.play();
+				this.knife.kill();
+				atm_time = time;
+				after_10_time = time + 10;
+				while (time <= after_10_time) {
+					console.log('test2');
+					if (this.pacman.overlap(this.soldier)) {
+						this.soldier.visible = false;
+						score += 250;
+						score_text.text = 'Score: ' + score + ' points';
 					}
 				}
 			}
