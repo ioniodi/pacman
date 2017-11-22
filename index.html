@@ -114,7 +114,7 @@
             this.dynamite = this.add.sprite((11 * 16), (11 * 16), 'dynamite', 0);
             this.teleport = this.add.sprite((1 * 16), (12 * 16), 'teleport', 0);
             
-	    this.dynamite.visible = false;
+	    	this.dynamite.visible = false;
                     
             this.pacman.anchor.set(0.5);
             this.pacman.animations.add('munch', [0, 1, 2, 1], 15, true);
@@ -318,7 +318,9 @@
             //lives_text.text = 'Lives: ' + lives;
             
             if (this.pacman.overlap(this.teleport)) {
-		this.pacman.reset(13 * 16, 11 * 16);
+				//this.pacman.reset(25 * 16, 21 * 16);
+				this.pacman.kill();
+				this.move(Phaser.LEFT);
                 
             }
             
