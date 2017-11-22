@@ -34,6 +34,7 @@
         
     var counter = 0;
 	var	knife_eaten = 0;
+	var soldier_eaten = 0;
         
     var Pacman = function (game) {
         this.map = null;
@@ -329,18 +330,20 @@
 				if (this.pacman.overlap(this.knife)) {
 					music.play();
 					this.knife.kill();
+					atm_time = time;
 					knife_eaten = 1;
-					atm_time = time
-					after_10_time = time + 10;
+					after_10_time = atm_time + 10;
 				}
 			} 
 			else {
 				if (time <= after_10_time ) {
-					console.log('test2');
-					if (this.pacman.overlap(this.soldier)) {
-						this.soldier.visible = false;
-						score += 250;
-						score_text.text = 'Score: ' + score + ' points';
+					if (soldier_eaten == 0) {
+						if (this.pacman.overlap(this.soldier)) {
+							soldier_eaten = 1;
+							this.soldier.visible = false;
+							score += 250;
+							score_text.text = 'Score: ' + score + ' points';
+						}
 					}
 				}
 			}
