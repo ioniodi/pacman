@@ -21,7 +21,11 @@
     var music;           
     
     var time;    
-    var time_text;        
+    var time_text;
+		
+	var atm_time;
+	var after_5_time;
+	var i;
     
     var score = 0;   
     var score_text;   
@@ -68,8 +72,9 @@
             this.load.image('kiwi', 'assets/kiwi.png');
             this.load.image('dynamite', 'assets/dynamite.png');
             this.load.image('soldier', 'assets/soldier.png');
-	    this.load.image('teleport_portal_left', 'assets/teleport_portal_left.png');
-	    this.load.image('teleport_portal_right', 'assets/teleport_portal_right.png');
+			this.load.image('teleport_portal_left', 'assets/teleport_portal_left.png');
+			this.load.image('teleport_portal_right', 'assets/teleport_portal_right.png');
+			this.load.image('knife', 'assets/knife.png');
             
             this.load.image('blackberry-tiles', 'assets/blackberry.png');
             this.load.image('cherry-tiles', 'assets/cherry.png');
@@ -115,6 +120,7 @@
             this.dynamite = this.add.sprite((11 * 16), (11 * 16), 'dynamite', 0);
             this.teleport_portal_left = this.add.sprite((-2 * 16), (12 * 16), 'teleport_portal_left', 0);
 			this.teleport_portal_right = this.add.sprite((29 * 16), (21 * 16), 'teleport_portal_right', 0);
+			this.knife = this.add.sprite((14 * 16) + 8, (29 * 16) + 8, 'knife', 0);
             
 			this.dynamite.visible = false;
                     
@@ -319,6 +325,22 @@
             time_text.text = 'Time: ' + time + ' seconds';
             //lives_text.text = 'Lives: ' + lives;
             
+			if (this.pacman.overlap(this.knife)) {
+				console.log('test');
+				music.play();
+				this.knife.visible = false;
+				atm_time = time;
+				after_5_time = time + 5;
+				while (atm_time + i <= after_5_time) {
+					i++;
+					if (this.pacman.overlap(this.soldier)) }
+						this.soldier.visible = false;
+						score += 250;
+						score_text.text = 'Score: ' + score + ' points';
+					}
+				}
+			}
+			
             if (this.pacman.overlap(this.teleport_portal_left)) {
 				this.pacman.reset((27 * 16) + 8, (21 * 16) + 8);
 				this.move(Phaser.LEFT);
