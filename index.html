@@ -375,14 +375,16 @@
 			if (soldier_eaten == 1) {
 				this.soldier.reset((14 * 16) + 8, (14 * 16) + 8);
 			}
-			
-            if (this.pacman.overlap(this.teleport_portal_left)) {
-				this.pacman.reset((27 * 16) + 8, (21 * 16) + 8);
-				//this.move(Phaser.LEFT);
-            } else if (this.pacman.overlap(this.teleport_portal_right)) {
-				this.pacman.reset((0 * 16) + 8, (12 * 16) + 8);
-				//this.move(Phaser.RIGHT);
-            }
+			if (!this.cursors.up.isDown && !this.cursors.down.isDown) {
+				if (this.pacman.overlap(this.teleport_portal_left)) {
+					if (this.cursors.left.isDown)
+					this.pacman.reset((27 * 16) + 8, (21 * 16) + 8);
+					this.move(Phaser.LEFT);
+				} else if (this.pacman.overlap(this.teleport_portal_right)) {
+					this.pacman.reset((0 * 16) + 8, (12 * 16) + 8);
+					this.move(Phaser.RIGHT);
+				}
+			}
             
 			if (this.pacman.overlap(this.soldier) && knife_eaten == 0) {
 				lives--;
