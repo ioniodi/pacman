@@ -365,6 +365,10 @@
 				}
 			}
 			
+			if (soldier_eaten == 1) {
+				this.soldier.reset((14 * 16) + 8, (14 * 16) + 8);
+			}
+			
             if (this.pacman.overlap(this.teleport_portal_left)) {
 				this.pacman.reset((27 * 16) + 8, (21 * 16) + 8);
 				this.move(Phaser.LEFT);
