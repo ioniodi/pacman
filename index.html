@@ -309,16 +309,10 @@
         },        
         
         update: function () {
-            
-			console.log('directions[1] == ', this.directions[1]);
-			console.log(this.directions[2]);
-			console.log(this.directions[3]);
-			console.log(this.directions[4]);
-			
-			
+  
 			if (lives == 0) {
 				this.game.paused = true;
-				end_text = game.add.text(180, -2, 'Score: 0 points', { font: '14px Arial', fill: '#FFFFFF' });
+				end_text = game.add.text(180, 350, 'Game Over!', { font: '14px Arial', fill: '#FFFFFF' });
 			}
 			
 			this.physics.arcade.collide(this.pacman, this.layer);
