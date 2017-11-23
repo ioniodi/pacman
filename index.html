@@ -307,7 +307,12 @@
         },        
         
         update: function () {
-            this.physics.arcade.collide(this.pacman, this.layer);
+            
+			if (lives == 0) {
+				this.game.paused = true;
+			}
+			
+			this.physics.arcade.collide(this.pacman, this.layer);
             this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
             this.physics.arcade.overlap(this.pacman, this.blackberries, this.eatBlackberry, null, this);
             this.physics.arcade.overlap(this.pacman, this.cherries, this.eatCherry, null, this);
@@ -330,7 +335,6 @@
              
             time = this.game.time.totalElapsedSeconds()|0;
             time_text.text = 'Time: ' + time + ' seconds';
-            //lives_text.text = 'Lives: ' + lives;
             
 			if (knife_eaten == 0) {
 				if (this.pacman.overlap(this.knife)) {
@@ -343,7 +347,7 @@
 			} 
 			else {
 				if (time <= after_5_time ) {
-					if (soldier_eaten == 0) {
+					if (soldier_eaten == 0 && knife_eaten == 1) {
 						if (this.pacman.overlap(this.soldier)) {
 							soldier_eaten = 1;
 							this.soldier.visible = false;
@@ -380,6 +384,11 @@
 				this.move(Phaser.RIGHT);
             }
             
+			if (this.pacman.overlap(this.soldier) && knife_eaten == 0) {
+				lives--;
+				lives_text.text = 'Lives: ' + lives;
+			}
+			
             if (counter == 0) {
                 if (time >= 10 && time < 16) {
                     this.dynamite.visible = true;
