@@ -33,6 +33,8 @@
     var lives_text;
 		
 	var soldier_text;
+		
+	var end_text;
         
     var counter = 0;
 	var	knife_eaten = 0;
@@ -308,8 +310,15 @@
         
         update: function () {
             
+			console.log('directions[1] == ', this.directions[1]);
+			console.log(this.directions[2]);
+			console.log(this.directions[3]);
+			console.log(this.directions[4]);
+			
+			
 			if (lives == 0) {
 				this.game.paused = true;
+				end_text = game.add.text(180, -2, 'Score: 0 points', { font: '14px Arial', fill: '#FFFFFF' });
 			}
 			
 			this.physics.arcade.collide(this.pacman, this.layer);
@@ -374,6 +383,8 @@
 			else {
 				if (this.pacman.overlap(this.soldier)) {
 					this.pacman.reset((13 * 16) + 8, (11 * 16) + 8);
+					this.move(Phaser.LEFT);
+					this.move(Phaser.RIGHT);
 					lives--;
 					lives_text.text = 'Lives: ' + lives;
 				}
