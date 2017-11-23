@@ -360,7 +360,7 @@
 						soldier_text.text = 'Time left to eat the soldier: ' + (after_5_time - time) + ' seconds';
 					}
 				}
-				else {
+				else if (this.soldier.visible != false) {
 					soldier_text.text = 'Time left to kill the soldier: ' + 'Ended unsuccessfully';
 				}
 			}
