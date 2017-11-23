@@ -133,6 +133,7 @@
 
             this.physics.arcade.enable(this.pacman);
             this.pacman.body.setSize(16, 16, 0, 0);
+			this.physics.arcade.enable(this.soldier);
 			this.soldier.body.setSize(16, 16, 0, 0);
 
             this.cursors = this.input.keyboard.createCursorKeys();
