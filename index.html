@@ -352,22 +352,19 @@
  					}
  					else {
  						soldier_text.text = 'Time left to eat the soldier: ' + (after_5_time - time) + ' seconds';
+						if (this.pacman.overlap(this.soldier)) {
+							this.pacman.reset((13 * 16) + 8, (11 * 16) + 8);
+							this.move(Phaser.LEFT);
+							this.move(Phaser.RIGHT);
+							lives--;
+							lives_text.text = 'Lives: ' + lives;
+ 						}
  					}
  				}
  				else if (soldier_eaten != 1) {
  					soldier_text.text = 'Time left to kill the soldier: ' + 'Ended unsuccessfully';
  				}
  			}
- 			else {
- 				if (this.pacman.overlap(this.soldier)) {
- 					this.pacman.reset((13 * 16) + 8, (11 * 16) + 8);
- 					this.move(Phaser.LEFT);
- 					this.move(Phaser.RIGHT);
- 					lives--;
- 					lives_text.text = 'Lives: ' + lives;
- 				}
- 			}
-			
 			
 			if (this.pacman.overlap(this.teleport_portal_left)) {
 				this.pacman.reset((27 * 16) + 8, (21 * 16) + 8);
