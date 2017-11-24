@@ -359,20 +359,18 @@
 					if (this.pacman.overlap(this.soldier)) {
   						this.pacman.reset((13 * 16) + 8, (11 * 16) + 8);
   						this.move(Phaser.LEFT);
-  						this.move(Phaser.RIGHT);
   						lives--;
   						lives_text.text = 'Lives: ' + lives;
   					}
  				}
  			}
-			
-			if (knife_eaten == 0) {
+			else {
+				soldier_text.text = 'Time left to eat the soldier: ' + (after_5_time - time) + ' seconds';
 				if (this.pacman.overlap(this.soldier)) {
-  					this.pacman.reset((13 * 16) + 8, (11 * 16) + 8);
-  					this.move(Phaser.LEFT);
-  					this.move(Phaser.RIGHT);
-  					lives--;
-  					lives_text.text = 'Lives: ' + lives;
+					this.pacman.reset((13 * 16) + 8, (11 * 16) + 8);
+					this.move(Phaser.LEFT);					
+					lives--;
+					lives_text.text = 'Lives: ' + lives;
   				}
 			}
 			
