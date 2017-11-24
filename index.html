@@ -35,6 +35,8 @@
 	var soldier_text;
 		
 	var end_text;
+		
+	var finish_text;
         
     var counter = 0;
 	var	knife_eaten = 0;
@@ -148,7 +150,12 @@
             time_text = game.add.text(10, -2, 'Time: 0 seconds', { font: '14px Arial', fill: '#FFFFFF' });
             score_text = game.add.text(180, -2, 'Score: 0 points', { font: '14px Arial', fill: '#FFFFFF' });
             lives_text = game.add.text(360, -2, 'Lives: 3', { font: '14px Arial', fill: '#FFFFFF' });
-			soldier_text = game.add.text(94, 481, 'Time left to kill the soldier: Not Activated', { font: '14px Arial', fill: '#FFFFFF' });
+			soldier_text = game.add.text(94, 481, 'Time left to kill the soldier: Not Activated', { font: '14px Arial', fill: '#FFFFFF' }
+			end_text = game.add.text(180, 330, 'Game Over!', { font: '14px Arial', fill: '#FFFFFF' });
+			finish_text = game.add.text(180, 200, 'Completed!', { font: '14px Arial', fill: '#FFFFFF' });
+			
+			end_text.visible = true;
+			
         },
         
         checkKeys: function () {
@@ -297,14 +304,7 @@
             score += 10;
             score_text.text = 'Score: ' + score + ' points';
             if (this.dots.total === 0 && this.blackberries.total === 0 && this.cherries.total === 0 && this.kiwis.total === 0) {
-                this.dots.callAll('revive');
-                this.blackberries.callAll('revive');
-                this.cherries.callAll('revive');
-                this.kiwis.callAll('revive');
-                this.game.time.reset();
-                counter = 0;
-                score = 0;
-                score_text.text = 'Score: ' + score + ' points';
+               finish_text = game.add.text(180, 200, 'Finished!', { font: '14px Arial', fill: '#FFFFFF' });
             }
         },        
         
@@ -312,7 +312,7 @@
   
 			if (lives == 0) {
 				this.game.paused = true;
-				end_text = game.add.text(180, 330, 'Game Over!', { font: '14px Arial', fill: '#FFFFFF' });
+				end_text.visible = true;
 			}
 			
 			this.physics.arcade.collide(this.pacman, this.layer);
