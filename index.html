@@ -346,6 +346,7 @@
 			}
 			
 			if (knife_eaten == 1) {
+				if (after_5_time - time < 0) {
 					if (soldier_eaten == 1) {
 						soldier_text.text = 'Time left to kill the soldier: ' + 'Soldier Killed';
 					}
@@ -358,7 +359,6 @@
 				}
 			}
 			else {
-				if (after_5_time - time < 0) {
 				if (this.pacman.overlap(this.soldier)) {
 					this.pacman.reset((13 * 16) + 8, (11 * 16) + 8);
 					this.move(Phaser.LEFT);
