@@ -24,7 +24,7 @@
     var time_text;
 		
 	var atm_time;
-	var after_5_time;
+	var after_8_time;
     
     var score = 0;   
     var score_text;   
@@ -329,11 +329,11 @@
 					this.knife.visible = false;
 					atm_time = time;
 					knife_eaten = 1;
-					after_5_time = atm_time + 15;
+					after_8_time = atm_time + 8;
 				}
 			} 
 			else {
-				if (time <= after_5_time ) {
+				if (time <= after_8_time ) {
 					if (soldier_eaten == 0 && knife_eaten == 1) {
 						if (this.pacman.overlap(this.soldier)) {
 							soldier_eaten = 1;
