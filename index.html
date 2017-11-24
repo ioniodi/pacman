@@ -356,6 +356,14 @@
  				}
  				else {
  					soldier_text.text = 'Time left to kill the soldier: ' + 'Ended unsuccessfully';
+					if (soldier_eaten == 0) {
+ 						if (this.pacman.overlap(this.soldier)) {
+							this.pacman.reset((13 * 16) + 8, (11 * 16) + 8);
+							this.move(Phaser.LEFT);					
+							lives--;
+							lives_text.text = 'Lives: ' + lives;
+  						}
+ 					}
  				}
  			}
 			else {
