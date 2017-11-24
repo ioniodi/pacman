@@ -152,7 +152,7 @@
             lives_text = game.add.text(360, -2, 'Lives: 3', { font: '14px Arial', fill: '#FFFFFF' });
 			soldier_text = game.add.text(94, 481, 'Time left to kill the soldier: Not Activated', { font: '14px Arial', fill: '#FFFFFF' });
 			end_text = game.add.text(180, 330, 'Game Over!', { font: '14px Arial', fill: '#FFFFFF' });
-			finish_text = game.add.text(180, 200, 'Completed!', { font: '14px Arial', fill: '#FFFFFF' });
+			finish_text = game.add.text(185, 210, 'Completed!', { font: '14px Arial', fill: '#FFFFFF' });
 			
 			end_text.visible = false;
 			finish_text.visible = false;
@@ -254,7 +254,8 @@
             score++;
             score_text.text = 'Score: ' + score + ' points';
             if (this.dots.total === 0 && this.blackberries.total === 0 && this.cherries.total === 0 && this.kiwis.total === 0) {
-               finish_text.visible = true;
+               this.game.paused = true;
+				finish_text.visible = true;
             }
         },
         
@@ -264,7 +265,8 @@
             score += 10;
             score_text.text = 'Score: ' + score + ' points';
             if (this.dots.total === 0 && this.blackberries.total === 0 && this.cherries.total === 0 && this.kiwis.total === 0) {
-                finish_text.visible = true;
+                this.game.paused = true;
+				finish_text.visible = true;
             }
         },
         
@@ -274,7 +276,8 @@
             score += 10;
             score_text.text = 'Score: ' + score + ' points';
             if (this.dots.total === 0 && this.blackberries.total === 0 && this.cherries.total === 0 && this.kiwis.total === 0) {
-                finish_text.visible = true;
+                this.game.paused = true;
+				finish_text.visible = true;
             }
         },
         
@@ -284,7 +287,8 @@
             score += 10;
             score_text.text = 'Score: ' + score + ' points';
             if (this.dots.total === 0 && this.blackberries.total === 0 && this.cherries.total === 0 && this.kiwis.total === 0) {
-               finish_text.visible = true;
+               	this.game.paused = true;
+				finish_text.visible = true;
             }
         },        
         
@@ -355,6 +359,7 @@
 				}
 			}
 			else {
+				if (after_5_time - time < 0) {
 				if (this.pacman.overlap(this.soldier)) {
 					this.pacman.reset((13 * 16) + 8, (11 * 16) + 8);
 					this.move(Phaser.LEFT);
