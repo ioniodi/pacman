@@ -155,6 +155,7 @@
 			finish_text = game.add.text(180, 200, 'Completed!', { font: '14px Arial', fill: '#FFFFFF' });
 			
 			end_text.visible = false;
+			finish_text.visible = false;
 			
         },
         
@@ -253,14 +254,7 @@
             score++;
             score_text.text = 'Score: ' + score + ' points';
             if (this.dots.total === 0 && this.blackberries.total === 0 && this.cherries.total === 0 && this.kiwis.total === 0) {
-                this.dots.callAll('revive');
-                this.blackberries.callAll('revive');
-                this.cherries.callAll('revive');
-                this.kiwis.callAll('revive');
-                this.game.time.reset();
-                counter = 0;
-                score = 0;
-                score_text.text = 'Score: ' + score + ' points';
+               finish_text.visible = true;
             }
         },
         
@@ -270,14 +264,7 @@
             score += 10;
             score_text.text = 'Score: ' + score + ' points';
             if (this.dots.total === 0 && this.blackberries.total === 0 && this.cherries.total === 0 && this.kiwis.total === 0) {
-                this.dots.callAll('revive');
-                this.blackberries.callAll('revive');
-                this.cherries.callAll('revive');
-                this.kiwis.callAll('revive');
-                this.game.time.reset();
-                counter = 0;
-                score = 0;
-                score_text.text = 'Score: ' + score + ' points';
+                finish_text.visible = true;
             }
         },
         
@@ -287,14 +274,7 @@
             score += 10;
             score_text.text = 'Score: ' + score + ' points';
             if (this.dots.total === 0 && this.blackberries.total === 0 && this.cherries.total === 0 && this.kiwis.total === 0) {
-                this.dots.callAll('revive');
-                this.blackberries.callAll('revive');
-                this.cherries.callAll('revive');
-                this.kiwis.callAll('revive');
-                this.game.time.reset();
-                counter = 0;
-                score = 0;
-                score_text.text = 'Score: ' + score + ' points';
+                finish_text.visible = true;
             }
         },
         
@@ -304,7 +284,7 @@
             score += 10;
             score_text.text = 'Score: ' + score + ' points';
             if (this.dots.total === 0 && this.blackberries.total === 0 && this.cherries.total === 0 && this.kiwis.total === 0) {
-               finish_text = game.add.text(180, 200, 'Finished!', { font: '14px Arial', fill: '#FFFFFF' });
+               finish_text.visible = true;
             }
         },        
         
