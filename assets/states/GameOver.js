@@ -1,1 +1,1 @@
-varGameOver = function () {};
+var GameOver = function () {};
