@@ -1,0 +1,1 @@
+varGameOver = function () {};
