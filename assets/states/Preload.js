@@ -1,6 +1,6 @@
-var preload = function (game){}
+var Preload = function (game){}
 
-preload.prototype = {
+Preload.prototype = {
 	preload: function() { 
         var loadingBar = this.add.sprite(160, 240, 'loading');
         loadingBar.anchor.setTo(0.5,0.5);
