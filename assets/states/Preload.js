@@ -1,4 +1,4 @@
-var Preload = function (game){}
+var Preload = function (game) {}
 
 Preload.prototype = {
 	preload: function() { 
@@ -10,6 +10,7 @@ Preload.prototype = {
 	    this.game.load.image('level', 'assets/states/buttons/level.png');
 	},
   	create: function(){
-        this.game.state.start('MainMenu');
+        console.log('%cPreload -> create intitialized', 'color:white; background:red');
+		this.game.state.start('MainMenu');
 	}
 }
