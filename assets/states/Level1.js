@@ -1,24 +1,4 @@
 var game = new Phaser.Game(448, 496, Phaser.AUTO);
-var music;
-var time;
-var time_text;
-var atm_time;
-var after_8_time;
-
-var score = 0;
-var score_text;   
-
-var lives = 3;
-var lives_text;
-
-var soldier_text;
-
-var end_text;
-var finish_text;
-
-var counter = 0;
-var knife_eaten = 0;
-var soldier_eaten = 0;
 
 var Pacman = function (game) {
 	this.map = null;
@@ -34,6 +14,27 @@ var Pacman = function (game) {
 	this.opposites = [ Phaser.NONE, Phaser.RIGHT, Phaser.LEFT, Phaser.DOWN, Phaser.UP ];
 	this.current = Phaser.NONE;
 	this.turning = Phaser.NONE;
+	
+	var music;
+	var time;
+	var time_text;
+	var atm_time;
+	var after_8_time;
+
+	var score = 0;
+	var score_text;   
+
+	var lives = 3;
+	var lives_text;
+
+	var soldier_text;
+
+	var end_text;
+	var finish_text;
+
+	var counter = 0;
+	var knife_eaten = 0;
+	var soldier_eaten = 0;
 };
 
 Pacman.prototype = {
