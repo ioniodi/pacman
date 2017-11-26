@@ -8,7 +8,7 @@ Game.Preloader.prototype = {
         this.loadingBar.anchor.setTO(0.5, 0.5);
         this.time.advancedTiming = true;
         this.load.setPreloadSprite(this.loadingBar);
-    }
+    },
     
     create: function() {
         game.state.start('Level1');
