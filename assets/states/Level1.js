@@ -1,27 +1,25 @@
 var Level1 = function(game){}
 var game = new Phaser.Game(448, 496, Phaser.AUTO);
-	var music;           
-    
-	var time;    
+    var music;
+    var time;
     var time_text;
     var atm_time;
-	var after_8_time;
- 
-    var score = 0;   
+    var after_8_time;
+
+    var score = 0;
     var score_text;   
     
-    var lives = 3;   
+    var lives = 3;
     var lives_text;
 		
-	var soldier_text;
-		
-	var end_text;
-		
-	var finish_text;
+    var soldier_text;
+
+    var end_text;
+    var finish_text;
         
     var counter = 0;
-	var	knife_eaten = 0;
-	var soldier_eaten = 0;
+    var knife_eaten = 0;
+    var soldier_eaten = 0;
         
     var Pacman = function (game) {
         this.map = null;
@@ -60,9 +58,9 @@ var game = new Phaser.Game(448, 496, Phaser.AUTO);
             this.load.image('kiwi', 'assets/kiwi.png');
             this.load.image('dynamite', 'assets/dynamite.png');
             this.load.image('soldier', 'assets/soldier.png');
-			this.load.image('teleport_portal_left', 'assets/teleport_portal_left.png');
-			this.load.image('teleport_portal_right', 'assets/teleport_portal_right.png');
-			this.load.image('knife', 'assets/knife.png');
+            this.load.image('teleport_portal_left', 'assets/teleport_portal_left.png');
+            this.load.image('teleport_portal_right', 'assets/teleport_portal_right.png');
+            this.load.image('knife', 'assets/knife.png');
             
             this.load.image('blackberry-tiles', 'assets/blackberry.png');
             this.load.image('cherry-tiles', 'assets/cherry.png');
@@ -108,18 +106,18 @@ var game = new Phaser.Game(448, 496, Phaser.AUTO);
             this.dynamite = this.add.sprite((11 * 16), (11 * 16), 'dynamite', 0);
             this.teleport_portal_left = this.add.sprite((-2 * 16), (12 * 16), 'teleport_portal_left', 0);
             this.teleport_portal_right = this.add.sprite((29 * 16), (21 * 16), 'teleport_portal_right', 0);
-	    	this.knife = this.add.sprite((14 * 16), (29 * 16), 'knife', 0);
+            this.knife = this.add.sprite((14 * 16), (29 * 16), 'knife', 0);
             
-	    	this.dynamite.visible = false;
+            this.dynamite.visible = false;
                     
             this.pacman.anchor.set(0.5);
-			this.soldier.anchor.set(0.5);
+            this.soldier.anchor.set(0.5);
             this.pacman.animations.add('munch', [0, 1, 2, 1], 15, true);
 
             this.physics.arcade.enable(this.pacman);
             this.pacman.body.setSize(16, 16, 0, 0);
-			this.physics.arcade.enable(this.soldier);
-			this.soldier.body.setSize(16, 16, 0, 0);
+            this.physics.arcade.enable(this.soldier);
+            this.soldier.body.setSize(16, 16, 0, 0);
 
             this.cursors = this.input.keyboard.createCursorKeys();
 
@@ -131,12 +129,12 @@ var game = new Phaser.Game(448, 496, Phaser.AUTO);
             time_text = game.add.text(10, -2, 'Time: 0 seconds', { font: '14px Arial', fill: '#FFFFFF' });
             score_text = game.add.text(180, -2, 'Score: 0 points', { font: '14px Arial', fill: '#FFFFFF' });
             lives_text = game.add.text(360, -2, 'Lives: 3', { font: '14px Arial', fill: '#FFFFFF' });
-			soldier_text = game.add.text(94, 481, 'Time left to kill the soldier: Not Activated', { font: '14px Arial', fill: '#FFFFFF' });
-			end_text = game.add.text(180, 330, 'Game Over!', { font: '14px Arial', fill: '#FFFFFF' });
-			finish_text = game.add.text(185, 210, 'Completed!', { font: '14px Arial', fill: '#FFFFFF' });
+            soldier_text = game.add.text(94, 481, 'Time left to kill the soldier: Not Activated', { font: '14px Arial', fill: '#FFFFFF' });
+            end_text = game.add.text(180, 330, 'Game Over!', { font: '14px Arial', fill: '#FFFFFF' });
+            finish_text = game.add.text(185, 210, 'Completed!', { font: '14px Arial', fill: '#FFFFFF' });
 			
-			end_text.visible = false;
-			finish_text.visible = false;
+            end_text.visible = false;
+            finish_text.visible = false;
 			
         },
         
@@ -236,7 +234,7 @@ var game = new Phaser.Game(448, 496, Phaser.AUTO);
             score_text.text = 'Score: ' + score + ' points';
             if (this.dots.total === 0 && this.blackberries.total === 0 && this.cherries.total === 0 && this.kiwis.total === 0) {
                this.game.paused = true;
-				finish_text.visible = true;
+               finish_text.visible = true;
             }
         },
         
@@ -247,7 +245,7 @@ var game = new Phaser.Game(448, 496, Phaser.AUTO);
             score_text.text = 'Score: ' + score + ' points';
             if (this.dots.total === 0 && this.blackberries.total === 0 && this.cherries.total === 0 && this.kiwis.total === 0) {
                 this.game.paused = true;
-				finish_text.visible = true;
+                finish_text.visible = true;
             }
         },
         
@@ -258,7 +256,7 @@ var game = new Phaser.Game(448, 496, Phaser.AUTO);
             score_text.text = 'Score: ' + score + ' points';
             if (this.dots.total === 0 && this.blackberries.total === 0 && this.cherries.total === 0 && this.kiwis.total === 0) {
                 this.game.paused = true;
-				finish_text.visible = true;
+                finish_text.visible = true;
             }
         },
         
@@ -269,18 +267,16 @@ var game = new Phaser.Game(448, 496, Phaser.AUTO);
             score_text.text = 'Score: ' + score + ' points';
             if (this.dots.total === 0 && this.blackberries.total === 0 && this.cherries.total === 0 && this.kiwis.total === 0) {
                	this.game.paused = true;
-				finish_text.visible = true;
+                finish_text.visible = true;
             }
-        },        
+        },
         
         update: function () {
-  
-			if (lives == 0) {
-				this.game.paused = true;
-				end_text.visible = true;
-			}
-			
-			this.physics.arcade.collide(this.pacman, this.layer);
+            if (lives == 0) {
+                this.game.paused = true;
+                end_text.visible = true;
+             }
+            this.physics.arcade.collide(this.pacman, this.layer);
             this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
             this.physics.arcade.overlap(this.pacman, this.blackberries, this.eatBlackberry, null, this);
             this.physics.arcade.overlap(this.pacman, this.cherries, this.eatCherry, null, this);
