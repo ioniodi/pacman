@@ -1,29 +1,29 @@
 <!DOCTYPE HTML>
 <html lang="en">
 	<head>
-    	<title>Pacman - geocfu</title>
-    	<meta charset="UTF-8">
+    		<title>Pacman - geocfu</title>
+    		<meta charset="UTF-8">
 		<script src="//cdn.jsdelivr.net/phaser/2.2.2/phaser.min.js"></script>
-        <script src="assets/states/Preload.js"></script>
-        <script src="assets/states/MainMenu.js"></script>
+        	<script src="assets/states/Preload.js"></script>
+        	<script src="assets/states/MainMenu.js"></script>
 		<script src="assets/states/Level1.js"></script>
 		<script src="assets/states/Level2.js"></script>
 		<script>
-        function() {
+        		(function() {
 				var game = new Phaser.Game(448, 496, Phaser.AUTO);
 				game.state.add('Preload', Preload);
-                game.state.add('MainMenu', MainMenu);
+				game.state.add('MainMenu', MainMenu);
 				game.state.add('Level1', Level1);
 				game.state.add('Level2', Level2);
 				game.state.start('Preload');
-			}();
-        </script>
-        <style>
-        	body {
-            	margin: 0;
-            	padding: 0;
-            	background-color: #000;
-        	}
-    	</style>
+			})();
+        	</script>
+        	<style>
+			body {
+			margin: 0;
+			padding: 0;
+			background-color: #000;
+			}
+    		</style>
       </head>
 </html>
