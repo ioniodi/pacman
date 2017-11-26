@@ -271,7 +271,7 @@ Pacman.prototype = {
 	},
 
 	update: function () {
-		if (lives == 0) {
+		if (this.lives == 0) {
 			this.game.paused = true;
 			end_text.visible = true;
 		}
