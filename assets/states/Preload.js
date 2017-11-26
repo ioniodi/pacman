@@ -7,6 +7,7 @@ Preload.prototype = {
 		this.game.load.image("level","assets/states/buttons/level.png");
 	},
   	create: function(){
-		this.game.state.start("MainMenu");
+		console.log('Preload goes to MainMenu');
+		this.game.state.start('MainMenu');
 	}
 }
