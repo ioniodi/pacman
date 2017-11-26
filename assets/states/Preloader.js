@@ -3,7 +3,7 @@ Game.Preloader = function (game) {
 };
 
 Game.Preloader.prototype = {
-    preload: function () {
-        this.preloadBar = this.add.sprite(this
+    create: function() {
+        game.state.start('Level1');
     }
 }
