@@ -1,6 +1,6 @@
-var preload = function(game){}
+var Preload = function(game){}
  
-preload.prototype = {
+Preload.prototype = {
 	preload: function(){ 
 		this.game.load.image("title","assets/states/buttons/title.png");
 		this.game.load.image("play","assets/states/buttons/play.png");
