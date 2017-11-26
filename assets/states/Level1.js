@@ -11,16 +11,16 @@ var game = new Phaser.Game(448, 496, Phaser.AUTO);
     
     var lives = 3;
     var lives_text;
-		
+	
     var soldier_text;
 
     var end_text;
     var finish_text;
-        
+	
     var counter = 0;
     var knife_eaten = 0;
     var soldier_eaten = 0;
-        
+	
     var Pacman = function (game) {
         this.map = null;
         this.layer = null;
@@ -125,7 +125,7 @@ var game = new Phaser.Game(448, 496, Phaser.AUTO);
             //this.move(Phaser.LEFT);
             
             music = game.add.audio('chopping');
-            
+
             time_text = game.add.text(10, -2, 'Time: 0 seconds', { font: '14px Arial', fill: '#FFFFFF' });
             score_text = game.add.text(180, -2, 'Score: 0 points', { font: '14px Arial', fill: '#FFFFFF' });
             lives_text = game.add.text(360, -2, 'Lives: 3', { font: '14px Arial', fill: '#FFFFFF' });
@@ -134,24 +134,23 @@ var game = new Phaser.Game(448, 496, Phaser.AUTO);
             finish_text = game.add.text(185, 210, 'Completed!', { font: '14px Arial', fill: '#FFFFFF' });
 			
             end_text.visible = false;
-            finish_text.visible = false;
-			
+            finish_text.visible = false;	
         },
         
         checkKeys: function () {
             if (this.cursors.left.isDown && this.current !== Phaser.LEFT) {
                 this.checkDirection(Phaser.LEFT);
             }
-            else if (this.cursors.right.isDown && this.current !== Phaser.RIGHT) {
+			else if (this.cursors.right.isDown && this.current !== Phaser.RIGHT) {
                 this.checkDirection(Phaser.RIGHT);
             }
-            else if (this.cursors.up.isDown && this.current !== Phaser.UP) {
+			else if (this.cursors.up.isDown && this.current !== Phaser.UP) {
                 this.checkDirection(Phaser.UP);
             }
-            else if (this.cursors.down.isDown && this.current !== Phaser.DOWN) {
+			else if (this.cursors.down.isDown && this.current !== Phaser.DOWN) {
                 this.checkDirection(Phaser.DOWN);
             }
-            else {
+			else {
                 //  This forces them to hold the key down to turn the corner
                 this.turning = Phaser.NONE;
             }
@@ -168,7 +167,7 @@ var game = new Phaser.Game(448, 496, Phaser.AUTO);
             if (this.current === this.opposites[turnTo]) {
                 this.move(turnTo);
             }
-            else {
+			else {
                 this.turning = turnTo;
 
                 this.turnPoint.x = (this.marker.x * this.gridsize) + (this.gridsize / 2);
@@ -281,7 +280,7 @@ var game = new Phaser.Game(448, 496, Phaser.AUTO);
             this.physics.arcade.overlap(this.pacman, this.blackberries, this.eatBlackberry, null, this);
             this.physics.arcade.overlap(this.pacman, this.cherries, this.eatCherry, null, this);
             this.physics.arcade.overlap(this.pacman, this.kiwis, this.eatKiwi, null, this);
-                        
+			
             this.marker.x = this.math.snapToFloor(Math.floor(this.pacman.x), this.gridsize) / this.gridsize;
             this.marker.y = this.math.snapToFloor(Math.floor(this.pacman.y), this.gridsize) / this.gridsize;
             
@@ -294,58 +293,62 @@ var game = new Phaser.Game(448, 496, Phaser.AUTO);
             this.checkKeys();
 
             if (this.turning !== Phaser.NONE) {
-                this.turn();
+				this.turn();
             }
-             
+			
             time = this.game.time.totalElapsedSeconds()|0;
             time_text.text = 'Time: ' + time + ' seconds';
             
             if (knife_eaten == 0) {
-                 if (this.pacman.overlap(this.knife)) {
-                      music.play();
-                      this.knife.visible = false;
-                      atm_time = time;
-                      knife_eaten = 1;
-                      after_8_time = atm_time + 8;
-                 }
-            } else {
-                 if (time <= after_8_time ) {
-                      if (soldier_eaten == 0 && knife_eaten == 1) {
-                           if (this.pacman.overlap(this.soldier)) {
-                                soldier_eaten = 1;
-                                this.soldier.visible = false;
-                                score += 250;
-                                score_text.text = 'Score: ' + score + ' points';
-                           }
-                      }
-                 }
+				if (this.pacman.overlap(this.knife)) {
+					music.play();
+					this.knife.visible = false;
+					atm_time = time;
+					knife_eaten = 1;
+					after_8_time = atm_time + 8;
+                }
+            }
+			else {
+                if (time <= after_8_time ) {
+                    if (soldier_eaten == 0 && knife_eaten == 1) {
+                        if (this.pacman.overlap(this.soldier)) {
+                            soldier_eaten = 1;
+                            this.soldier.visible = false;
+                            score += 250;
+                            score_text.text = 'Score: ' + score + ' points';
+                        }
+                    }
+                }
             }
 
             if (knife_eaten == 1) {
-                 if (after_8_time - time > 0) {
-                      if (soldier_eaten == 1) {
-                           soldier_text.text = 'Time left to kill the soldier: ' + 'Soldier Killed';
-                      } else {
-                           soldier_text.text = 'Time left to eat the soldier: ' + (after_8_time - time) + ' seconds';
-                      }
-                 } else {
-                      if (soldier_eaten == 0) {
-                           soldier_text.text = 'Time left to kill the soldier: ' + 'Ended unsuccessfully';
-                           if (this.pacman.overlap(this.soldier)) {
-                                this.pacman.reset((13 * 16) + 8, (11 * 16) + 8);
-                                this.move(Phaser.LEFT);					
-                                lives--;
-                                lives_text.text = 'Lives: ' + lives;
-                           }
-                      }
-                 }
-            } else {
-                 if (this.pacman.overlap(this.soldier)) {
-                      this.pacman.reset((13 * 16) + 8, (11 * 16) + 8);
-                      this.move(Phaser.LEFT);
-                      lives--;
-                      lives_text.text = 'Lives: ' + lives;
-                  }
+                if (after_8_time - time > 0) {
+                    if (soldier_eaten == 1) {
+                        soldier_text.text = 'Time left to kill the soldier: ' + 'Soldier Killed';
+                    }
+					else {
+						soldier_text.text = 'Time left to eat the soldier: ' + (after_8_time - time) + ' seconds';
+                    }
+				}
+				else {
+                    if (soldier_eaten == 0) {
+                        soldier_text.text = 'Time left to kill the soldier: ' + 'Ended unsuccessfully';
+						if (this.pacman.overlap(this.soldier)) {
+							this.pacman.reset((13 * 16) + 8, (11 * 16) + 8);
+							this.move(Phaser.LEFT);					
+							lives--;
+							lives_text.text = 'Lives: ' + lives;
+						}
+					}
+				}
+            }
+			else {
+				if (this.pacman.overlap(this.soldier)) {
+					this.pacman.reset((13 * 16) + 8, (11 * 16) + 8);
+					this.move(Phaser.LEFT);
+					lives--;
+					lives_text.text = 'Lives: ' + lives;
+				}
             }
 	
             if (this.pacman.overlap(this.teleport_portal_left)) {
@@ -374,5 +377,4 @@ var game = new Phaser.Game(448, 496, Phaser.AUTO);
             }
         }
     };
-
     game.state.add('Game', Pacman, true);
