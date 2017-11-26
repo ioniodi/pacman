@@ -17,7 +17,7 @@ var Pacman = function (game) {
 	
 	var music;
 	var time;
-	var time_text;
+	this.time_text;
 	var atm_time;
 	var after_8_time;
 
