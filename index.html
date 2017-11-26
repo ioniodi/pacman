@@ -6,14 +6,14 @@
 		<script src="//cdn.jsdelivr.net/phaser/2.2.2/phaser.min.js"></script>
         <script src="assets/states/Preload.js"></script>
         <script src="assets/states/MainMenu.js"></script>
-		<script src="assets/states/Pacman.js"></script>
+		<script src="assets/states/Level1.js"></script>
 		<script src="assets/states/Level2.js"></script>
 		<script type="text/javascript">
             window.onload = function() {
                 var game = new Phaser.Game(448, 496, Phaser.AUTO);
 				game.state.add("Preload", Preload);
 				game.state.add("MainMenu", MainMenu);
-				game.state.add("Level1", Pacman);
+				game.state.add("Level1", Level1);
 				game.state.add("Level2", Level2);
 				game.state.start("Preload");
             };
