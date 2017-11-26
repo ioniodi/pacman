@@ -11,11 +11,11 @@
 		<script>
         function() {
 				var game = new Phaser.Game(448, 496, Phaser.AUTO);
-				game.state.add('Preload', Game.Preload);
-                game.state.add('MainMenu', Game.MainMenu);
-				game.state.add('Level1', Game.Level1);
-				game.state.add('Level2', Game.Level2);
-				game.state.start("Preload");
+				game.state.add('Preload', Preload);
+                game.state.add('MainMenu', MainMenu);
+				game.state.add('Level1', Level1);
+				game.state.add('Level2', Level2);
+				game.state.start('Preload');
 			}();
         </script>
         <style>
