@@ -297,13 +297,13 @@ Pacman.prototype = {
 		}
 
 		this.time = this.game.time.totalElapsedSeconds()|0;
-		this.time_text.text = 'Time: ' + time + ' seconds';
+		this.time_text.text = 'Time: ' + this.time + ' seconds';
 
 		if (this.knife_eaten == 0) {
 			if (this.pacman.overlap(this.knife)) {
 				this.music.play();
 				this.knife.visible = false;
-				this.atm_time = time;
+				this.atm_time = this.time;
 				this.knife_eaten = 1;
 				this.after_8_time = this.atm_time + 8;
 			}
@@ -315,7 +315,7 @@ Pacman.prototype = {
 						this.soldier_eaten = 1;
 						this.soldier.visible = false;
 						this.score += 250;
-						this.score_text.text = 'Score: ' + score + ' points';
+						this.score_text.text = 'Score: ' + this.score + ' points';
 					}
 				}
 			}
@@ -327,7 +327,7 @@ Pacman.prototype = {
 					this.soldier_text.text = 'Time left to kill the soldier: ' + 'Soldier Killed';
 				}
 				else {
-					this.soldier_text.text = 'Time left to eat the soldier: ' + (after_8_time - time) + ' seconds';
+					this.soldier_text.text = 'Time left to eat the soldier: ' + (this.after_8_time - this.time) + ' seconds';
 				}
 			}
 			else {
@@ -337,7 +337,7 @@ Pacman.prototype = {
 						this.pacman.reset((13 * 16) + 8, (11 * 16) + 8);
 						this.move(Phaser.LEFT);					
 						this.lives--;
-						this.lives_text.text = 'Lives: ' + lives;
+						this.lives_text.text = 'Lives: ' + this.lives;
 					}
 				}
 			}
@@ -347,7 +347,7 @@ Pacman.prototype = {
 				this.pacman.reset((13 * 16) + 8, (11 * 16) + 8);
 				this.move(Phaser.LEFT);
 				this.lives--;
-				this.lives_text.text = 'Lives: ' + lives;
+				this.lives_text.text = 'Lives: ' + this.lives;
 			}
 		}
 
@@ -367,7 +367,7 @@ Pacman.prototype = {
 					this.music.play();
 					this.dynamite.visible = false;
 					this.score += 100;
-					this.score_text.text = 'Score: ' + score + ' points';
+					this.score_text.text = 'Score: ' + this.score + ' points';
 					this.counter = 1;
 				}
 			}
