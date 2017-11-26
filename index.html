@@ -3,7 +3,12 @@
 	<head>
     	<title>Pacman - geocfu</title>
     	<meta charset="UTF-8">
-		<script src="//cdn.jsdelivr.net/phaser/2.2.2/phaser.min.js"></script>
+    	<script src="//cdn.jsdelivr.net/phaser/2.2.2/phaser.min.js"></script>
+		<script src="assets/states/Loading.js"></script>
+		<script src="assets/states/Preloader.js"></script>
+		<script src="assets/states/MainMenu.js"></script>
+		<script src="assets/states/Level1.js"></script>
+		<script src="assets/states/Level2.js"></script>
 		<style>
         	body {
             	margin: 0;
@@ -13,6 +18,15 @@
     	</style>
 	</head>
 	<body>
-		<script src="assets/states/Game.js"></script>
+		window.onload = function() {
+                var game = new Phaser.Game(448, 496, Phaser.AUTO);
+				game.state.add('Loading', Game.Preloader);
+				game.state.add('Preloader', Game.Preloader);
+				game.state.add('MainMenu', Game.MainMenu);
+				game.state.add('Level1', Game.Level1);
+				game.state.add('Level2', Game.Level1);
+				game.state.start('Loading');
+            };
+        </script>
 	</body>
 </html>
