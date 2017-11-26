@@ -8,16 +8,6 @@
         <script src="assets/states/MainMenu.js"></script>
 		<script src="assets/states/Level1.js"></script>
 		<!-- <script src="assets/states/Level2.js"></script> -->
-		<script type="text/javascript">
-            window.onload = function() {
-                var game = new Phaser.Game(448, 496, Phaser.AUTO);
-				game.state.add("Preload", Preload);
-				game.state.add("MainMenu", MainMenu);
-				game.state.add("Level1", Level1);
-				//game.state.add("Level2", Level2);
-				game.state.start("Preload");
-            };
-		</script>
 		<style>
 			body {
 			margin: 0;
