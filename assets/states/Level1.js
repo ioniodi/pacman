@@ -377,4 +377,4 @@ var game = new Phaser.Game(448, 496, Phaser.AUTO);
             }
         }
     };
-    //game.state.add('Game', Pacman, true);
+    game.state.add('Game', Pacman, false);
