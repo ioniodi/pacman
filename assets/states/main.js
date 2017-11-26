@@ -1,4 +1,4 @@
-var Preload = function(game){}
+var game = new Phaser.Game(448, 496, Phaser.AUTO);
  
 Preload.prototype = {
     preload: function(){ 
