@@ -275,7 +275,7 @@ var game = new Phaser.Game(448, 496, Phaser.AUTO);
             if (lives == 0) {
                 this.game.paused = true;
                 end_text.visible = true;
-             }
+            }
             this.physics.arcade.collide(this.pacman, this.layer);
             this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
             this.physics.arcade.overlap(this.pacman, this.blackberries, this.eatBlackberry, null, this);
@@ -300,66 +300,62 @@ var game = new Phaser.Game(448, 496, Phaser.AUTO);
             time = this.game.time.totalElapsedSeconds()|0;
             time_text.text = 'Time: ' + time + ' seconds';
             
-			if (knife_eaten == 0) {
-				if (this.pacman.overlap(this.knife)) {
-					music.play();
-					this.knife.visible = false;
-					atm_time = time;
-					knife_eaten = 1;
-					after_8_time = atm_time + 8;
-				}
-			} 
-			else {
-				if (time <= after_8_time ) {
-					if (soldier_eaten == 0 && knife_eaten == 1) {
-						if (this.pacman.overlap(this.soldier)) {
-							soldier_eaten = 1;
-							this.soldier.visible = false;
-							score += 250;
-							score_text.text = 'Score: ' + score + ' points';
-						}
-					}
-				}
-			}
-			
-			if (knife_eaten == 1) {
- 				if (after_8_time - time > 0) {
- 					if (soldier_eaten == 1) {
- 						soldier_text.text = 'Time left to kill the soldier: ' + 'Soldier Killed';
- 					}
- 					else {
- 						soldier_text.text = 'Time left to eat the soldier: ' + (after_8_time - time) + ' seconds';
- 					}
- 				}
- 				else {
- 					if (soldier_eaten == 0) {
-						soldier_text.text = 'Time left to kill the soldier: ' + 'Ended unsuccessfully';
- 						if (this.pacman.overlap(this.soldier)) {
-							this.pacman.reset((13 * 16) + 8, (11 * 16) + 8);
-							this.move(Phaser.LEFT);					
-							lives--;
-							lives_text.text = 'Lives: ' + lives;
-  						}
- 					}
- 				}
- 			}
-			else {
-				if (this.pacman.overlap(this.soldier)) {
-					this.pacman.reset((13 * 16) + 8, (11 * 16) + 8);
-					this.move(Phaser.LEFT);					
-					lives--;
-					lives_text.text = 'Lives: ' + lives;
-  				}
-			}
-			
-			if (this.pacman.overlap(this.teleport_portal_left)) {
-				this.pacman.reset((27 * 16) + 8, (21 * 16) + 8);
-				this.move(Phaser.LEFT);
-			} 
-			else if (this.pacman.overlap(this.teleport_portal_right)) {
-				this.pacman.reset((0 * 16) + 8, (12 * 16) + 8);
-				this.move(Phaser.RIGHT);
-			}
+            if (knife_eaten == 0) {
+                 if (this.pacman.overlap(this.knife)) {
+                      music.play();
+                      this.knife.visible = false;
+                      atm_time = time;
+                      knife_eaten = 1;
+                      after_8_time = atm_time + 8;
+                 }
+            } else {
+                 if (time <= after_8_time ) {
+                      if (soldier_eaten == 0 && knife_eaten == 1) {
+                           if (this.pacman.overlap(this.soldier)) {
+                                soldier_eaten = 1;
+                                this.soldier.visible = false;
+                                score += 250;
+                                score_text.text = 'Score: ' + score + ' points';
+                           }
+                      }
+                 }
+            }
+
+            if (knife_eaten == 1) {
+                 if (after_8_time - time > 0) {
+                      if (soldier_eaten == 1) {
+                           soldier_text.text = 'Time left to kill the soldier: ' + 'Soldier Killed';
+                      } else {
+                           soldier_text.text = 'Time left to eat the soldier: ' + (after_8_time - time) + ' seconds';
+                      }
+                 } else {
+                      if (soldier_eaten == 0) {
+                           soldier_text.text = 'Time left to kill the soldier: ' + 'Ended unsuccessfully';
+                           if (this.pacman.overlap(this.soldier)) {
+                                this.pacman.reset((13 * 16) + 8, (11 * 16) + 8);
+                                this.move(Phaser.LEFT);					
+                                lives--;
+                                lives_text.text = 'Lives: ' + lives;
+                           }
+                      }
+                 }
+            } else {
+                 if (this.pacman.overlap(this.soldier)) {
+                      this.pacman.reset((13 * 16) + 8, (11 * 16) + 8);
+                      this.move(Phaser.LEFT);
+                      lives--;
+                      lives_text.text = 'Lives: ' + lives;
+                  }
+            }
+	
+            if (this.pacman.overlap(this.teleport_portal_left)) {
+                this.pacman.reset((27 * 16) + 8, (21 * 16) + 8);
+                this.move(Phaser.LEFT);
+            } 
+            else if (this.pacman.overlap(this.teleport_portal_right)) {
+                this.pacman.reset((0 * 16) + 8, (12 * 16) + 8);
+                this.move(Phaser.RIGHT);
+            }
 			
             if (counter == 0) {
                 if (time >= 10 && time < 16) {
@@ -379,4 +375,4 @@ var game = new Phaser.Game(448, 496, Phaser.AUTO);
         }
     };
 
-    //game.state.add('Game', Pacman, true);
+    game.state.add('Game', Pacman, true);
