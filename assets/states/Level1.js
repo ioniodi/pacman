@@ -228,52 +228,52 @@ Pacman.prototype = {
 
 	eatDot: function (pacman, dot) {
 		dot.kill();
-		music.play();
-		score++;
-		score_text.text = 'Score: ' + score + ' points';
+		this.music.play();
+		this.score++;
+		this.score_text.text = 'Score: ' + score + ' points';
 		if (this.dots.total === 0 && this.blackberries.total === 0 && this.cherries.total === 0 && this.kiwis.total === 0) {
 		   this.game.paused = true;
-		   finish_text.visible = true;
+		   this.finish_text.visible = true;
 		}
 	},
 
 	eatBlackberry: function (pacman, blackberry) {
 		blackberry.kill();
-		music.play();
-		score += 10;
-		score_text.text = 'Score: ' + score + ' points';
+		this.music.play();
+		this.score += 10;
+		this.score_text.text = 'Score: ' + score + ' points';
 		if (this.dots.total === 0 && this.blackberries.total === 0 && this.cherries.total === 0 && this.kiwis.total === 0) {
 			this.game.paused = true;
-			finish_text.visible = true;
+			this.finish_text.visible = true;
 		}
 	},
 
 	eatCherry: function (pacman, cherry) {
 		cherry.kill();
-		music.play();
-		score += 10;
-		score_text.text = 'Score: ' + score + ' points';
+		this.music.play();
+		this.score += 10;
+		this.score_text.text = 'Score: ' + score + ' points';
 		if (this.dots.total === 0 && this.blackberries.total === 0 && this.cherries.total === 0 && this.kiwis.total === 0) {
 			this.game.paused = true;
-			finish_text.visible = true;
+			this.finish_text.visible = true;
 		}
 	},
 
 	eatKiwi: function (pacman, kiwi) {
 		kiwi.kill();
-		music.play();
-		score += 10;
-		score_text.text = 'Score: ' + score + ' points';
+		this.music.play();
+		this.score += 10;
+		this.score_text.text = 'Score: ' + score + ' points';
 		if (this.dots.total === 0 && this.blackberries.total === 0 && this.cherries.total === 0 && this.kiwis.total === 0) {
 			this.game.paused = true;
-			finish_text.visible = true;
+			this.finish_text.visible = true;
 		}
 	},
 
 	update: function () {
 		if (this.lives == 0) {
 			this.game.paused = true;
-			end_text.visible = true;
+			this.end_text.visible = true;
 		}
 		this.physics.arcade.collide(this.pacman, this.layer);
 		this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
@@ -296,48 +296,48 @@ Pacman.prototype = {
 			this.turn();
 		}
 
-		time = this.game.time.totalElapsedSeconds()|0;
-		time_text.text = 'Time: ' + time + ' seconds';
+		this.time = this.game.time.totalElapsedSeconds()|0;
+		this.time_text.text = 'Time: ' + time + ' seconds';
 
-		if (knife_eaten == 0) {
+		if (this.knife_eaten == 0) {
 			if (this.pacman.overlap(this.knife)) {
-				music.play();
+				this.music.play();
 				this.knife.visible = false;
-				atm_time = time;
-				knife_eaten = 1;
-				after_8_time = atm_time + 8;
+				this.atm_time = time;
+				this.knife_eaten = 1;
+				this.after_8_time = this.atm_time + 8;
 			}
 		}
 		else {
-			if (time <= after_8_time ) {
-				if (soldier_eaten == 0 && knife_eaten == 1) {
+			if (this.time <= this.after_8_time ) {
+				if (this.soldier_eaten == 0 && this.knife_eaten == 1) {
 					if (this.pacman.overlap(this.soldier)) {
-						soldier_eaten = 1;
+						this.soldier_eaten = 1;
 						this.soldier.visible = false;
-						score += 250;
-						score_text.text = 'Score: ' + score + ' points';
+						this.score += 250;
+						this.score_text.text = 'Score: ' + score + ' points';
 					}
 				}
 			}
 		}
 
-		if (knife_eaten == 1) {
-			if (after_8_time - time > 0) {
-				if (soldier_eaten == 1) {
-					soldier_text.text = 'Time left to kill the soldier: ' + 'Soldier Killed';
+		if (this.knife_eaten == 1) {
+			if (this.after_8_time - this.time > 0) {
+				if (this.soldier_eaten == 1) {
+					this.soldier_text.text = 'Time left to kill the soldier: ' + 'Soldier Killed';
 				}
 				else {
-					soldier_text.text = 'Time left to eat the soldier: ' + (after_8_time - time) + ' seconds';
+					this.soldier_text.text = 'Time left to eat the soldier: ' + (after_8_time - time) + ' seconds';
 				}
 			}
 			else {
-				if (soldier_eaten == 0) {
-					soldier_text.text = 'Time left to kill the soldier: ' + 'Ended unsuccessfully';
+				if (this.soldier_eaten == 0) {
+					this.soldier_text.text = 'Time left to kill the soldier: ' + 'Ended unsuccessfully';
 					if (this.pacman.overlap(this.soldier)) {
 						this.pacman.reset((13 * 16) + 8, (11 * 16) + 8);
 						this.move(Phaser.LEFT);					
-						lives--;
-						lives_text.text = 'Lives: ' + lives;
+						this.lives--;
+						this.lives_text.text = 'Lives: ' + lives;
 					}
 				}
 			}
@@ -346,8 +346,8 @@ Pacman.prototype = {
 			if (this.pacman.overlap(this.soldier)) {
 				this.pacman.reset((13 * 16) + 8, (11 * 16) + 8);
 				this.move(Phaser.LEFT);
-				lives--;
-				lives_text.text = 'Lives: ' + lives;
+				this.lives--;
+				this.lives_text.text = 'Lives: ' + lives;
 			}
 		}
 
@@ -360,15 +360,15 @@ Pacman.prototype = {
 			this.move(Phaser.RIGHT);
 		}
 
-		if (counter == 0) {
-			if (time >= 10 && time < 16) {
+		if (this.counter == 0) {
+			if (this.time >= 10 && this.time < 16) {
 				this.dynamite.visible = true;
 				if (this.pacman.overlap(this.dynamite)) {
-					music.play();
+					this.music.play();
 					this.dynamite.visible = false;
-					score += 100;
-					score_text.text = 'Score: ' + score + ' points';
-					counter = 1;
+					this.score += 100;
+					this.score_text.text = 'Score: ' + score + ' points';
+					this.counter = 1;
 				}
 			}
 			else {
