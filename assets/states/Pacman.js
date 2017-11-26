@@ -381,4 +381,4 @@
         }
     };
 
-    game.state.add('Game', Pacman, true);
+    //game.state.add('Game', Pacman, true);
