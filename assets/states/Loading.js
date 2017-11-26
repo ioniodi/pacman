@@ -6,7 +6,7 @@ Game.Loading = function (game) {
 
 Game.Loading.prototype = {
     preload: function () {
-        this.load.image('Loading', 'assets/states/loading.png');
+        this.load.image('loading', 'assets/states/loading.png');
     },
     
     create: function () {
