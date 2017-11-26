@@ -1,5 +1,5 @@
 var MainMenu = function(game){}
- 
+
 MainMenu.prototype = {
     create: function(){
          var title = this.game.add.sprite(160, 160, "title");
