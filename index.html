@@ -128,8 +128,9 @@
             this.map.createFromTiles(36, this.safetile, 'banana', this.layer, this.bananas);
 
 
-            enemy = new Enemy(game, 22, 22, 1, 100);
+            enemy = new Enemy(game, 1, 0, 1, 100);
 		    game.add.existing(enemy);
+
 
             this.switch = game.add.audio('switch');
             this.switch2 = game.add.audio('switch');
@@ -429,6 +430,7 @@
             }
 
             this.physics.arcade.collide(enemy, this.layer);
+            this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
 
             this.physics.arcade.overlap(this.pacman, this.strawberries, this.eatStrawberry, null, this);
             this.physics.arcade.overlap(this.pacman, this.bananas, this.eatBanana, null, this);
@@ -479,8 +481,8 @@
 
 
 	Enemy = function (game, x, y, direction, speed) {
-		Phaser.Sprite.call(this, game, x, y, "enemy");
-		this.anchor.setTo(0.5);
+		Phaser.Sprite.call(this, game, x+8, y+8, "enemy");
+		//this.anchor.setTo(.5);
 		game.physics.enable(this, Phaser.Physics.ARCADE);
 		this.xSpeed = direction*speed;
 	};
@@ -493,10 +495,10 @@
 	};
 
 	function moveEnemy(enemy,platform){
-		if(enemy.xSpeed>0 && enemy.x>platform.x+platform.width/2 || enemy.xSpeed<0 && enemy.x<platform.x-platform.width/2){
+
 
 			enemy.xSpeed*=-1;
-		}
+
 	}
 
     game.state.add('Game', Pacman, true);
