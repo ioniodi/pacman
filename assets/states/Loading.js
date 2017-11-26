@@ -6,7 +6,7 @@ Game.Loading = function (game) {
 
 Game.Loading.prototype = {
     preload: function () {
-        this.load.image('loading', 'assets/states/loading.png');
+        textManager.createText(game, 180, 300, 'Loading...', colors.white, false);
     },
     
     create: function () {
