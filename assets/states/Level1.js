@@ -1,4 +1,3 @@
-var game = new Phaser.Game(448, 496, Phaser.AUTO);
 var music;
 var time;
 var time_text;
