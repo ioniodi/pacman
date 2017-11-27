@@ -295,6 +295,7 @@ Pacman.prototype = {
       }
 
       time = this.game.time.totalElapsedSeconds()|0;
+      time = this.game.time.elapsedSince(0)
       time_text.text = 'Time: ' + time + ' seconds';
 
       if (knife_eaten == 0) {
