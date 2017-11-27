@@ -12,12 +12,12 @@
         <script type="text/javascript">
             window.onload = function() {
                 var game = new Phaser.Game(448, 496, Phaser.AUTO);
-                //var game2 = new Phaser.Game(448, 496, Phaser.AUTO, '');
+                var game2 = new Phaser.Game(448, 496, Phaser.AUTO);
                 game.state.add('Boot', Boot);
                 game.state.add('Preload', Preload);
                 game.state.add('MainMenu', MainMenu);
                 game.state.add('Level1', Pacman);
-                game.state.add('Level2', Pacman);
+                game2.state.add('Level2', Pacman);
                 
                 game.state.start('Boot');
             };
