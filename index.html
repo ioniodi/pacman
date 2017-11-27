@@ -110,8 +110,6 @@
 
             this.layer = this.map.createLayer('Pacman');
 
-            this.layer2 = this.map.createLayer('Enemies');
-
             this.dots = this.add.physicsGroup();
 
             this.strawberries = this.add.physicsGroup();
@@ -130,7 +128,6 @@
 
             enemy = new Enemy(game, 0, 0, 1, 100);
 		    game.add.existing(enemy);
-            console.log(enemy);
 
             this.switch = game.add.audio('switch');
             this.switch2 = game.add.audio('switch');
@@ -473,10 +470,7 @@
                 text3.setText("");
             }
 
-
         },
-
-
 
     };
 
