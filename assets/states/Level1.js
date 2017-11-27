@@ -3,6 +3,8 @@ var time;
 var time_text;
 var atm_time;
 var after_8_time;
+var time_after_play;
+var show_time;
 
 var score = 0;
 var score_text;   
@@ -295,8 +297,9 @@ Pacman.prototype = {
       }
 
       time = this.game.time.totalElapsedSeconds()|0;
-      time = this.game.time.elapsedSince(0)
-      time_text.text = 'Time: ' + time + ' seconds';
+      time_after_play = this.game.time.elapsedSince(0)
+      show_time = time_after_play;
+      time_text.text = 'Time: ' + show_time + ' seconds';
 
       if (knife_eaten == 0) {
           if (this.pacman.overlap(this.knife)) {
