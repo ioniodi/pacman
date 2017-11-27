@@ -13,7 +13,7 @@ MainMenu.prototype = {
 		level2.anchor.setTo(0.5, 0.5);
 	},
 	Level1: function () {
-		this.game.state.start('Level1');
+		this.game.state.start('Level2');
 	},
      
 	level2: function () {
