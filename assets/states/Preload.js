@@ -7,9 +7,10 @@ Preload.prototype = {
         this.load.setPreloadSprite(loadingBar);
         this.game.load.image('title', 'assets/states/buttons/title.png');
 	    this.game.load.image('play', 'assets/states/buttons/play.png');
-	    this.game.load.image('level', 'assets/states/buttons/level.png');
+	    this.game.load.image('level2', 'assets/states/buttons/level.png');
 	},
-  	create: function(){
+  	
+	create: function(){
         console.log('%cPreload -> create intitialized', 'color:white; background:red');
 		this.game.state.start('MainMenu');
 	}
