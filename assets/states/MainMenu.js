@@ -5,16 +5,16 @@ MainMenu.prototype = {
 		console.log('%cMainMenu -> create intitialized', 'color:white; background:red');
 		var Title = this.game.add.sprite(160, 160, 'title');
 		Title.anchor.setTo(0.5, 0.5);
-		var play = this.game.add.button(100, 320, 'play', this.Level1, this);
+		var play = this.game.add.button(90, 320, 'play', this.Level1, this);
 		play.anchor.setTo(0.5, 0.5);
-        var level = this.game.add.button(200, 320, 'level', this.Level_pick, this);
+        var level2 = this.game.add.button(210, 320, 'level', this.Level2, this);
 		level.anchor.setTo(0.5, 0.5);
 	},
 	Level1: function () {
 		this.game.state.start('Level1');
 	},
      
-	level_pick: function () {
-		this.game.state.start('Level_pick');
+	level2: function () {
+		this.game.state.start('Level2');
 	}
 }
