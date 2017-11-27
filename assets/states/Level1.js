@@ -297,7 +297,7 @@ Pacman.prototype = {
       }
 
       time = this.game.time.totalElapsedSeconds()|0;
-      time_after_play = this.game.time.elapsedSince(0)
+      time_after_play = this.game.time.elapsedSecondsSince(0)
       show_time = time_after_play;
       time_text.text = 'Time: ' + show_time + ' seconds';
 
