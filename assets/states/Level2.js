@@ -19,7 +19,7 @@ var counter = 0;
 var knife_eaten = 0;
 var soldier_eaten = 0;
   
-var Pacman = function (game) {
+var Pacman2 = function (game) {
   this.map = null;
   this.layer = null;
   this.pacman = null;
@@ -35,7 +35,7 @@ var Pacman = function (game) {
   this.turning = Phaser.NONE;
 };
 
-Pacman.prototype = {
+Pacman2.prototype = {
   init: function () {
       this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
       this.scale.pageAlignHorizontally = true;
@@ -79,7 +79,7 @@ Pacman.prototype = {
       this.map.addTilesetImage('cherry', 'cherry-tiles');
       this.map.addTilesetImage('kiwi', 'kiwi-tiles');
 
-      this.layer = this.map.createLayer('Pacman');
+      this.layer = this.map.createLayer('Pacman2');
 
       this.dots = this.add.physicsGroup();
       this.blackberries = this.add.physicsGroup();
