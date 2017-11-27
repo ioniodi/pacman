@@ -120,6 +120,7 @@ Pacman.prototype = {
       this.cursors = this.input.keyboard.createCursorKeys();
 
       this.pacman.play('munch');
+      this.game.paused = true;
       //this.move(Phaser.LEFT);
 
       music = this.add.audio('chopping');
@@ -269,6 +270,21 @@ Pacman.prototype = {
   },
 
   update: function () {
+      if (this.game.paused = true) {
+        if (this.cursors.left.isDown) {
+            this.game.paused = false;
+        }
+        else if (this.cursors.right.isDown) {
+            this.game.paused = false;
+        }
+        else if (this.cursors.up.isDown) {
+            this.game.paused = false;
+        }
+        else if (this.cursors.down.isDown) {
+            this.game.paused = false;
+        }
+      }
+      
       if (lives == 0) {
           this.game.paused = true;
           end_text.visible = true;
