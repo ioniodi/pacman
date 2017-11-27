@@ -124,12 +124,12 @@ Pacman.prototype = {
 
       music = this.add.audio('chopping');
 
-      time_text = game.add.text(10, -2, 'Time: 0 seconds', { font: '14px Arial', fill: '#FFFFFF' });
-      score_text = game.add.text(180, -2, 'Score: 0 points', { font: '14px Arial', fill: '#FFFFFF' });
-      lives_text = game.add.text(360, -2, 'Lives: 3', { font: '14px Arial', fill: '#FFFFFF' });
-      soldier_text = game.add.text(94, 481, 'Time left to kill the soldier: Not Activated', { font: '14px Arial', fill: '#FFFFFF' });
-      end_text = game.add.text(180, 330, 'Game Over!', { font: '14px Arial', fill: '#FFFFFF' });
-      finish_text = game.add.text(185, 210, 'Completed!', { font: '14px Arial', fill: '#FFFFFF' });
+      time_text = this.add.text(10, -2, 'Time: 0 seconds', { font: '14px Arial', fill: '#FFFFFF' });
+      score_text = this.add.text(180, -2, 'Score: 0 points', { font: '14px Arial', fill: '#FFFFFF' });
+      lives_text = this.add.text(360, -2, 'Lives: 3', { font: '14px Arial', fill: '#FFFFFF' });
+      soldier_text = this.add.text(94, 481, 'Time left to kill the soldier: Not Activated', { font: '14px Arial', fill: '#FFFFFF' });
+      end_text = this.add.text(180, 330, 'Game Over!', { font: '14px Arial', fill: '#FFFFFF' });
+      finish_text = this.add.text(185, 210, 'Completed!', { font: '14px Arial', fill: '#FFFFFF' });
 
       end_text.visible = false;
       finish_text.visible = false;	
