@@ -122,7 +122,7 @@ Pacman.prototype = {
       this.pacman.play('munch');
       //this.move(Phaser.LEFT);
 
-      music = game.add.audio('chopping');
+      music = this.add.audio('chopping');
 
       time_text = game.add.text(10, -2, 'Time: 0 seconds', { font: '14px Arial', fill: '#FFFFFF' });
       score_text = game.add.text(180, -2, 'Score: 0 points', { font: '14px Arial', fill: '#FFFFFF' });
