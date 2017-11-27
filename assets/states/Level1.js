@@ -120,8 +120,6 @@ Pacman.prototype = {
       this.cursors = this.input.keyboard.createCursorKeys();
 
       this.pacman.play('munch');
-      this.game.paused = true;
-      //this.move(Phaser.LEFT);
 
       music = this.add.audio('chopping');
 
@@ -133,7 +131,8 @@ Pacman.prototype = {
       finish_text = this.add.text(185, 210, 'Completed!', { font: '14px Arial', fill: '#FFFFFF' });
 
       end_text.visible = false;
-      finish_text.visible = false;	
+      finish_text.visible = false;
+      this.game.paused = true;
   },
 
   checkKeys: function () {
