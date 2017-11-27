@@ -295,7 +295,7 @@ Pacman.prototype = {
       }
 
       time = this.game.time.totalElapsedSeconds()|0;
-      time_text.text = 'Time: ' + time + ' seconds';
+      time_text = 'Time: ' + time + ' seconds';
 
       if (knife_eaten == 0) {
           if (this.pacman.overlap(this.knife)) {
