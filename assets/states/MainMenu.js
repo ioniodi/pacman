@@ -2,6 +2,7 @@ var MainMenu = function (game) {}
 
 MainMenu.prototype = {
   	create: function(){
+		console.log('%cMainMenu -> create intitialized', 'color:white; background:red');
 		var Title = this.game.add.sprite(160, 160, 'title');
 		gameTitle.anchor.setTo(0.5, 0.5);
 		var play = this.game.add.button(160, 320, 'play', this.Level1, this);
