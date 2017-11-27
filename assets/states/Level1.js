@@ -68,7 +68,7 @@ Pacman.prototype = {
       this.load.spritesheet('pacman', 'assets/giannis_rambo_scaled_flipped.png', 32, 32);
       this.load.tilemap('map', 'assets/pacman-map_fruits.json', null, Phaser.Tilemap.TILED_JSON);
 
-      game.load.audio('chopping', 'assets/giannakis_is_cutting.mp3');
+      this.load.audio('chopping', 'assets/giannakis_is_cutting.mp3');
       //  Needless to say, graphics (C)opyright Namco
   },
 
