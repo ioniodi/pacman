@@ -128,9 +128,9 @@
             this.map.createFromTiles(36, this.safetile, 'banana', this.layer, this.bananas);
 
 
-            enemy = new Enemy(game, 1, 0, 1, 100);
+            enemy = new Enemy(game, 0, 0, 1, 100);
 		    game.add.existing(enemy);
-
+            console.log(enemy);
 
             this.switch = game.add.audio('switch');
             this.switch2 = game.add.audio('switch');
@@ -331,14 +331,7 @@
             score++;
             text.setText("Score: " + score);
 
-            lives--;
-            if (lives >= 0) {
-                text3.setText("Lives: " + lives);
-            }
-            else {
-                // display loss message and nullify text3
-                text3.setText("");
-            }
+
 
 
             dot.kill();
@@ -420,6 +413,11 @@
 
         },
 
+        kill_pacman: function (pacman) {
+            pacman.kill();
+            lives--;
+        },
+
         update: function () {
 
             this.physics.arcade.collide(this.pacman, this.layer);
@@ -429,7 +427,8 @@
                 this.physics.arcade.overlap(this.pacman, this.bonuses, this.eatBonus, null, this);
             }
 
-            this.physics.arcade.collide(enemy, this.layer);
+            this.physics.arcade.collide(enemy, this.layer, moveEnemy);
+            this.physics.arcade.collide(this.pacman, enemy, this.kill_pacman);
             this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
 
             this.physics.arcade.overlap(this.pacman, this.strawberries, this.eatStrawberry, null, this);
@@ -466,6 +465,14 @@
                 this.bonuses.callAll('revive');
             }
 
+            if (lives >= 0) {
+                text3.setText("Lives: " + lives);
+            }
+            else {
+                // display loss message and nullify text3
+                text3.setText("");
+            }
+
 
         },
 
@@ -477,27 +484,48 @@
 
         total++;
 
-    }
-
+    };
 
 	Enemy = function (game, x, y, direction, speed) {
-		Phaser.Sprite.call(this, game, x+8, y+8, "enemy");
+		Phaser.Sprite.call(this, game, x+16, y+16, "enemy");
 		//this.anchor.setTo(.5);
 		game.physics.enable(this, Phaser.Physics.ARCADE);
 		this.xSpeed = direction*speed;
+        this.ySpeed = 0;
 	};
 
 	Enemy.prototype = Object.create(Phaser.Sprite.prototype);
 	Enemy.prototype.constructor = Enemy;
 
 	Enemy.prototype.update = function() {
+        //game.physics.arcade.collide(Enemy, game.layer, moveEnemy);
 		this.body.velocity.x = this.xSpeed;
+        this.body.velocity.y = this.ySpeed;
+
 	};
 
 	function moveEnemy(enemy,platform){
 
+        var rand = Math.floor((Math.random() * 10) + 1)%2;
 
-			enemy.xSpeed*=-1;
+        if (enemy.xSpeed == 0) {
+            if (rand == 0) {
+                enemy.xSpeed = enemy.ySpeed;
+            }
+            else {
+                enemy.xSpeed = enemy.ySpeed*-1;
+            }
+            enemy.ySpeed = 0;
+        }
+        else {
+            if (rand == 0) {
+                enemy.ySpeed = enemy.xSpeed;
+            }
+            else {
+                enemy.ySpeed = enemy.xSpeed*-1;
+            }
+            enemy.xSpeed = 0;
+        }
 
 	}
 
