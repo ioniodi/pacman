@@ -5,7 +5,7 @@ var atm_time;
 var after_8_time;
 
 var score = 0;
-var score_text;   
+var score_text;
 
 var lives = 3;
 var lives_text;
@@ -18,7 +18,7 @@ var finish_text;
 var counter = 0;
 var knife_eaten = 0;
 var soldier_eaten = 0;
-  
+
 var Pacman = function (game) {
   this.map = null;
   this.layer = null;
@@ -44,33 +44,7 @@ Pacman.prototype = {
       this.physics.startSystem(Phaser.Physics.ARCADE);
   },
 
-  preload: function () {
-      //  We need this because the assets are on github pages
-      //  Remove the next 2 lines if running locally
-      this.load.baseURL = 'https://geocfu.github.io/pacman/';
-      this.load.crossOrigin = 'anonymous';
-
-      this.load.image('dot', 'assets/dot.png');
-      this.load.image('blackberry', 'assets/blackberry.png');
-      this.load.image('cherry', 'assets/cherry.png');
-      this.load.image('kiwi', 'assets/kiwi.png');
-      this.load.image('dynamite', 'assets/dynamite.png');
-      this.load.image('soldier', 'assets/soldier.png');
-      this.load.image('teleport_portal_left', 'assets/teleport_portal_left.png');
-      this.load.image('teleport_portal_right', 'assets/teleport_portal_right.png');
-      this.load.image('knife', 'assets/knife.png');
-
-      this.load.image('blackberry-tiles', 'assets/blackberry.png');
-      this.load.image('cherry-tiles', 'assets/cherry.png');
-      this.load.image('kiwi-tiles', 'assets/kiwi.png');
-      this.load.image('tiles', 'assets/pacman-tiles.png');
-
-      this.load.spritesheet('pacman', 'assets/giannis_rambo_scaled_flipped.png', 32, 32);
-      this.load.tilemap('map', 'assets/pacman-map_fruits.json', null, Phaser.Tilemap.TILED_JSON);
-
-      this.load.audio('chopping', 'assets/giannakis_is_cutting.mp3');
-      //  Needless to say, graphics (C)opyright Namco
-  },
+  preload: function () {},
 
   create: function () {
       this.map = this.add.tilemap('map');
@@ -132,7 +106,7 @@ Pacman.prototype = {
 
       end_text.visible = false;
       finish_text.visible = false;
-      
+
   },
 
   checkKeys: function () {
@@ -268,35 +242,43 @@ Pacman.prototype = {
       }
   },
 
-  update: function () {
+  endLevel: function () {
       if (lives == 0) {
           this.game.paused = true;
           end_text.visible = true;
       }
-      this.physics.arcade.collide(this.pacman, this.layer);
-      this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
-      this.physics.arcade.overlap(this.pacman, this.blackberries, this.eatBlackberry, null, this);
-      this.physics.arcade.overlap(this.pacman, this.cherries, this.eatCherry, null, this);
-      this.physics.arcade.overlap(this.pacman, this.kiwis, this.eatKiwi, null, this);
+  },
 
-      this.marker.x = this.math.snapToFloor(Math.floor(this.pacman.x), this.gridsize) / this.gridsize;
-      this.marker.y = this.math.snapToFloor(Math.floor(this.pacman.y), this.gridsize) / this.gridsize;
-
-      //  Update our grid sensors
-      this.directions[1] = this.map.getTileLeft(this.layer.index, this.marker.x, this.marker.y);
-      this.directions[2] = this.map.getTileRight(this.layer.index, this.marker.x, this.marker.y);
-      this.directions[3] = this.map.getTileAbove(this.layer.index, this.marker.x, this.marker.y);
-      this.directions[4] = this.map.getTileBelow(this.layer.index, this.marker.x, this.marker.y);
-
-      this.checkKeys();
-
-      if (this.turning !== Phaser.NONE) {
-          this.turn();
+  teleport: function () {
+      if (this.pacman.overlap(this.teleport_portal_left)) {
+          this.pacman.reset((27 * 16) + 8, (21 * 16) + 8);
+          this.move(Phaser.LEFT);
       }
+      else if (this.pacman.overlap(this.teleport_portal_right)) {
+          this.pacman.reset((0 * 16) + 8, (12 * 16) + 8);
+          this.move(Phaser.RIGHT);
+      }
+  },
 
-      time = this.game.time.totalElapsedSeconds()|0;
-      time_text.text = 'Time: ' + time + ' seconds';
+  eatBonus: function () {
+      if (counter == 0) {
+          if (time >= 10 && time < 16) {
+              this.dynamite.visible = true;
+              if (this.pacman.overlap(this.dynamite)) {
+                  music.play();
+                  this.dynamite.visible = false;
+                  score += 100;
+                  score_text.text = 'Score: ' + score + ' points';
+                  counter = 1;
+              }
+          }
+          else {
+              this.dynamite.visible = false;
+          }
+      }
+  },
 
+  enemy: function () {
       if (knife_eaten == 0) {
           if (this.pacman.overlap(this.knife)) {
               music.play();
@@ -333,7 +315,7 @@ Pacman.prototype = {
                   soldier_text.text = 'Time left to kill the soldier: ' + 'Ended unsuccessfully';
                   if (this.pacman.overlap(this.soldier)) {
                       this.pacman.reset((13 * 16) + 8, (11 * 16) + 8);
-                      this.move(Phaser.LEFT);					
+                      this.move(Phaser.LEFT);
                       lives--;
                       lives_text.text = 'Lives: ' + lives;
                   }
@@ -348,31 +330,39 @@ Pacman.prototype = {
               lives_text.text = 'Lives: ' + lives;
           }
       }
+  },
 
-      if (this.pacman.overlap(this.teleport_portal_left)) {
-          this.pacman.reset((27 * 16) + 8, (21 * 16) + 8);
-          this.move(Phaser.LEFT);
-      } 
-      else if (this.pacman.overlap(this.teleport_portal_right)) {
-          this.pacman.reset((0 * 16) + 8, (12 * 16) + 8);
-          this.move(Phaser.RIGHT);
+  manageTime: function () {
+      time = this.game.time.totalElapsedSeconds()|0;
+      time_text.text = 'Time: ' + time + ' seconds';
+  },
+
+  update: function () {
+      this.physics.arcade.collide(this.pacman, this.layer);
+      this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
+      this.physics.arcade.overlap(this.pacman, this.blackberries, this.eatBlackberry, null, this);
+      this.physics.arcade.overlap(this.pacman, this.cherries, this.eatCherry, null, this);
+      this.physics.arcade.overlap(this.pacman, this.kiwis, this.eatKiwi, null, this);
+
+      this.marker.x = this.math.snapToFloor(Math.floor(this.pacman.x), this.gridsize) / this.gridsize;
+      this.marker.y = this.math.snapToFloor(Math.floor(this.pacman.y), this.gridsize) / this.gridsize;
+
+      //  Update our grid sensors
+      this.directions[1] = this.map.getTileLeft(this.layer.index, this.marker.x, this.marker.y);
+      this.directions[2] = this.map.getTileRight(this.layer.index, this.marker.x, this.marker.y);
+      this.directions[3] = this.map.getTileAbove(this.layer.index, this.marker.x, this.marker.y);
+      this.directions[4] = this.map.getTileBelow(this.layer.index, this.marker.x, this.marker.y);
+
+      this.checkKeys();
+
+      if (this.turning !== Phaser.NONE) {
+          this.turn();
       }
 
-      if (counter == 0) {
-          if (time >= 10 && time < 16) {
-              this.dynamite.visible = true;
-              if (this.pacman.overlap(this.dynamite)) {
-                  music.play();
-                  this.dynamite.visible = false;
-                  score += 100;
-                  score_text.text = 'Score: ' + score + ' points';
-                  counter = 1;
-              }
-          }
-          else {
-              this.dynamite.visible = false;
-          }
-      }
+      this.endLevel();
+      this.teleport();
+      this.eatBonus();
+      this.enemy();
+      this.manageTime();
   }
 };
-//game.state.add('Game', Pacman, true);
