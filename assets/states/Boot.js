@@ -1,10 +1,10 @@
 var Boot = function(game) {
 	console.log('%cPacman - geocfu', 'color:white; background:red');
 };
-  
+
 Boot.prototype = {
 	preload: function() {
-          this.game.load.image('loading','assets/loading.png'); 
+          this.game.load.image('loading','assets/loading.png');
 	},
   	create: function(){
 		this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
