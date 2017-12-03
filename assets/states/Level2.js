@@ -112,6 +112,8 @@ Pacman_level2.prototype = {
 
         end_text.visible = false;
         finish_text.visible = false;
+        score_text.text = 'Score: ' + score + ' points';
+        lives_text.text = 'Lives: ' + lives;
     },
 
     checkKeys: function () {
@@ -283,6 +285,7 @@ Pacman_level2.prototype = {
     },
 
     enemySoldier: function () {
+        this.knife.visible = false;
         if (knife_eaten == false) {
             if (this.pacman.overlap(this.knife)) {
                 music.play();

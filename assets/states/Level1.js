@@ -1,3 +1,4 @@
+//var game = new Phaser.Game(448, 496, Phaser.AUTO);
 var music;
 var time;
 var time_text;
@@ -21,6 +22,7 @@ var soldier_eaten = false;
 
 var direction = 0;
 var previous_direction = 0;
+var next_level = false;
 
 var Pacman = function (game) {
     this.map = null;
@@ -47,9 +49,7 @@ Pacman.prototype = {
         this.physics.startSystem(Phaser.Physics.ARCADE);
     },
 
-    preload: function () {
-		
-    },
+    preload: function () {},
 
     create: function () {
         this.map = this.add.tilemap('map');
@@ -207,8 +207,7 @@ Pacman.prototype = {
         score++;
         score_text.text = 'Score: ' + score + ' points';
         if (this.dots.total === 0 && this.blackberries.total === 0 && this.cherries.total === 0 && this.kiwis.total === 0) {
-             this.game.paused = true;
-             finish_text.visible = true;
+             next_level = true;
         }
     },
 
@@ -218,8 +217,7 @@ Pacman.prototype = {
         score += 10;
         score_text.text = 'Score: ' + score + ' points';
         if (this.dots.total === 0 && this.blackberries.total === 0 && this.cherries.total === 0 && this.kiwis.total === 0) {
-            this.game.paused = true;
-            finish_text.visible = true;
+            next_level = true;
         }
     },
 
@@ -229,8 +227,7 @@ Pacman.prototype = {
         score += 10;
         score_text.text = 'Score: ' + score + ' points';
         if (this.dots.total === 0 && this.blackberries.total === 0 && this.cherries.total === 0 && this.kiwis.total === 0) {
-            this.game.paused = true;
-            finish_text.visible = true;
+            next_level = true;
         }
     },
 
@@ -240,8 +237,7 @@ Pacman.prototype = {
         score += 10;
         score_text.text = 'Score: ' + score + ' points';
         if (this.dots.total === 0 && this.blackberries.total === 0 && this.cherries.total === 0 && this.kiwis.total === 0) {
-            this.game.paused = true;
-            finish_text.visible = true;
+            next_level = true;
         }
     },
 
@@ -404,5 +400,12 @@ Pacman.prototype = {
         this.eatBonus();
         this.manageTime();
         this.enemySoldier();
+        nextLevel(this.game);
     }
 };
+
+var nextLevel = function (game) {
+    if (next_level == true) {
+        game.state.start('Level2');
+    }
+}
