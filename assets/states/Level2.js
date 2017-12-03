@@ -48,7 +48,8 @@ Pacman_level2.prototype = {
     },
 
     preload: function () {
-        this.load.baseURL = 'https://geocfu.github.io/pacman/';
+		//  Needless to say, graphics (C)opyright Namco
+		this.load.baseURL = 'https://geocfu.github.io/pacman/';
         this.load.crossOrigin = 'anonymous';
 
         this.load.image('dot', 'assets/dot.png');
@@ -354,7 +355,7 @@ Pacman_level2.prototype = {
     },
 
     enemySoldierMove: function () {
-        var enemySoldierSpeed = this.speed - 140;
+        var enemySoldierSpeed = this.speed - 50;
 
         while (direction == previous_direction) {
             direction = this.game.rnd.between(0, 3);
