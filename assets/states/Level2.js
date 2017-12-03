@@ -22,7 +22,7 @@ var soldier_eaten = false;
 var direction = 0;
 var previous_direction = 0;
 
-var Pacman = function (game) {
+var Pacman_level2 = function (game) {
     this.map = null;
     this.layer = null;
     this.pacman = null;
@@ -38,7 +38,7 @@ var Pacman = function (game) {
     this.turning = Phaser.NONE;
 };
 
-Pacman.prototype = {
+Pacman_level2.prototype = {
     init: function () {
         this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
         this.scale.pageAlignHorizontally = true;
