@@ -16,8 +16,8 @@ var end_text;
 var finish_text;
 
 var counter = 0;
-var knife_eaten = 0;
-var soldier_eaten = 0;
+var knife_eaten = false;
+var soldier_eaten = false;
 
 var direction = 0;
 var previous_direction = 0;
@@ -32,18 +32,10 @@ var Pacman = function (game) {
     this.threshold = 3;
     this.marker = new Phaser.Point();
     this.turnPoint = new Phaser.Point();
-
-    this.soldier_marker = new Phaser.Point();
-
     this.directions = [null, null, null, null, null];
-    this.soldier_directions = [null, null, null, null, null];
     this.opposites = [Phaser.NONE, Phaser.RIGHT, Phaser.LEFT, Phaser.DOWN, Phaser.UP];
-    this.soldier_opposites = [Phaser.RIGHT, Phaser.LEFT, Phaser.DOWN, Phaser.UP];
     this.current = Phaser.NONE;
     this.turning = Phaser.NONE;
-
-    this.soldier_current = Phaser.NONE;
-    this.soldier_turning = Phaser.NONE;
 };
 
 Pacman.prototype = {
@@ -85,22 +77,24 @@ Pacman.prototype = {
 
         //  Position Pacman at grid location 13x11 (the +8 accounts for his anchor)
         this.pacman = this.add.sprite((13 * 16) + 8, (11 * 16) + 8, 'pacman', 0);
-        this.soldier = this.add.sprite((9 * 16) + 8, (10 * 16) + 8, 'soldier', 0);
-        this.dynamite = this.add.sprite((11 * 16), (11 * 16), 'dynamite', 0);
         this.teleport_portal_left = this.add.sprite((-1 * 16), (12 * 16), 'teleport_portal_left', 0);
         this.teleport_portal_right = this.add.sprite((28 * 16), (21 * 16), 'teleport_portal_right', 0);
         this.knife = this.add.sprite((14 * 16), (29 * 16), 'knife', 0);
 
-        this.dynamite.visible = false;
-
         this.pacman.anchor.set(0.5);
-        this.soldier.anchor.set(0.5);
         this.pacman.animations.add('munch', [0, 1, 2, 1], 15, true);
-
         this.physics.arcade.enable(this.pacman);
         this.pacman.body.setSize(16, 16, 0, 0);
+
+        this.dynamite = this.add.sprite((11 * 16), (11 * 16), 'dynamite', 0);
+        this.dynamite.visible = false;
+
+        this.soldier = this.add.sprite((13 * 16) + 8, (16 * 16) + 8, 'soldier', 0);
+        this.soldier.anchor.set(0.5);
         this.physics.arcade.enable(this.soldier);
         this.soldier.body.setSize(16, 16, 0, 0);
+        this.soldier.body.velocity.x = -(this.speed - 50);
+        this.soldier.body.velocity.y = 0;
 
         this.cursors = this.input.keyboard.createCursorKeys();
 
@@ -111,15 +105,11 @@ Pacman.prototype = {
         time_text = this.add.text(10, -2, 'Time: 0 seconds', { font: '14px Arial', fill: '#FFFFFF' });
         score_text = this.add.text(180, -2, 'Score: 0 points', { font: '14px Arial', fill: '#FFFFFF' });
         lives_text = this.add.text(360, -2, 'Lives: 3', { font: '14px Arial', fill: '#FFFFFF' });
-        soldier_text = this.add.text(94, 481, 'Time left to kill the soldier: Not Activated', { font: '14px Arial', fill: '#FFFFFF' });
         end_text = this.add.text(180, 330, 'Game Over!', { font: '14px Arial', fill: '#FFFFFF' });
         finish_text = this.add.text(185, 210, 'Completed!', { font: '14px Arial', fill: '#FFFFFF' });
 
         end_text.visible = false;
         finish_text.visible = false;
-
-        this.soldier.body.velocity.x = -(this.speed - 50);
-        this.soldier.body.velocity.y = 0;
     },
 
     checkKeys: function () {
@@ -270,13 +260,6 @@ Pacman.prototype = {
             this.pacman.reset((1 * 16) + 8, (12 * 16) + 8);
             this.move(Phaser.RIGHT);
         }
-        //teleport soldier
-        if (this.soldier.overlap(this.teleport_portal_left)) {
-            this.solider.reset((26 * 16) + 8, (21 * 16) + 8);
-        }
-        else if (this.soldier.overlap(this.teleport_portal_right)) {
-            this.soldier.reset((1 * 16) + 8, (12 * 16) + 8);
-        }
     },
 
     eatBonus: function () {
@@ -298,20 +281,20 @@ Pacman.prototype = {
     },
 
     enemySoldier: function () {
-        if (knife_eaten == 0) {
+        if (knife_eaten == false) {
             if (this.pacman.overlap(this.knife)) {
                 music.play();
                 this.knife.visible = false;
                 atm_time = time;
-                knife_eaten = 1;
+                knife_eaten = true;
                 after_8_time = atm_time + 8;
             }
         }
         else {
             if (time <= after_8_time ) {
-                if (soldier_eaten == 0 && knife_eaten == 1) {
+                if (soldier_eaten == false && knife_eaten == true) {
                     if (this.pacman.overlap(this.soldier)) {
-                        soldier_eaten = 1;
+                        soldier_eaten = true;
                         this.soldier.visible = false;
                         score += 250;
                         score_text.text = 'Score: ' + score + ' points';
@@ -320,18 +303,15 @@ Pacman.prototype = {
             }
         }
 
-        if (knife_eaten == 1) {
+        if (knife_eaten == true) {
             if (after_8_time - time > 0) {
-                if (soldier_eaten == 1) {
-                    soldier_text.text = 'Time left to kill the soldier: ' + 'Soldier Killed';
-                }
-                else {
-                    soldier_text.text = 'Time left to eat the soldier: ' + (after_8_time - time) + ' seconds';
+                if (soldier_eaten == false) {
+                    this.soldier.tint = 0xff0000;
                 }
             }
             else {
                 if (soldier_eaten == 0) {
-                    soldier_text.text = 'Time left to kill the soldier: ' + 'Ended unsuccessfully';
+                    this.soldier.tint = 0xffffff;
                     if (this.pacman.overlap(this.soldier)) {
                         this.pacman.reset((13 * 16) + 8, (11 * 16) + 8);
                         this.move(Phaser.RIGHT);
@@ -352,7 +332,7 @@ Pacman.prototype = {
     },
 
     enemySoldierMove: function () {
-        var enemySoldierSpeed = this.speed - 50;
+        var enemySoldierSpeed = this.speed - 140;
 
         while (direction == previous_direction) {
             direction = this.game.rnd.between(0, 3);
@@ -396,6 +376,7 @@ Pacman.prototype = {
     update: function () {
         this.physics.arcade.collide(this.pacman, this.layer);
         this.physics.arcade.collide(this.soldier, this.layer, this.enemySoldierMove, null, this);
+        this.physics.arcade.collide(this.pacman, this.knife, this.enemySoldier, null, this);
         this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
         this.physics.arcade.overlap(this.pacman, this.blackberries, this.eatBlackberry, null, this);
         this.physics.arcade.overlap(this.pacman, this.cherries, this.eatCherry, null, this);
@@ -404,19 +385,11 @@ Pacman.prototype = {
         this.marker.x = this.math.snapToFloor(Math.floor(this.pacman.x), this.gridsize) / this.gridsize;
         this.marker.y = this.math.snapToFloor(Math.floor(this.pacman.y), this.gridsize) / this.gridsize;
 
-        this.soldier_marker.x = this.math.snapToFloor(Math.floor(this.soldier.x), this.gridsize) / this.gridsize;
-        this.soldier_marker.y = this.math.snapToFloor(Math.floor(this.soldier.y), this.gridsize) / this.gridsize;
-
         //  Update our grid sensors
         this.directions[1] = this.map.getTileLeft(this.layer.index, this.marker.x, this.marker.y);
         this.directions[2] = this.map.getTileRight(this.layer.index, this.marker.x, this.marker.y);
         this.directions[3] = this.map.getTileAbove(this.layer.index, this.marker.x, this.marker.y);
         this.directions[4] = this.map.getTileBelow(this.layer.index, this.marker.x, this.marker.y);
-
-        this.soldier_directions[1] = this.map.getTileLeft(this.layer.index, this.soldier_marker.x, this.soldier_marker.y);
-        this.soldier_directions[2] = this.map.getTileRight(this.layer.index, this.soldier_marker.x, this.soldier_marker.y);
-        this.soldier_directions[3] = this.map.getTileAbove(this.layer.index, this.soldier_marker.x, this.soldier_marker.y);
-        this.soldier_directions[4] = this.map.getTileBelow(this.layer.index, this.soldier_marker.x, this.soldier_marker.y);
 
         this.checkKeys();
 
