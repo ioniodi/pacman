@@ -19,6 +19,9 @@ var counter = 0;
 var knife_eaten = 0;
 var soldier_eaten = 0;
 
+var direction = 0;
+var previous_direction = 0;
+
 var Pacman = function (game) {
     this.map = null;
     this.layer = null;
@@ -29,10 +32,18 @@ var Pacman = function (game) {
     this.threshold = 3;
     this.marker = new Phaser.Point();
     this.turnPoint = new Phaser.Point();
-    this.directions = [ null, null, null, null, null ];
-    this.opposites = [ Phaser.NONE, Phaser.RIGHT, Phaser.LEFT, Phaser.DOWN, Phaser.UP ];
+
+    this.soldier_marker = new Phaser.Point();
+
+    this.directions = [null, null, null, null, null];
+    this.soldier_directions = [null, null, null, null, null];
+    this.opposites = [Phaser.NONE, Phaser.RIGHT, Phaser.LEFT, Phaser.DOWN, Phaser.UP];
+    this.soldier_opposites = [Phaser.RIGHT, Phaser.LEFT, Phaser.DOWN, Phaser.UP];
     this.current = Phaser.NONE;
     this.turning = Phaser.NONE;
+
+    this.soldier_current = Phaser.NONE;
+    this.soldier_turning = Phaser.NONE;
 };
 
 Pacman.prototype = {
@@ -42,7 +53,7 @@ Pacman.prototype = {
         this.scale.pageAlignVertically = true;
         Phaser.Canvas.setImageRenderingCrisp(this.game.canvas);
         this.physics.startSystem(Phaser.Physics.ARCADE);
-  },
+    },
 
     preload: function () {},
 
@@ -74,10 +85,10 @@ Pacman.prototype = {
 
         //  Position Pacman at grid location 13x11 (the +8 accounts for his anchor)
         this.pacman = this.add.sprite((13 * 16) + 8, (11 * 16) + 8, 'pacman', 0);
-        this.soldier = this.add.sprite((8 * 16) + 8, (10 * 16) + 8, 'soldier', 0);
+        this.soldier = this.add.sprite((9 * 16) + 8, (10 * 16) + 8, 'soldier', 0);
         this.dynamite = this.add.sprite((11 * 16), (11 * 16), 'dynamite', 0);
-        this.teleport_portal_left = this.add.sprite((-2 * 16), (12 * 16), 'teleport_portal_left', 0);
-        this.teleport_portal_right = this.add.sprite((29 * 16), (21 * 16), 'teleport_portal_right', 0);
+        this.teleport_portal_left = this.add.sprite((-1 * 16), (12 * 16), 'teleport_portal_left', 0);
+        this.teleport_portal_right = this.add.sprite((28 * 16), (21 * 16), 'teleport_portal_right', 0);
         this.knife = this.add.sprite((14 * 16), (29 * 16), 'knife', 0);
 
         this.dynamite.visible = false;
@@ -106,6 +117,9 @@ Pacman.prototype = {
 
         end_text.visible = false;
         finish_text.visible = false;
+
+        this.soldier.body.velocity.x = -(this.speed - 50);
+        this.soldier.body.velocity.y = 0;
     },
 
     checkKeys: function () {
@@ -247,13 +261,21 @@ Pacman.prototype = {
     },
 
     teleport: function () {
+        //teleport giannaki rambo
         if (this.pacman.overlap(this.teleport_portal_left)) {
-            this.pacman.reset((27 * 16) + 8, (21 * 16) + 8);
+            this.pacman.reset((26 * 16) + 8, (21 * 16) + 8);
             this.move(Phaser.LEFT);
         }
         else if (this.pacman.overlap(this.teleport_portal_right)) {
-            this.pacman.reset((0 * 16) + 8, (12 * 16) + 8);
+            this.pacman.reset((1 * 16) + 8, (12 * 16) + 8);
             this.move(Phaser.RIGHT);
+        }
+        //teleport soldier
+        if (this.soldier.overlap(this.teleport_portal_left)) {
+            this.solider.reset((26 * 16) + 8, (21 * 16) + 8);
+        }
+        else if (this.soldier.overlap(this.teleport_portal_right)) {
+            this.soldier.reset((1 * 16) + 8, (12 * 16) + 8);
         }
     },
 
@@ -275,7 +297,7 @@ Pacman.prototype = {
         }
     },
 
-    enemy: function () {
+    enemySoldier: function () {
         if (knife_eaten == 0) {
             if (this.pacman.overlap(this.knife)) {
                 music.play();
@@ -312,7 +334,7 @@ Pacman.prototype = {
                     soldier_text.text = 'Time left to kill the soldier: ' + 'Ended unsuccessfully';
                     if (this.pacman.overlap(this.soldier)) {
                         this.pacman.reset((13 * 16) + 8, (11 * 16) + 8);
-                        this.move(Phaser.LEFT);
+                        this.move(Phaser.RIGHT);
                         lives--;
                         lives_text.text = 'Lives: ' + lives;
                     }
@@ -322,11 +344,48 @@ Pacman.prototype = {
         else {
             if (this.pacman.overlap(this.soldier)) {
                 this.pacman.reset((13 * 16) + 8, (11 * 16) + 8);
-                this.move(Phaser.LEFT);
+                this.move(Phaser.RIGHT);
                 lives--;
                 lives_text.text = 'Lives: ' + lives;
             }
         }
+    },
+
+    enemySoldierMove: function () {
+        var enemySoldierSpeed = this.speed - 50;
+
+        while (direction == previous_direction) {
+            direction = this.game.rnd.between(0, 3);
+        }
+
+        this.soldier.scale.x = -1;
+        this.soldier.angle = 0;
+
+        if (direction == 0) {//goes right
+            this.soldier.body.velocity.x = enemySoldierSpeed;
+            this.soldier.body.velocity.y = 0;
+        }
+        else if (direction == 1) {//goes left
+            this.soldier.body.velocity.x = -enemySoldierSpeed;
+            this.soldier.body.velocity.y = 0;
+
+            this.soldier.scale.x = 1;
+        }
+        else if (direction == 2) {//goes down
+            this.soldier.body.velocity.x = 0;
+            this.soldier.body.velocity.y = enemySoldierSpeed;
+
+            this.soldier.scale.x = -1;
+            this.soldier.angle = 90;
+        }
+        else {//goes up
+            this.soldier.body.velocity.x = 0;
+            this.soldier.body.velocity.y = -enemySoldierSpeed;
+
+            this.soldier.angle = 270;
+        }
+
+        previous_direction = direction;
     },
 
     manageTime: function () {
@@ -336,6 +395,7 @@ Pacman.prototype = {
 
     update: function () {
         this.physics.arcade.collide(this.pacman, this.layer);
+        this.physics.arcade.collide(this.soldier, this.layer, this.enemySoldierMove, null, this);
         this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
         this.physics.arcade.overlap(this.pacman, this.blackberries, this.eatBlackberry, null, this);
         this.physics.arcade.overlap(this.pacman, this.cherries, this.eatCherry, null, this);
@@ -344,11 +404,19 @@ Pacman.prototype = {
         this.marker.x = this.math.snapToFloor(Math.floor(this.pacman.x), this.gridsize) / this.gridsize;
         this.marker.y = this.math.snapToFloor(Math.floor(this.pacman.y), this.gridsize) / this.gridsize;
 
+        this.soldier_marker.x = this.math.snapToFloor(Math.floor(this.soldier.x), this.gridsize) / this.gridsize;
+        this.soldier_marker.y = this.math.snapToFloor(Math.floor(this.soldier.y), this.gridsize) / this.gridsize;
+
         //  Update our grid sensors
         this.directions[1] = this.map.getTileLeft(this.layer.index, this.marker.x, this.marker.y);
         this.directions[2] = this.map.getTileRight(this.layer.index, this.marker.x, this.marker.y);
         this.directions[3] = this.map.getTileAbove(this.layer.index, this.marker.x, this.marker.y);
         this.directions[4] = this.map.getTileBelow(this.layer.index, this.marker.x, this.marker.y);
+
+        this.soldier_directions[1] = this.map.getTileLeft(this.layer.index, this.soldier_marker.x, this.soldier_marker.y);
+        this.soldier_directions[2] = this.map.getTileRight(this.layer.index, this.soldier_marker.x, this.soldier_marker.y);
+        this.soldier_directions[3] = this.map.getTileAbove(this.layer.index, this.soldier_marker.x, this.soldier_marker.y);
+        this.soldier_directions[4] = this.map.getTileBelow(this.layer.index, this.soldier_marker.x, this.soldier_marker.y);
 
         this.checkKeys();
 
@@ -359,7 +427,7 @@ Pacman.prototype = {
         this.endLevel();
         this.teleport();
         this.eatBonus();
-        this.enemy();
         this.manageTime();
+        this.enemySoldier();
     }
 };
