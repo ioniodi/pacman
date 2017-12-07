@@ -1,16 +1,10 @@
 var Preloader = {
 	preload: function(){
-		//  We need this because the assets are on github pages
-        //  Remove the next 2 lines if running locally
-        //this.load.baseURL = 'https://Dimitris-Stamatis.github.io/pacman/';
-        //this.load.crossOrigin = 'Dimitris-Stamatis';
-		          
-
-            
+		
             this.load.image('background', 'assets/back.png');
             this.load.spritesheet('button', 'assets/button.png',222,75);
             this.load.spritesheet('buttonRestart', 'assets/buttonRestart.png',222,75);
-        this.load.spritesheet('buttonHelp', 'assets/buttonHelp.png',222,75);
+            this.load.spritesheet('buttonHelp', 'assets/buttonHelp.png',222,75);
             this.load.spritesheet('buttonBack', 'assets/buttonBack.png',222,75);
             this.load.spritesheet('helpScreen', 'assets/helpScreen.png');
             
@@ -39,7 +33,7 @@ var Preloader = {
             game.load.audio('DeathSound', 'assets/DeathSound.mp3');
             
             this.load.image('tiles', 'assets/pacman-tiles.png');
-            this.load.image('gmo', 'assets/GameOver.png');
+            this.load.image('gmo', 'assets/gameOver.png');
             this.load.spritesheet('pacman', 'assets/link.png', 32, 32);
             this.load.spritesheet('link-sword', 'assets/link-sword.png', 32, 32);
             this.load.spritesheet('enemy', 'assets/enemy.png', 32, 32);
