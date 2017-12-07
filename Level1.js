@@ -39,7 +39,7 @@ var music;
         this.takeWeaponOneTime = true;
         this.takeTeleportOneTime = true;
         
-        this.teleportCount = 50;
+        this.teleportCount = 0;
         this.swordsCount = 2;  
         
         this.opposites = [ Phaser.NONE, Phaser.RIGHT, Phaser.LEFT, Phaser.DOWN, Phaser.UP ];
