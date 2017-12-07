@@ -238,7 +238,7 @@ var music;
             switch (this.pacman_spot)
             {
                     case 1:             
-                        this.pacman = this.add.sprite((12 * 16) + 5, (28 * 16) + 5, 'pacman', 0);
+                        this.pacman = this.add.sprite((12 * 16) + 8, (29 * 16) + 8, 'pacman', 0);
                         this.pacman.anchor.set(0.5);
                         this.pacman.animations.add('munch', [0, 1, 2, 1,1, 0], 15, true);
                         console.log("1");
