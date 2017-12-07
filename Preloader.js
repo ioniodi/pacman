@@ -14,8 +14,7 @@ var Preloader = {
             this.load.image('dot3', 'assets/dot3.png');
             this.load.image('dot4', 'assets/dot4.png');
             this.load.image('bonus', 'assets/bonus.png');
-            this.load.image('bonusText', 'assets/bonusText.png');
-            this.load.image('logo', 'assets/logo.png');
+            this.load.image('bonusText', 'assets/bonusText.png');           
             this.load.image('timer', 'assets/timer.png');
             this.load.image('heart', 'assets/heart.png');
             this.load.image('weapon', 'assets/weapon.png');
