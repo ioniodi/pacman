@@ -884,7 +884,7 @@ var music;
             }
             else if( this.livesCount == 0)
             {
-                music.stop;
+                music.stop();
                 game.state.start('GameOver');
             }
                  
