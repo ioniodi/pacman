@@ -2,8 +2,8 @@ var bootState = {
     
     
     preload:function(){
-	//this.load.baseURL = 'https://Dimitris-Stamatis.github.io/pacman/';
-      //  this.load.crossOrigin = 'Dimitris-Stamatis';	
+       this.load.baseURL = 'https://Manolis-Tasiopoulos.github.io/pacman/';
+       this.load.crossOrigin = 'Manolis-Tasiopoulos';	
     },
     
 	create:function(){
