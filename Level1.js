@@ -1037,7 +1037,7 @@ var music;
                 this.physics.arcade.overlap(this.pacman, this.enemy2, this.playerKillEnemy2, null, this);
             }            
             
-            if( ((score + Bonus) % 10) == 0 && this.takeWeaponOneTime == true  && score > 0)
+            if( ((score + Bonus) % 100) == 0 && this.takeWeaponOneTime == true  && score > 0)
             {
                 this.weapon.create((14 * 16), (13 * 16) + 5, 'weapon');       
                 this.takeWeaponOneTime = false;
