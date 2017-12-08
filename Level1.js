@@ -19,6 +19,8 @@ var music;
         this.potionTimer = true;
         this.enemyTimer = true;
         this.enemy2Timer = true;
+        
+        this.teleportTimer = true;
 
         this.speed = 150;
         this.threshold = 3;
@@ -994,16 +996,33 @@ var music;
         },
         
         teleportTake: function(pacman,teleport){
-            this.takeTeleportOneTime = true;
-            teleport.kill();            
             
-            i_sound = game.add.audio('itemSound');
-            i_sound.volume = 1;
-            i_sound.play();
+            teleport.kill();
             
-            this.teleportCount++;
+            if(this.teleportTimer == true)
+            {      
+                this.takeTeleportOneTime = true;
+
+                this.timerTeleport = this.game.time.create(false);
+                this.timerTeleport.add(2000,this.setTeleportTrue,this);
+                this.timerTeleport.start();
+                    
+                i_sound = game.add.audio('itemSound');
+                i_sound.volume = 1;
+                i_sound.play();
             
-            this.potionsText.text = ': ' + this.teleportCount;
+                this.teleportCount++;
+            
+                this.potionsText.text = ': ' + this.teleportCount;
+
+                this.teleportTimer = false;
+            }         
+        },
+        
+        setTeleportTrue: function{
+        
+              this.teleportTimer = false;
+              this.timerTeleport.destroy();
         },
 
         update: function () {
