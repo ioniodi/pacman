@@ -997,12 +997,12 @@ var music;
         
         teleportTake: function(pacman,teleport){
             
-            teleport.kill();
+            
             
             if(this.teleportTimer == true)
             {  
+                teleport.kill();                
                 
-                this.takeTeleportOneTime = true;
 
                 this.timerTeleport = this.game.time.create(false);
                 this.timerTeleport.add(2000,this.setTeleportTrue,this);
@@ -1015,6 +1015,7 @@ var music;
                 this.teleportCount++;
             
                 this.potionsText.text = ': ' + this.teleportCount;
+                this.takeTeleportOneTime = true;
 
                 this.teleportTimer = false;
             }         
