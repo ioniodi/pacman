@@ -1000,7 +1000,8 @@ var music;
             teleport.kill();
             
             if(this.teleportTimer == true)
-            {      
+            {  
+                
                 this.takeTeleportOneTime = true;
 
                 this.timerTeleport = this.game.time.create(false);
@@ -1021,7 +1022,7 @@ var music;
         
         setTeleportTrue: function() {
         
-              this.teleportTimer = false;
+              this.teleportTimer = true;
               this.timerTeleport.destroy();
         },
 
