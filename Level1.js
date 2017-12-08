@@ -1019,7 +1019,7 @@ var music;
             }         
         },
         
-        setTeleportTrue: function{
+        setTeleportTrue: function() {
         
               this.teleportTimer = false;
               this.timerTeleport.destroy();
