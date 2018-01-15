@@ -26,7 +26,7 @@
     var game = new Phaser.Game(448, 496, Phaser.AUTO);
 	    var score = 0;
 	    var scoreText;
-	    var lives = 2;
+	    var lives = 1;
 	    var livesText;
 
     var Pacman = function (game) {
@@ -94,7 +94,7 @@
 	    this.oranges = this.add.physicsGroup();
 
             this.map.createFromTiles(7, this.safetile, 'dot', this.layer, this.dots);
-	    this.map.createFromTiles(18, this.safetile, 'orange', this.layer, this.oranges);
+	    this.map.createFromTiles(32, this.safetile, 'orange', this.layer, this.oranges);
 
             //  The dots will need to be offset by 6px to put them back in the middle of the grid
             this.dots.setAll('x', 6, false, false, 1);
@@ -121,7 +121,7 @@
 		
 	    scoreText = game.add.text(10,10, 'SCORE: 0' , { font: 'bold 14px Roman', fill: '#50a0fa', boundsAlignH: 'center', boundsAlignV: 'middle' });
 	    
-	    livesText = game.add.text(20,25, 'Lives: 2' , { font: 'bold 14px Roman', fill: '#fd8a64', boundsAlignH: 'center', boundsAlignV: 'middle' });
+	    livesText = game.add.text(20,25, 'Lives: 1' , { font: 'bold 14px Roman', fill: '#fd8a64', boundsAlignH: 'center', boundsAlignV: 'middle' });
 
         },	    
 
@@ -260,8 +260,8 @@
             orange.kill();
             var audio = new Audio('assets/bite.mp3');
             audio.play()
-		score += 20;
-		scoreText.text = 'Score: ' + score;
+		lives += 1;
+		livesText.text = 'Lives: ' + lives;
 		
             if (this.oranges.total === 0)
             {
