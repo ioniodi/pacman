@@ -263,9 +263,9 @@
 		score += 20;
 		scoreText.text = 'Score: ' + score;
 		
-            if (this.dots.total === 0)
+            if (this.oranges.total === 0)
             {
-                this.dots.callAll('revive');
+                this.oranges.callAll('revive');
             }
 
         },
