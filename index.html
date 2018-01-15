@@ -22,6 +22,8 @@
 
 
     <script type="text/javascript">
+    var score = 0;
+    var lives = 3;	
 
     var game = new Phaser.Game(448, 496, Phaser.AUTO);
 
@@ -110,6 +112,10 @@
             this.move(Phaser.LEFT);
 
         },
+	    
+	    textScore = game.add.text(16,16,"SCORE : " + score, { font: '12px Roman', fill: '#50a0fa', boundsAlignH: 'center', boundsAlignV: 'middle' });
+	    textLives = game.add.text(16,30,"Lives : " + lives, { font: '12px Roman', fill: '#fd8a64', boundsAlignH: 'center', boundsAlignV: 'middle' });
+	    
 
         checkKeys: function () {
 
@@ -228,7 +234,12 @@
         eatDot: function (pacman, dot) {
 
             dot.kill();
-
+            var audio = new Audio('assets/munch.mp3');
+            audio.play()
+		
+		score += 10;
+	    textScore.text = "SCORE : " + score ;
+		
             if (this.dots.total === 0)
             {
                 this.dots.callAll('revive');
