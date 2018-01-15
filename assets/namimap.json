@@ -13,7 +13,7 @@
         }],
  "nextobjectid":1,
  "orientation":"orthogonal",
- "renderorder":"right-down",
+ "renderorder":"left-up",
  "tiledversion":"1.0.3",
  "tileheight":16,
  "tilesets":[
@@ -24,7 +24,7 @@
          "imageheight":48,
          "imagewidth":256,
          "margin":0,
-         "name":"tiles",
+         "name":"pacman-tiles",
          "spacing":0,
          "tilecount":48,
          "tileheight":16,
