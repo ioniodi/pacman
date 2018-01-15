@@ -22,13 +22,12 @@
 
 
     <script type="text/javascript">
-	        
-                var score = 0;
-                var scoreText;
-                var lives = 2;
-                var livesText;
 
     var game = new Phaser.Game(448, 496, Phaser.AUTO);
+	    var score = 0;
+	    var scoreText;
+	    var lives = 2;
+	    var livesText;
 
     var Pacman = function (game) {
 
@@ -113,14 +112,14 @@
 
             this.pacman.play('munch');
             this.move(Phaser.LEFT);
-
-        },
-	    
+		
 	    scoreText = game.add.text(10,10, 'Score: 0' , { font: '12px Roman', fill: '#50a0fa', boundsAlignH: 'center', boundsAlignV: 'middle' });
 	    
 	    livesText = game.add.text(23,27, 'Lives: 2' , { font: '12px Roman', fill: '#fd8a64', boundsAlignH: 'center', boundsAlignV: 'middle' });
-	    
 
+        },	    
+
+	    
         checkKeys: function () {
 
             if (this.cursors.left.isDown && this.current !== Phaser.LEFT)
