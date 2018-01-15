@@ -99,7 +99,7 @@
 
             this.map.createFromTiles(7, this.safetile, 'dot', this.layer, this.dots);
 	    this.map.createFromTiles(32, this.safetile, 'orange', this.layer, this.oranges);
-	    this.map.createFromTiles(18, this.safetile, 'clima', this.layer, this.climas);	
+	    this.map.createFromTiles(19, this.safetile, 'clima', this.layer, this.climas);	
 
             //  The dots will need to be offset by 6px to put them back in the middle of the grid
             this.dots.setAll('x', 6, false, false, 1);
@@ -127,11 +127,11 @@
             this.pacman.play('munch');
             this.move(Phaser.LEFT);
 		
-	    scoreText = game.add.text(100,1, 'SCORE: 0' , { font: 'bold 14px Roman', fill: '#50a0fa', boundsAlignH: 'center', boundsAlignV: 'middle' });
+	    scoreText = game.add.text(380,1, 'SCORE: 0' , { font: 'bold 14px Roman', fill: '#50a0fa', boundsAlignH: 'center', boundsAlignV: 'middle' });
 	    
-	    livesText = game.add.text(100,12, 'Lives: 1' , { font: 'bold 14px Roman', fill: '#fd8a64', boundsAlignH: 'center', boundsAlignV: 'middle' });
+	    livesText = game.add.text(380,12, 'Lives: 1' , { font: 'bold 14px Roman', fill: '#fd8a64', boundsAlignH: 'center', boundsAlignV: 'middle' });
          
-	    bonusText = game.add.text(100,23, 'Bonus: 0' , { font: 'bold 14px Roman', fill: '#f4e842', boundsAlignH: 'center', boundsAlignV: 'middle' });	
+	    bonusText = game.add.text(380,23, 'Bonus: 0' , { font: 'bold 14px Roman', fill: '#f4e842', boundsAlignH: 'center', boundsAlignV: 'middle' });	
 		
         },	    
 
