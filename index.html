@@ -25,7 +25,6 @@
 	        
     var score = 0;
     var lives = 1;
-    var bonus = 0;
 
     var game = new Phaser.Game(448, 496, Phaser.AUTO);
 
@@ -117,7 +116,6 @@
 	    
 	    textScore = game.add.text(16,16,"SCORE : " + score, { font: '12px Roman', fill: '#50a0fa', boundsAlignH: 'center', boundsAlignV: 'middle' });
 	    textLives = game.add.text(16,30,"Lives : " + lives, { font: '12px Roman', fill: '#fd8a64', boundsAlignH: 'center', boundsAlignV: 'middle' });
-	    textBonus = game.add.text(16,30,"Bonus : " + bonus, { font: '12px Roman', fill: '#e8f041', boundsAlignH: 'center', boundsAlignV: 'middle' });
 	    
 
         checkKeys: function () {
