@@ -23,8 +23,10 @@
 
     <script type="text/javascript">
 	        
-    var score = 0;
-    var lives = 1;
+                var score = 0;
+                var scoreText;
+                var lives = 2;
+                var livesText;
 
     var game = new Phaser.Game(448, 496, Phaser.AUTO);
 
@@ -114,8 +116,9 @@
 
         },
 	    
-	    textScore = game.add.text(16,16,"SCORE : " + score, { font: '12px Roman', fill: '#50a0fa', boundsAlignH: 'center', boundsAlignV: 'middle' });
-	    textLives = game.add.text(16,30,"Lives : " + lives, { font: '12px Roman', fill: '#fd8a64', boundsAlignH: 'center', boundsAlignV: 'middle' });
+	    scoreText = game.add.text(10,10, 'Score: 0' , { font: '12px Roman', fill: '#50a0fa', boundsAlignH: 'center', boundsAlignV: 'middle' });
+	    
+	    livesText = game.add.text(23,27, 'Lives: 2' , { font: '12px Roman', fill: '#fd8a64', boundsAlignH: 'center', boundsAlignV: 'middle' });
 	    
 
         checkKeys: function () {
@@ -237,9 +240,8 @@
             dot.kill();
             var audio = new Audio('assets/munch.mp3');
             audio.play()
-		
 		score += 10;
-	    textScore.text = "SCORE : " + score ;
+		scoreText.text = 'Score: ' + score;
 		
             if (this.dots.total === 0)
             {
