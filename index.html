@@ -331,7 +331,6 @@
 	    
          getCaught: function (arlong, pacman){
 		if ( lives == 1 ) {
-			totalScore = score + bonusScore;
 			this.GameOver = game.add.text(100, 250, 'GAME OVER', {font: 'bold 40px Roman', fill: '#ed5e2a'});
 			var audioGameOver = new Audio('assets/over.mp3');
 			audioGameOver.play();
