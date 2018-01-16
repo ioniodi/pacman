@@ -130,8 +130,8 @@
             this.pacman.play('munch');
             this.move(Phaser.LEFT);;
 		
-	     //  Position arlong at grid location 13x16 (the +8 accounts for his anchor)	
-	    this.arlong = this.add.sprite((13 * 16) + 8, (16 * 16) + 8, 'arlong', 0);
+	     //  Position arlong at grid location 16x12 (the +8 accounts for his anchor)	
+	    this.arlong = this.add.sprite((16 * 16) + 8, (12 * 16) + 8, 'arlong', 0);
             this.arlong.anchor.set(0.5);
             this.arlong.animations.add('munch', [0, 1, 2, 1], 20, true);
 	    this.physics.arcade.enable(this.arlong);
@@ -349,7 +349,7 @@
 			
 		//  thesi tou exthrou sto simeio kinhshs
 		this.arlong.destroy();
-		this.arlong = this.add.sprite((13 * 16) + 8, (16 * 16) + 8, 'arlong', 0);
+		this.arlong = this.add.sprite((16 * 16) + 8, (12 * 16) + 8, 'arlong', 0);
 		this.arlong.anchor.set(0.5);
 		this.arlong.animations.add('munch', [0, 1, 2, 1], 20, true);
 		this.physics.arcade.enable(this.arlong);
