@@ -30,6 +30,7 @@
 	    var livesText;
 	    var bonus = 0;
 	    var bonusText;
+	    var arlongSpeed = 70;
 	    
 
     var Pacman = function (game) {
@@ -130,8 +131,8 @@
             this.pacman.play('munch');
             this.move(Phaser.LEFT);;
 		
-	     //  Position arlong at grid location 16x12 (the +8 accounts for his anchor)	
-	    this.arlong = this.add.sprite((16 * 16) + 8, (12 * 16) + 8, 'arlong', 0);
+	     //  Position arlong at grid location 18x17 (the +8 accounts for his anchor)	
+	    this.arlong = this.add.sprite((18 * 16) + 8, (17 * 16) + 8, 'arlong', 0);
             this.arlong.anchor.set(0.5);
             this.arlong.animations.add('munch', [0, 1, 2, 1], 20, true);
 	    this.physics.arcade.enable(this.arlong);
@@ -349,7 +350,7 @@
 			
 		//  thesi tou exthrou sto simeio kinhshs
 		this.arlong.destroy();
-		this.arlong = this.add.sprite((16 * 16) + 8, (12 * 16) + 8, 'arlong', 0);
+		this.arlong = this.add.sprite((18 * 16) + 8, (17 * 16) + 8, 'arlong', 0);
 		this.arlong.anchor.set(0.5);
 		this.arlong.animations.add('munch', [0, 1, 2, 1], 20, true);
 		this.physics.arcade.enable(this.arlong);
