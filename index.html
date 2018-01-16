@@ -30,7 +30,7 @@
 	    var livesText;
 	    var bonus = 0;
 	    var bonusText;
-	    var arlongSpeed = 90;
+	    
 
     var Pacman = function (game) {
 
@@ -149,7 +149,7 @@
         },	    
 
         catchMe: function(){
-            var arlongSpeed = 90;
+            var arlongSpeed = 70;
             if (this.pacman.body.x < this.arlong.body.x) {
                 this.arlong.body.velocity.x = arlongSpeed * -1;
             }
@@ -398,6 +398,7 @@
             {
                 this.turn();
             }
+	    this.CatchMe();
 	    
 
         }
