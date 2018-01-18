@@ -1,4 +1,4 @@
-var menuState = {
+var levelsState = {
     create : function() {
         
     this.theme = this.add.audio('livetheme',0.2,true);
@@ -7,10 +7,12 @@ var menuState = {
     this.BACKGROUND = game.add.image(20,20,'Background');
     this.BACKGROUND.width = 700; 
     this.BACKGROUND.height = 480;
-    this.startbutton = this.add.button(250,70, 'startbut',this.start,this,1,0);
-    this.levelbutton = this.add.button(250,170, 'levelsbut',this.levels,this,1,0);
-    this.helpbutton = this.add.button(250,270, 'helpbut',this.help,this,1,0);
-    this.aboutbutton = this.add.button(250,370, 'aboutbut',this.about,this,1,0);
+    
+    this.sel1 = this.add.button(250,100, 'level1im',this.level1,this,1,0);
+    this.sel2 = this.add.button(250,200, 'level2im',this.level2,this,1,0);
+    this.backbutton = this.add.button(250,420, 'backbut',this.goback,this,1,0);
+
+        
     this.buttontext = game.add.text(645,400, 'Music', { fill: '#B22222' })
     this.mutebutton = this.add.button(660,440, 'mbutton',this.mute, this, 1, 0, 2);
 
@@ -29,21 +31,21 @@ var menuState = {
     this.theme.mute = false;
     }
     },
-    levels:function(){
+
+    level1:function (){
     this.theme.destroy();
-    game.state.start('levels'); 
+    game.state.start('play');
     },
-    about:function(){
+      level2:function (){
     this.theme.destroy();
-    game.state.start('about');  
+    game.state.start('play2');
     },
-    help:function(){
+     goback:function(){
     this.theme.destroy();
-    game.state.start('help');  
-    },
-    start:function (){
-        this.theme.destroy();
-        game.state.start('play');
+    game.state.start('menu');    
+        
+        
+        
     },
     
     

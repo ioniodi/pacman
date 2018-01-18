@@ -5,6 +5,10 @@ game.state.add('menu',menuState);
 game.state.add('help',helpState);
 game.state.add('about',aboutState);
 game.state.add('play',playState);
+game.state.add('play2',play2State);
+game.state.add('levels',levelsState);
+game.state.add('gameover',gameoverState);
+game.state.add('continue',continueState);
 
 
 

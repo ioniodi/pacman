@@ -4,7 +4,7 @@ var loadState = {
     
     preload:function(){
         
-                  //  We need this because the assets are on github pages
+            //  We need this because the assets are on github pages
             //  Remove the next 2 lines if running locally
             this.load.baseURL = 'https://p15theo2.github.io/pacman/';
             this.load.crossOrigin = 'anonymous';
@@ -15,6 +15,12 @@ var loadState = {
             this.load.spritesheet('helpbut', 'assets/helpbut.png',249,113);
             this.load.spritesheet('aboutbut', 'assets/aboutbut.png',249,113);
             this.load.spritesheet('backbut', 'assets/backbut.png',249,113);
+            this.load.spritesheet('continuebut', 'assets/continuebut.png',249,113);
+            this.load.spritesheet('level1im','assets/level1but.png',249,113);
+            this.load.spritesheet('level2im','assets/level2but.png',249,113);
+            this.load.spritesheet('gameoverim','assets/overbut.png',249,113);
+            
+        
             this.load.audio('boden','assets/tetris.mp3');
             this.load.audio('livetheme','assets/livetheme.mp3');
             this.load.audio('bonus','assets/bonussound.wav');
@@ -31,10 +37,13 @@ var loadState = {
             this.load.image('beer', 'assets/beer.png');
             this.load.image('flower', 'assets/flowerdot.png');
             this.load.image('Background','assets/backgroundim.png')
+
+
             this.load.spritesheet('pacman', 'assets/pacman.png', 32, 32);
             this.load.spritesheet('monster', 'assets/monster.png',23,21);
             this.load.spritesheet('bonusp', 'assets/bonuspop.png', 95,30,3);
             this.load.tilemap('map', 'assets/pacman-map.json', null, Phaser.Tilemap.TILED_JSON);
+            this.load.tilemap('map2', 'assets/pacman-map2.json', null, Phaser.Tilemap.TILED_JSON);
             //LOADING 
             //  Needless to say, graphics (C)opyright Namco
         
@@ -43,7 +52,7 @@ var loadState = {
         
     },
     create:function(){
-
+    var helptitle = game.add.text(280,5,'LOADING',{font: '50px arial',fill:'#FF0000'});
     this.scale.scaleMode = Phaser.ScaleManager.USER_SCALE;
     this.scale.pageAlignHorizontally = true;
     this.scale.pageAlignVertically = true;

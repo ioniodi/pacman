@@ -1,4 +1,4 @@
-var playState = {
+var play2State = {
 
    
 
@@ -28,7 +28,7 @@ var playState = {
         this.monster2=null;
         this.monster3=null;
         this.button;
-        this.safetile = 107;
+        this.safetile = 131;
         this.gridsize = 16;
         this.speed = 150;
         this.threshold = 3;
@@ -65,7 +65,7 @@ var playState = {
             this.eatbonussound = this.add.audio('eatbonussound',0.3,true);
             this.mkill = this.add.audio('mkill',0.3,true);
             
-            this.map = this.add.tilemap('map');
+            this.map = this.add.tilemap('map2');
             this.map.addTilesetImage('pacman-tiles', 'tiles');
             this.layer = this.map.createLayer('Pacman');
             
@@ -73,10 +73,10 @@ var playState = {
             this.test = this.add.physicsGroup();
             this.eattest = this.add.physicsGroup();
             // "δηλωση" κουκιδων 
-            this.map.createFromTiles(131, this.safetile, 'beer', this.layer, this.dots);
+            //this.map.createFromTiles(131, this.safetile, 'beer', this.layer, this.dots);
             this.map.createFromTiles(163, this.safetile, 'dot', this.layer, this.dots);
-            this.map.createFromTiles(165,this.safetile, 'flower', this.layer, this.dots);
-            this.map.createFromTiles(167,this.safetile, 'potion', this.layer,this.dots);
+            //this.map.createFromTiles(165,this.safetile, 'flower', this.layer, this.dots);
+            //this.map.createFromTiles(167,this.safetile, 'potion', this.layer,this.dots);
             
             //εντολες δημιουργιας τυχαιου μπλοκ και εντολες επαναληψης μουσικης 
             this.time.events.loop(10000, this.random, this);
@@ -245,8 +245,8 @@ var playState = {
         this.timer.add(2000,this.anim,this);
         this.timer.start();
         }else{
-         game.state.start('gameover');
-        this.music.mute = true; 
+        game.state.start('gameover');
+            this.music.mute = true; 
         }
         },
         
@@ -484,9 +484,7 @@ var playState = {
                 
             if (this.dots.total === 0)
             {
-            //this.dots.callAll('revive');
-            this.music.mute = true; 
-            game.state.start('continue');
+                this.dots.callAll('revive');
                 
             }
             this.score++;
