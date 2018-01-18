@@ -31,6 +31,7 @@
     var disable = 0;
 
     var enemy;
+    var enemy2;
 
 
     var Pacman = function (game) {
@@ -93,7 +94,7 @@
             this.load.image('tiles', 'assets/pacman-tiles.png');
 
             this.load.spritesheet('pacman', 'assets/pacman.png', 32, 32);
-            this.load.tilemap('map', 'assets/pacman-map3.json', null, Phaser.Tilemap.TILED_JSON);
+            this.load.tilemap('map', 'assets/pacman-map4.json', null, Phaser.Tilemap.TILED_JSON);
 
             game.load.image("enemy","assets/cate.png");
 
@@ -125,9 +126,11 @@
 
             this.map.createFromTiles(36, this.safetile, 'banana', this.layer, this.bananas);
 
-
-            enemy = new Enemy(game, 0, 0, 1, 100);
+            enemy = new Enemy(game, 13, 14, 1, 100);
 		    game.add.existing(enemy);
+
+            enemy2 = new Enemy(game, 14, 14, 1, 100);
+		    game.add.existing(enemy2);
 
             this.switch = game.add.audio('switch');
             this.switch2 = game.add.audio('switch');
@@ -425,7 +428,9 @@
             }
 
             this.physics.arcade.collide(enemy, this.layer, moveEnemy);
+            this.physics.arcade.collide(enemy2, this.layer, moveEnemy);
             this.physics.arcade.collide(this.pacman, enemy, this.kill_pacman);
+            this.physics.arcade.collide(this.pacman, enemy2, this.kill_pacman);
             this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
 
             this.physics.arcade.overlap(this.pacman, this.strawberries, this.eatStrawberry, null, this);
@@ -481,11 +486,11 @@
     };
 
 	Enemy = function (game, x, y, direction, speed) {
-		Phaser.Sprite.call(this, game, x+16, y+16, "enemy");
+		Phaser.Sprite.call(this, game, (x*16), (y*16), "enemy");
 		//this.anchor.setTo(.5);
 		game.physics.enable(this, Phaser.Physics.ARCADE);
-		this.xSpeed = direction*speed;
-        this.ySpeed = 0;
+		this.ySpeed = direction*speed*-1;
+        this.xSpeed = 0;
 	};
 
 	Enemy.prototype = Object.create(Phaser.Sprite.prototype);
