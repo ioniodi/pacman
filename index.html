@@ -26,6 +26,7 @@
     var text4;
 
     var poomptext;
+    var wintext;
 
     var score = 0;
     var lives = 3;
@@ -105,7 +106,7 @@
             this.load.image('tiles', 'assets/pacman-tiles.png');
 
             this.load.spritesheet('pacman', 'assets/pacman.png', 32, 32);
-            this.load.tilemap('map', 'assets/pacman-map4.json', null, Phaser.Tilemap.TILED_JSON);
+            this.load.tilemap('map', 'assets/level1.json', null, Phaser.Tilemap.TILED_JSON);
 
             game.load.image("enemy","assets/cate.png");
 
@@ -220,16 +221,18 @@
 
             poomptext.anchor.set(-.54, -8.6);
 
+            wintext = game.add.text(game.world.x, game.world.y, "", {
+                font: "18px Arial",
+                fill: "#ffffff"
+            });
+
+            wintext.anchor.set(-1.93, -8.6);
+
             timer = game.time.create(false);
 
             timer.loop(1000, updateCounter, this);
 
             timer.start();
-
-
-
-
-
 
         },
 
@@ -363,13 +366,23 @@
 
         },
 
-        eatTP: function (pacman, tp) {
-            pacman.reset(26 * 16 + 8, 29 * 15 + 8);
+        eatTP: function (player, tp) {
+            player.reset(26 * 16 + 8, 29 * 15 + 8);
             this.move(Phaser.UP);
         },
 
-        eatTP2: function (pacman, tp) {
-            pacman.reset(1 * 16 + 8, 29 * 15 + 8);
+        eatTP2: function (player, tp) {
+            player.reset(1 * 16 + 8, 29 * 15 + 8);
+            this.move(Phaser.UP);
+        },
+
+        eatTPe: function (player, tp) {
+            player.reset(26 * 16 + 4, 29 * 15 + 4);
+            this.move(Phaser.UP);
+        },
+
+        eatTPe2: function (player, tp) {
+            player.reset(1 * 16 + 4, 29 * 15 + 4);
             this.move(Phaser.UP);
         },
 
@@ -405,17 +418,13 @@
             }
 
             if (this.dots.total === 0) {
-                //this.dots.callAll('revive');
-                //this.strawberries.callAll('revive');
-                //this.bananas.callAll('revive');
+                // WHERE IS THE LAST DOT?!
+                wintext.setText("YOU WON!");
                 game.time.events.add(Phaser.Timer.SECOND / 10, playWin, this);
-
             }
 
             function playWin() {
-
-                this.win.play()
-
+                this.win.play();
             }
 
         },
@@ -469,7 +478,13 @@
 
         kill_pacman: function (pacman) {
             pacman.kill();
-            lives--;
+            if (lives == 0) {
+                poomptext.setText("YOU LOSE GOOD DAY SIR!");
+            }
+            else {
+                pacman.reset(13 * 16 + 8, 20 * 16 + 8);
+                lives--;
+            }
         },
 
         kill_enemy: function (enemy) {
@@ -492,6 +507,14 @@
             this.physics.arcade.overlap(this.pacman, this.tp, this.eatTP, null, this);
 
             this.physics.arcade.overlap(this.pacman, this.tp2, this.eatTP2, null, this);
+
+            this.physics.arcade.overlap(enemy, this.tp, this.eatTPe, null, this);
+            this.physics.arcade.overlap(enemy, this.tp2, this.eatTPe2, null, this);
+
+            this.physics.arcade.overlap(enemy2, this.tp, this.eatTPe, null, this);
+            this.physics.arcade.overlap(enemy2, this.tp2, this.eatTPe2, null, this);
+
+            this.physics.arcade.collide(this.pacman, this.layer);
 
             this.physics.arcade.collide(enemy, this.layer, moveEnemy);
             this.physics.arcade.collide(enemy2, this.layer, moveEnemy);
