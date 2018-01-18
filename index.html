@@ -90,6 +90,9 @@
             this.load.image('dot', 'assets/dot.png');
             this.load.image('gun', 'assets/gun.png');
 
+            this.load.image('tp', 'assets/banana.png');
+            this.load.image('tp2', 'assets/banana.png');
+
             this.load.image('bonus', 'assets/bonus.png');
 
             this.load.image('strawberry', 'assets/strawberry.png');
@@ -127,11 +130,20 @@
             this.bonuses = this.add.physicsGroup();
             this.gun = this.add.physicsGroup();
 
+            this.tp = this.add.physicsGroup();
+            this.tp2 = this.add.physicsGroup();
+
             this.map.createFromTiles(37, this.safetile, 'bonus', this.layer, this.bonuses);
             this.bonuses.visible = false;
 
             this.map.createFromTiles(38, this.safetile, 'gun', this.layer, this.gun);
             this.gun.visible = false;
+
+            this.map.createFromTiles(39, this.safetile, 'tp', this.layer, this.tp);
+            this.tp.visible = true;
+
+            this.map.createFromTiles(40, this.safetile, 'tp2', this.layer, this.tp2);
+            this.tp2.visible = true;
 
             this.map.createFromTiles(7, this.safetile, 'dot', this.layer, this.dots);
 
@@ -351,6 +363,16 @@
 
         },
 
+        eatTP: function (pacman, tp) {
+            pacman.reset(26 * 16 + 8, 29 * 15 + 8);
+            this.move(Phaser.UP);
+        },
+
+        eatTP2: function (pacman, tp) {
+            pacman.reset(1 * 16 + 8, 29 * 15 + 8);
+            this.move(Phaser.UP);
+        },
+
         poomp: function (pacman) {
 
             enablepoomp = 1;
@@ -466,6 +488,10 @@
             if (total > 20) {
                 this.physics.arcade.overlap(this.pacman, this.gun, this.eatGun, null, this);
             }
+
+            this.physics.arcade.overlap(this.pacman, this.tp, this.eatTP, null, this);
+
+            this.physics.arcade.overlap(this.pacman, this.tp2, this.eatTP2, null, this);
 
             this.physics.arcade.collide(enemy, this.layer, moveEnemy);
             this.physics.arcade.collide(enemy2, this.layer, moveEnemy);
