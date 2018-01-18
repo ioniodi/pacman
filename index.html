@@ -24,11 +24,18 @@
     var text2;
     var text3;
     var text4;
+
+    var poomptext;
+
     var score = 0;
     var lives = 3;
     var timer;
     var total = 0;
     var disable = 0;
+
+    var enablepoomp = 0;
+    var disablepoompcnt = 0;
+    var poompinit = 0;
 
     var enemy;
     var enemy2;
@@ -81,6 +88,7 @@
             this.load.crossOrigin = 'anonymous';
 
             this.load.image('dot', 'assets/dot.png');
+            this.load.image('gun', 'assets/gun.png');
 
             this.load.image('bonus', 'assets/bonus.png');
 
@@ -117,8 +125,13 @@
             this.bananas = this.add.physicsGroup();
 
             this.bonuses = this.add.physicsGroup();
+            this.gun = this.add.physicsGroup();
+
             this.map.createFromTiles(37, this.safetile, 'bonus', this.layer, this.bonuses);
             this.bonuses.visible = false;
+
+            this.map.createFromTiles(38, this.safetile, 'gun', this.layer, this.gun);
+            this.gun.visible = false;
 
             this.map.createFromTiles(7, this.safetile, 'dot', this.layer, this.dots);
 
@@ -187,6 +200,13 @@
             });
 
             text3.anchor.set(-6, -20.4);
+
+            poomptext = game.add.text(game.world.x, game.world.y, "", {
+                font: "18px Arial",
+                fill: "#ffffff"
+            });
+
+            poomptext.anchor.set(-.54, -8.6);
 
             timer = game.time.create(false);
 
@@ -324,14 +344,26 @@
 
         },
 
+        eatGun: function (pacman, gun) {
+
+            gun.kill();
+            this.poomp(pacman);
+
+        },
+
+        poomp: function (pacman) {
+
+            enablepoomp = 1;
+            disablepoompcnt = 1;
+            console.log("poomp activated");
+            poomptext.setText("POOMP THE MOOSCLES");
+
+        },
+
         eatDot: function (pacman, dot) {
-
-
 
             score++;
             text.setText("Score: " + score);
-
-
 
 
             dot.kill();
@@ -418,6 +450,10 @@
             lives--;
         },
 
+        kill_enemy: function (enemy) {
+            enemy.kill();
+        },
+
         update: function () {
 
             this.physics.arcade.collide(this.pacman, this.layer);
@@ -427,10 +463,22 @@
                 this.physics.arcade.overlap(this.pacman, this.bonuses, this.eatBonus, null, this);
             }
 
+            if (total > 20) {
+                this.physics.arcade.overlap(this.pacman, this.gun, this.eatGun, null, this);
+            }
+
             this.physics.arcade.collide(enemy, this.layer, moveEnemy);
             this.physics.arcade.collide(enemy2, this.layer, moveEnemy);
-            this.physics.arcade.collide(this.pacman, enemy, this.kill_pacman);
-            this.physics.arcade.collide(this.pacman, enemy2, this.kill_pacman);
+
+            if (enablepoomp == 0) {
+                this.physics.arcade.collide(this.pacman, enemy, this.kill_pacman);
+                this.physics.arcade.collide(this.pacman, enemy2, this.kill_pacman);
+            }
+            else {
+                this.physics.arcade.collide(enemy, this.pacman, this.kill_enemy);
+                this.physics.arcade.collide(enemy2, this.pacman, this.kill_enemy);
+            }
+
             this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
 
             this.physics.arcade.overlap(this.pacman, this.strawberries, this.eatStrawberry, null, this);
@@ -454,6 +502,23 @@
 
             text2.setText("Timer: " + total + " seconds");
 
+            if (disablepoompcnt == 1) {
+                poompinit = total;
+                disablepoompcnt = total;
+            }
+
+            if (disablepoompcnt > 1 && disablepoompcnt < poompinit + 10) {
+                // not more than 10 seconds have passed since powers enable, keep em up
+                if (total % 10 == 0) {
+                    disablepoompcnt++;
+                }
+            }
+            else {
+                enablepoomp = 0;
+                poomptext.setText("");
+            }
+
+
             if (total == 10 && disable == 0) {
                 this.bonuses.visible = true;
                 disable = 1;
@@ -466,6 +531,19 @@
             if (total % 25 == 0) {
                 this.bonuses.callAll('revive');
             }
+
+            if (total == 20) {
+                this.gun.visible = true;
+                this.gun.callAll('revive');
+            }
+
+            if (total == 25) {
+                this.gun.callAll('kill');
+            }
+
+            //if (total % 35 == 0) {
+            //    this.gun.callAll('revive');
+            //}
 
             if (lives >= 0) {
                 text3.setText("Lives: " + lives);
