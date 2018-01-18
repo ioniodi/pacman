@@ -7,22 +7,38 @@
         body {
             margin: 0;
             padding: 0;
-            background-color: #000;
+            background-image: url("assets/namis.jpg");
+			background-attachment: fixed;
+			background-size: 100% auto;
         }
     </style>
     <script src="//cdn.jsdelivr.net/phaser/2.2.2/phaser.min.js"></script>
 </head>
 <body>
+    
+    <audio autoplay loop>     
+        <source src="assets/nami.mp3" type="audio/mp3">
+    </audio>
+
 
     <script type="text/javascript">
 
     var game = new Phaser.Game(448, 496, Phaser.AUTO);
+	    var score = 0;
+	    var scoreText;
+	    var lives = 1;
+	    var livesText;
+	    var bonus = 0;
+	    var bonusText;
+	    var arlongSpeed = 70;
+	    
 
     var Pacman = function (game) {
 
         this.map = null;
         this.layer = null;
         this.pacman = null;
+	this.arlong = null;
 
         this.safetile = 14;
         this.gridsize = 16;
@@ -59,13 +75,16 @@
 
             //  We need this because the assets are on github pages
             //  Remove the next 2 lines if running locally
-            this.load.baseURL = 'https://ioniodi.github.io/pacman/';
-            this.load.crossOrigin = 'anonymous';
+            //this.load.baseURL = 'https://isoqar.github.io/pacman/';
+            //this.load.crossOrigin = 'anonymous';
 
             this.load.image('dot', 'assets/dot.png');
+	    this.load.image('orange', 'assets/orange.png')
+	    this.load.image('clima', 'assets/clima.png')	
             this.load.image('tiles', 'assets/pacman-tiles.png');
             this.load.spritesheet('pacman', 'assets/pacman.png', 32, 32);
-            this.load.tilemap('map', 'assets/pacman-map.json', null, Phaser.Tilemap.TILED_JSON);
+	    this.load.spritesheet('arlong', 'assets/arlong.png', 32, 32);
+            this.load.tilemap('map', 'assets/namimap.json', null, Phaser.Tilemap.TILED_JSON);
 
             //  Needless to say, graphics (C)opyright Namco
 
@@ -79,12 +98,22 @@
             this.layer = this.map.createLayer('Pacman');
 
             this.dots = this.add.physicsGroup();
+	    this.oranges = this.add.physicsGroup();
+	    this.climas = this.add.physicsGroup();
 
             this.map.createFromTiles(7, this.safetile, 'dot', this.layer, this.dots);
+	    this.map.createFromTiles(32, this.safetile, 'orange', this.layer, this.oranges);
+	    this.map.createFromTiles(20, this.safetile, 'clima', this.layer, this.climas);	
 
             //  The dots will need to be offset by 6px to put them back in the middle of the grid
             this.dots.setAll('x', 6, false, false, 1);
             this.dots.setAll('y', 6, false, false, 1);
+		
+            this.oranges.setAll('x', 6, false, false, 1);
+            this.oranges.setAll('y', 6, false, false, 1);
+		
+	    this.climas.setAll('x', 6, false, false, 1);
+            this.climas.setAll('y', 6, false, false, 1);
 
             //  Pacman should collide with everything except the safe tile
             this.map.setCollisionByExclusion([this.safetile], true, this.layer);
@@ -96,14 +125,48 @@
 
             this.physics.arcade.enable(this.pacman);
             this.pacman.body.setSize(16, 16, 0, 0);
-
-            this.cursors = this.input.keyboard.createCursorKeys();
+		
+	    this.cursors = this.input.keyboard.createCursorKeys();
 
             this.pacman.play('munch');
-            this.move(Phaser.LEFT);
+            this.move(Phaser.LEFT);;
+		
+	     //  Position arlong at grid location 18x19 (the +8 accounts for his anchor)	
+	    this.arlong = this.add.sprite((18 * 16) + 8, (19 * 16) + 8, 'arlong', 0);
+            this.arlong.anchor.set(0.5);
+            this.arlong.animations.add('munch', [0, 1, 2, 1], 20, true);
+	    this.physics.arcade.enable(this.arlong);
+            this.arlong.body.setSize(16, 16, 0, 0);
+	    this.arlong.play('munch');
 
+          
+		
+	    scoreText = game.add.text(355,1, 'SCORE: 0' , { font: 'bold 14px Roman', fill: '#50a0fa', boundsAlignH: 'center', boundsAlignV: 'middle' });
+	    
+	    livesText = game.add.text(355,14, 'Lives: 1' , { font: 'bold 14px Roman', fill: '#fd8a64', boundsAlignH: 'center', boundsAlignV: 'middle' });
+         
+	    bonusText = game.add.text(355,27, 'Bonus: 0' , { font: 'bold 14px Roman', fill: '#f4e842', boundsAlignH: 'center', boundsAlignV: 'middle' });	
+		
+        },	    
+
+        catchMe: function(){
+            var arlongSpeed = 70;
+            if (this.pacman.body.x < this.arlong.body.x) {
+                this.arlong.body.velocity.x = arlongSpeed * -1;
+            }
+            else{
+                this.arlong.body.velocity.x = arlongSpeed;
+            }
+            if (this.pacman.body.y <this.arlong.body.y){
+                this.arlong.body.velocity.y = arlongSpeed * -1;
+            }
+            else{
+                this.arlong.body.velocity.y = arlongSpeed;
+            }
         },
-
+	    
+	    
+	    
         checkKeys: function () {
 
             if (this.cursors.left.isDown && this.current !== Phaser.LEFT)
@@ -221,18 +284,105 @@
         eatDot: function (pacman, dot) {
 
             dot.kill();
-
+            var audio = new Audio('assets/coin.mp3');
+            audio.play()
+		score += 10;
+		scoreText.text = 'Score: ' + score;
+		
             if (this.dots.total === 0)
             {
                 this.dots.callAll('revive');
             }
 
         },
+	    
+        eatOrange: function (pacman, orange) {
+
+            orange.kill();
+            var audio = new Audio('assets/bite.mp3');
+            audio.play()
+		lives += 1;
+		livesText.text = 'Lives: ' + lives;
+		
+            if (this.oranges.total === 0)
+            {
+                this.oranges.callAll('revive');
+            }
+
+        },
+	    
+        eatClima: function (pacman, clima) {
+
+            clima.kill();
+            var audio = new Audio('assets/clima.mp3');
+            audio.play()
+		bonus += 20;
+		bonusText.text = 'Bonus: ' + bonus;
+		score += 20;
+		scoreText.text = 'Score: ' + score;
+		
+            if (this.climas.total === 0)
+            {
+                this.climas.callAll('revive');
+            }
+
+        },
+	    
+	    
+         getCaught: function (arlong, pacman){
+		if ( lives == 1 ) {
+			this.GameOver = game.add.text(100, 250, 'GAME OVER', {font: 'bold 40px Roman', fill: '#ed5e2a'});
+			var audioGameOver = new Audio('assets/over.mp3');
+			audioGameOver.play();
+			lives = 0;
+			livesText.text = 'Lives: ' + lives;
+			pacman.kill();
+		}
+		else{
+		//  thesi tou xaraktira mas sto simeio ekkinisis
+		this.pacman.destroy();
+		this.pacman = this.add.sprite((14 * 16) + 8, (17 * 16) + 8, 'pacman', 0);
+		this.pacman.anchor.set(0.5);
+		this.pacman.animations.add('munch', [0, 1, 2, 1], 20, true);
+		this.physics.arcade.enable(this.pacman);
+		this.pacman.body.setSize(16, 16, 0, 0);
+		this.pacman.play('munch');
+			
+		//  thesi tou exthrou sto simeio kinhshs
+		this.arlong.destroy();
+		this.arlong = this.add.sprite((18 * 16) + 8, (19 * 16) + 8, 'arlong', 0);
+		this.arlong.anchor.set(0.5);
+		this.arlong.animations.add('munch', [0, 1, 2, 1], 20, true);
+		this.physics.arcade.enable(this.arlong);
+		this.arlong.body.setSize(16, 16, 0, 0);
+		this.arlong.play('munch');
+			
+		var audioLose = new Audio('assets/death.mp3');
+		audioLose.play();
+		lives--;
+		livesText.text = ' ' + lives;
+		}
+        },
+	    
+    
 
         update: function () {
+		// kanei teleport ston xarth aristera-deksia sta orizontia
+		if (this.pacman.x < 0)
+		    {
+			this.pacman.x = game.width;
+		    }
+		    else if (this.pacman.x > game.width)
+		    {
+			this.pacman.x = 0;
+		    }
           
             this.physics.arcade.collide(this.pacman, this.layer);
-            this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
+	    this.physics.arcade.collide(this.arlong, this.layer);
+            this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this); //prosthetei score
+	    this.physics.arcade.overlap(this.pacman, this.oranges, this.eatOrange, null, this); //prosthetei  zwh
+	    this.physics.arcade.overlap(this.pacman, this.climas, this.eatClima, null, this); // prothetei epipleon score , einai bonus
+            this.physics.arcade.overlap(this.arlong, this.pacman, this.getCaught, null,this);
 
             this.marker.x = this.math.snapToFloor(Math.floor(this.pacman.x), this.gridsize) / this.gridsize;
             this.marker.y = this.math.snapToFloor(Math.floor(this.pacman.y), this.gridsize) / this.gridsize;
@@ -249,7 +399,9 @@
             {
                 this.turn();
             }
-
+		
+		this.catchMe();
+	    
         }
 
     };
