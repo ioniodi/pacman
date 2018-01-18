@@ -9,7 +9,7 @@ var loadState = {
             //  Remove the next 2 lines if running locally
             this.load.baseURL = 'https://p15theo2.github.io/pacman/';
             this.load.crossOrigin = 'anonymous';
-            var helptitle = game.add.text(280,5,'LOADING',{font: '50px arial',fill:'#FF0000'});
+            
 
             this.load.spritesheet('mbutton', 'assets/musicsprites.png',50,40,3);
             this.load.spritesheet('startbut', 'assets/startbut.png',249,113);
