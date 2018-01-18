@@ -73,10 +73,10 @@ var play2State = {
             this.test = this.add.physicsGroup();
             this.eattest = this.add.physicsGroup();
             // "δηλωση" κουκιδων 
-            //this.map.createFromTiles(131, this.safetile, 'beer', this.layer, this.dots);
+            this.map.createFromTiles(37, this.safetile, 'beer', this.layer, this.dots);
             this.map.createFromTiles(163, this.safetile, 'dot', this.layer, this.dots);
-            //this.map.createFromTiles(165,this.safetile, 'flower', this.layer, this.dots);
-            //this.map.createFromTiles(167,this.safetile, 'potion', this.layer,this.dots);
+            this.map.createFromTiles(165,this.safetile, 'flower', this.layer, this.dots);
+            this.map.createFromTiles(167,this.safetile, 'potion', this.layer,this.dots);
             
             //εντολες δημιουργιας τυχαιου μπλοκ και εντολες επαναληψης μουσικης 
             this.time.events.loop(10000, this.random, this);
