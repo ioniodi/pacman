@@ -14,764 +14,736 @@
 </head>
 <body>
 
-    <script type="text/javascript">
-    // new
-    var game = new Phaser.Game(448, 496, Phaser.AUTO);
-    // old
-    //var game = new Phaser.Game(512, 512, Phaser.AUTO);
-    var level = 1;
-    var initmenu = 0;
-    var won = 0;
+<script type="text/javascript">
+// new
+var game = new Phaser.Game(448, 496, Phaser.AUTO);
+// old
+//var game = new Phaser.Game(512, 512, Phaser.AUTO);
+var level = 1;
+var initmenu = 0;
+var won = 0;
 
-    var text;
-    var text2;
-    var text3;
-    var text4;
+var text;
+var text2;
+var text3;
+var text4;
 
-    var poomptext;
-    var wintext;
+var poomptext;
+var wintext;
 
-    var score = 0;
-    var lives = 3;
-    var timer;
-    var total = 0;
-    var disable = 0;
+var score = 0;
+var lives = 3;
+var timer;
+var total = 0;
+var disable = 0;
 
-    var enablepoomp = 0;
-    var disablepoompcnt = 0;
-    var poompinit = 0;
+var enablepoomp = 0;
+var disablepoompcnt = 0;
+var poompinit = 0;
 
-    var enemy;
-    var enemy2;
+var enemy;
+var enemy2;
 
-    var w = 448, h = 496;
+var w = 448,
+    h = 496;
 
-    var Pacman = function (game) {
+var Pacman = function(game) {
 
-        this.counter = 0;
+    this.counter = 0;
 
-        this.map = null;
-        this.layer = null;
-        this.pacman = null;
+    this.map = null;
+    this.layer = null;
+    this.pacman = null;
 
-        this.safetile = 14;
-        this.gridsize = 16;
+    this.safetile = 14;
+    this.gridsize = 16;
 
-        this.speed = 140;
-        this.threshold = 10;
+    this.speed = 140;
+    this.threshold = 10;
 
-        this.marker = new Phaser.Point();
-        this.turnPoint = new Phaser.Point();
+    this.marker = new Phaser.Point();
+    this.turnPoint = new Phaser.Point();
 
-        this.directions = [ null, null, null, null, null ];
-        this.opposites = [ Phaser.NONE, Phaser.RIGHT, Phaser.LEFT, Phaser.DOWN, Phaser.UP ];
+    this.directions = [null, null, null, null, null];
+    this.opposites = [Phaser.NONE, Phaser.RIGHT, Phaser.LEFT, Phaser.DOWN, Phaser.UP];
 
-        this.current = Phaser.NONE;
-        this.turning = Phaser.NONE;
+    this.current = Phaser.NONE;
+    this.turning = Phaser.NONE;
 
-    };
+};
 
-    Pacman.prototype = {
+Pacman.prototype = {
 
-        init: function () {
+    init: function() {
 
-            this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-            this.scale.pageAlignHorizontally = true;
-            this.scale.pageAlignVertically = true;
+        this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+        this.scale.pageAlignHorizontally = true;
+        this.scale.pageAlignVertically = true;
 
-            Phaser.Canvas.setImageRenderingCrisp(this.game.canvas);
+        Phaser.Canvas.setImageRenderingCrisp(this.game.canvas);
 
-            this.physics.startSystem(Phaser.Physics.ARCADE);
+        this.physics.startSystem(Phaser.Physics.ARCADE);
 
-        },
+    },
 
-        preload: function () {
+    preload: function() {
 
-            //  We need this because the assets are on github pages
-            //  Remove the next 2 lines if running locally
-            this.load.baseURL = 'https://pacman.sht.gr/';
-            this.load.crossOrigin = 'anonymous';
+        //  We need this because the assets are on github pages
+        //  Remove the next 2 lines if running locally
+        this.load.baseURL = 'https://pacman.sht.gr/';
+        this.load.crossOrigin = 'anonymous';
 
-            this.load.image('dot', 'assets/dot.png');
-            this.load.image('gun', 'assets/gun.png');
+        this.load.image('dot', 'assets/dot.png');
+        this.load.image('gun', 'assets/gun.png');
 
-            this.load.image('tp', 'assets/banana.png');
-            this.load.image('tp2', 'assets/banana.png');
+        this.load.image('tp', 'assets/banana.png');
+        this.load.image('tp2', 'assets/banana.png');
 
-            this.load.image('bonus', 'assets/bonus.png');
+        this.load.image('bonus', 'assets/bonus.png');
 
-            this.load.image('strawberry', 'assets/strawberry.png');
-            this.load.image('banana', 'assets/banana.png');
+        this.load.image('strawberry', 'assets/strawberry.png');
+        this.load.image('banana', 'assets/banana.png');
 
-            this.load.audio('switch', 'assets/audio/switch.mp3');
+        this.load.audio('switch', 'assets/audio/switch.mp3');
 
-            this.load.image('menu', 'assets/button.png', 270, 180);
+        this.load.image('menu', 'assets/button.png', 270, 180);
 
-            this.load.audio('win', 'assets/audio/switch.mp3');
+        this.load.audio('win', 'assets/audio/win.mp3');
 
-            this.load.image('tiles', 'assets/pacman-tiles.png');
+        this.load.image('tiles', 'assets/pacman-tiles.png');
 
-            this.load.spritesheet('pacman', 'assets/pacman.png', 32, 32);
-            this.load.tilemap('map', 'assets/level1.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.spritesheet('pacman', 'assets/pacman.png', 32, 32);
+        this.load.tilemap('map', 'assets/level1.json', null, Phaser.Tilemap.TILED_JSON);
 
-            game.load.image("enemy","assets/cate.png");
+        game.load.image("enemy", "assets/cate.png");
 
 
 
-            //  Needless to say, graphics (C)opyright Namco
+        //  Needless to say, graphics (C)opyright Namco
 
-        },
+    },
 
-        create: function () {
+    create: function() {
 
-            this.map = this.add.tilemap('map');
-            this.map.addTilesetImage('pacman-tiles', 'tiles');
+        this.map = this.add.tilemap('map');
+        this.map.addTilesetImage('pacman-tiles', 'tiles');
 
-            this.layer = this.map.createLayer('Pacman');
+        this.layer = this.map.createLayer('Pacman');
 
-            this.dots = this.add.physicsGroup();
+        this.dots = this.add.physicsGroup();
 
-            this.strawberries = this.add.physicsGroup();
-            this.bananas = this.add.physicsGroup();
+        this.strawberries = this.add.physicsGroup();
+        this.bananas = this.add.physicsGroup();
 
-            this.bonuses = this.add.physicsGroup();
-            this.gun = this.add.physicsGroup();
+        this.bonuses = this.add.physicsGroup();
+        this.gun = this.add.physicsGroup();
 
-            this.tp = this.add.physicsGroup();
-            this.tp2 = this.add.physicsGroup();
+        this.tp = this.add.physicsGroup();
+        this.tp2 = this.add.physicsGroup();
 
-            this.map.createFromTiles(37, this.safetile, 'bonus', this.layer, this.bonuses);
-            this.bonuses.visible = false;
+        this.map.createFromTiles(37, this.safetile, 'bonus', this.layer, this.bonuses);
+        this.bonuses.visible = false;
 
-            this.map.createFromTiles(38, this.safetile, 'gun', this.layer, this.gun);
-            this.gun.visible = false;
+        this.map.createFromTiles(38, this.safetile, 'gun', this.layer, this.gun);
+        this.gun.visible = false;
 
-            this.map.createFromTiles(39, this.safetile, 'tp', this.layer, this.tp);
-            this.tp.visible = false;
+        this.map.createFromTiles(39, this.safetile, 'tp', this.layer, this.tp);
+        this.tp.visible = false;
 
-            this.map.createFromTiles(40, this.safetile, 'tp2', this.layer, this.tp2);
-            this.tp2.visible = false;
+        this.map.createFromTiles(40, this.safetile, 'tp2', this.layer, this.tp2);
+        this.tp2.visible = false;
 
-            this.map.createFromTiles(7, this.safetile, 'dot', this.layer, this.dots);
+        this.map.createFromTiles(7, this.safetile, 'dot', this.layer, this.dots);
 
-            this.map.createFromTiles(35, this.safetile, 'strawberry', this.layer, this.strawberries);
+        this.map.createFromTiles(35, this.safetile, 'strawberry', this.layer, this.strawberries);
 
-            this.map.createFromTiles(36, this.safetile, 'banana', this.layer, this.bananas);
+        this.map.createFromTiles(36, this.safetile, 'banana', this.layer, this.bananas);
 
-            enemy = new Enemy(game, 13, 14, 1, 100);
-		    game.add.existing(enemy);
+        enemy = new Enemy(game, 13, 14, 1, 100);
+        game.add.existing(enemy);
 
-            enemy2 = new Enemy(game, 14, 14, 1, 100);
-		    game.add.existing(enemy2);
+        enemy2 = new Enemy(game, 14, 14, 1, 100);
+        game.add.existing(enemy2);
 
-            this.switch = game.add.audio('switch');
-            this.switch2 = game.add.audio('switch');
-            this.win = game.add.audio('win');
+        this.switch = game.add.audio('switch');
+        this.switch2 = game.add.audio('switch');
+        this.win = game.add.audio('win');
 
-            //  The dots will need to be offset by 6px to put them back in the middle of the grid
-            this.dots.setAll('x', 6, false, false, 1);
-            this.dots.setAll('y', 6, false, false, 1);
+        //  The dots will need to be offset by 6px to put them back in the middle of the grid
+        this.dots.setAll('x', 6, false, false, 1);
+        this.dots.setAll('y', 6, false, false, 1);
 
-            this.strawberries.setAll('x', 0, false, false, 1);
-            this.strawberries.setAll('y', 0, false, false, 1);
+        this.strawberries.setAll('x', 0, false, false, 1);
+        this.strawberries.setAll('y', 0, false, false, 1);
 
-            this.bananas.setAll('x', 0, false, false, 1);
-            this.bananas.setAll('y', 0, false, false, 1);
+        this.bananas.setAll('x', 0, false, false, 1);
+        this.bananas.setAll('y', 0, false, false, 1);
 
-            //  Pacman should collide with everything except the safe tile
-            this.map.setCollisionByExclusion([this.safetile], true, this.layer);
+        //  Pacman should collide with everything except the safe tile
+        this.map.setCollisionByExclusion([this.safetile], true, this.layer);
 
-            //  Position Pacman at grid location 14x17 (the +8 accounts for his anchor)
+        //  Position Pacman at grid location 14x17 (the +8 accounts for his anchor)
 
-            // new map coords
-            this.pacman = this.add.sprite((13 * 16) + 8, (20 * 16) + 8, 'pacman', 0);
-            // old map coords
-            //this.pacman = this.add.sprite((11 * 16) + 8, (11 * 16) + 8, 'pacman', 0);
+        // new map coords
+        this.pacman = this.add.sprite((13 * 16) + 8, (20 * 16) + 8, 'pacman', 0);
+        // old map coords
+        //this.pacman = this.add.sprite((11 * 16) + 8, (11 * 16) + 8, 'pacman', 0);
 
-            this.pacman.anchor.set(0.5);
-            this.pacman.animations.add('munch', [0, 1, 2], 5, true);
+        this.pacman.anchor.set(0.5);
+        this.pacman.animations.add('munch', [0, 1, 2], 5, true);
 
-            this.physics.arcade.enable(this.pacman);
-            this.pacman.body.setSize(16, 16, 0, 0);
+        this.physics.arcade.enable(this.pacman);
+        this.pacman.body.setSize(16, 16, 0, 0);
 
-            this.cursors = this.input.keyboard.createCursorKeys();
+        this.cursors = this.input.keyboard.createCursorKeys();
 
-            this.pacman.play('munch');
-            this.move(Phaser.LEFT);
+        this.pacman.play('munch');
+        this.move(Phaser.LEFT);
 
-            text = game.add.text(game.world.x, game.world.y, "Score: " + score, {
-                font: "15px Arial",
-                fill: "#ffffff"
-            });
+        text = game.add.text(game.world.x, game.world.y, "Score: " + score, {
+            font: "15px Arial",
+            fill: "#ffffff"
+        });
 
-            text.anchor.set(0, -20.4);
+        text.anchor.set(0, -20.4);
 
-            text2 = game.add.text(game.world.x, game.world.y, "Timer: " + timer + " seconds", {
-                font: "15px Arial",
-                fill: "#ffffff",
-            });
+        text2 = game.add.text(game.world.x, game.world.y, "Timer: " + timer + " seconds", {
+            font: "15px Arial",
+            fill: "#ffffff",
+        });
 
-            text2.anchor.set(-1, -20.4);
+        text2.anchor.set(-1, -20.4);
 
-            text3 = game.add.text(game.world.x, game.world.y, "Lives: " + lives, {
-                font: "15px Arial",
-                fill: "#ffffff",
-            });
+        text3 = game.add.text(game.world.x, game.world.y, "Lives: " + lives, {
+            font: "15px Arial",
+            fill: "#ffffff",
+        });
 
-            text3.anchor.set(-6, -20.4);
+        text3.anchor.set(-6, -20.4);
 
-            poomptext = game.add.text(game.world.x, game.world.y, "", {
-                font: "18px Arial",
-                fill: "#ffffff"
-            });
+        poomptext = game.add.text(game.world.x, game.world.y, "", {
+            font: "18px Arial",
+            fill: "#ffffff"
+        });
 
-            poomptext.anchor.set(-.54, -8.6);
+        poomptext.anchor.set(-.54, -8.6);
 
-            wintext = game.add.text(game.world.x, game.world.y, "", {
-                font: "18px Arial",
-                fill: "#ffffff"
-            });
+        wintext = game.add.text(game.world.x, game.world.y, "", {
+            font: "18px Arial",
+            fill: "#ffffff"
+        });
 
-            wintext.anchor.set(-1.93, -8.6);
+        wintext.anchor.set(-1.93, -8.6);
 
-            timer = game.time.create(false);
+        timer = game.time.create(false);
 
-            timer.loop(1000, updateCounter, this);
+        timer.loop(1000, updateCounter, this);
 
-            timer.start();
+        timer.start();
 
-             pause_label = game.add.text(400, 467, 'Pause', { font: '16px Arial', fill: '#fff' });
-    pause_label.inputEnabled = true;
-    game.paused = true;
-
-    // Then add the menu
-    menu = game.add.sprite(w/2, h/2, 'menu');
-    menu.anchor.setTo(0.5, 0.5);
-
-    // And a label to illustrate which menu item was chosen. (This is not necessary)
-    choiceLabel = game.add.text(w/2, h-130, 'Click outside menu to start', { font: '30px Arial', fill: '#fff' });
-    choiceLabel.anchor.setTo(0.5, 0.5);
-    pause_label.events.onInputUp.add(function () {
-        // When the paus button is pressed, we pause the game
+        pause_label = game.add.text(400, 467, 'Pause', {
+            font: '16px Arial',
+            fill: '#fff'
+        });
+        pause_label.inputEnabled = true;
         game.paused = true;
 
         // Then add the menu
-        menu = game.add.sprite(w/2, h/2, 'menu');
+        menu = game.add.sprite(w / 2, h / 2, 'menu');
         menu.anchor.setTo(0.5, 0.5);
 
         // And a label to illustrate which menu item was chosen. (This is not necessary)
-        choiceLabel = game.add.text(w/2, h-130, 'Click outside menu to continue', { font: '30px Arial', fill: '#fff' });
+        choiceLabel = game.add.text(w / 2, h - 130, 'Click outside menu to start', {
+            font: '30px Arial',
+            fill: '#fff'
+        });
         choiceLabel.anchor.setTo(0.5, 0.5);
-    });
+        pause_label.events.onInputUp.add(function() {
+            // When the paus button is pressed, we pause the game
+            game.paused = true;
 
-    // Add a input listener that can help us return from being paused
-    game.input.onDown.add(unpause, self);
+            // Then add the menu
+            menu = game.add.sprite(w / 2, h / 2, 'menu');
+            menu.anchor.setTo(0.5, 0.5);
 
-    // And finally the method that handels the pause menu
-    function unpause(event){
-        // Only act if paused
-        if(game.paused){
-            // Calculate the corners of the menu
-            var x1 = w/2 - 270/2, x2 = w/2 + 270/2,
-                y1 = h/2 - 180/2, y2 = h/2 + 180/2;
+            // And a label to illustrate which menu item was chosen. (This is not necessary)
+            choiceLabel = game.add.text(w / 2, h - 130, 'Click outside menu to continue', {
+                font: '30px Arial',
+                fill: '#fff'
+            });
+            choiceLabel.anchor.setTo(0.5, 0.5);
+        });
 
-            // Check if the click was inside the menu
-            if(event.x > x1 && event.x < x2 && event.y > y1 && event.y < y2 ){
-                // The choicemap is an array that will help us see which item was clicked
-                var choicemap = ['one', 'two', 'three', 'four', 'five', 'six'];
+        // Add a input listener that can help us return from being paused
+        game.input.onDown.add(unpause, self);
 
-                // Get menu local coordinates for the click
-                var x = event.x - x1,
-                    y = event.y - y1;
+        // And finally the method that handels the pause menu
+        function unpause(event) {
+            // Only act if paused
+            if (game.paused) {
+                // Calculate the corners of the menu
+                var x1 = w / 2 - 270 / 2,
+                    x2 = w / 2 + 270 / 2,
+                    y1 = h / 2 - 180 / 2,
+                    y2 = h / 2 + 180 / 2;
 
-                // Calculate the choice
-                var choice = Math.floor(x / 135) + 2 * Math.floor(y / 90);
+                // Check if the click was inside the menu
+                if (event.x > x1 && event.x < x2 && event.y > y1 && event.y < y2) {
+                    // The choicemap is an array that will help us see which item was clicked
+                    var choicemap = ['one', 'two', 'three', 'four', 'five', 'six'];
 
-                if (choice == 3) {
-                    choice = 2;
-                }
-                // Display the choice
-                //choiceLabel.text = 'You chose menu item: ' + choicemap[choice];
+                    // Get menu local coordinates for the click
+                    var x = event.x - x1,
+                        y = event.y - y1;
 
-                if (choice == 0) {
-                    //user has selected level 1
-                    if (initmenu == 0 && level == 1) {
-                        menu.destroy();
-                        choiceLabel.destroy();
+                    // Calculate the choice
+                    var choice = Math.floor(x / 135) + 2 * Math.floor(y / 90);
 
-                        // Unpause the game
-                        game.paused = false;
-                        initmenu = 1;
+                    if (choice == 3) {
+                        choice = 2;
                     }
-                    else if (level == 1) {
-                        choiceLabel.text = 'You already are on level 1';
-                    }
-                    else {
-                        choiceLabel.text = 'Moving to level 1...';
+                    // Display the choice
+                    //choiceLabel.text = 'You chose menu item: ' + choicemap[choice];
+
+                    if (choice == 0) {
+                        //user has selected level 1
+                        if (initmenu == 0 && level == 1) {
+                            menu.destroy();
+                            choiceLabel.destroy();
+
+                            // Unpause the game
+                            game.paused = false;
+                            initmenu = 1;
+                        } else if (level == 1) {
+                            choiceLabel.text = 'You already are on level 1';
+                        } else {
+                            choiceLabel.text = 'Moving to level 1...';
+                            window.location = "/";
+                        }
+                    } else if (choice == 1) {
+                        //user has selected level 2
+                        if (initmenu == 0 && level == 2) {
+                            menu.destroy();
+                            choiceLabel.destroy();
+
+                            // Unpause the game
+                            game.paused = false;
+                            initmenu = 1;
+                        } else if (level == 2) {
+                            choiceLabel.text = 'You already are on level 2';
+                        } else {
+                            choiceLabel.text = 'Moving to level 2...';
+                            window.location = "/level2.html";
+                        }
+                    } else {
+                        //user has selected restart
+                        choiceLabel.text = 'Restarting...';
                         window.location = "/";
                     }
-                }
-                else if (choice == 1) {
-                    //user has selected level 2
-                    if (initmenu == 0 && level == 2) {
-                        menu.destroy();
-                        choiceLabel.destroy();
+                } else {
+                    // Remove the menu and the label
+                    menu.destroy();
+                    choiceLabel.destroy();
 
-                        // Unpause the game
-                        game.paused = false;
-                        initmenu = 1;
-                    }
-                    else if (level == 2) {
-                        choiceLabel.text = 'You already are on level 2';
-                    }
-                    else {
-                        choiceLabel.text = 'Moving to level 2...';
-                        window.location = "/level2.html";
-                    }
-                }
-                else {
-                    //user has selected restart
-                    choiceLabel.text = 'Restarting...';
-                    window.location = "/";
+                    // Unpause the game
+                    game.paused = false;
+                    initmenu = 1;
                 }
             }
-            else{
-                // Remove the menu and the label
-                menu.destroy();
-                choiceLabel.destroy();
+        };
 
-                // Unpause the game
-                game.paused = false;
-                initmenu = 1;
-            }
-        }
-    };
+    },
 
-        },
+    checkKeys: function() {
 
-        checkKeys: function () {
-
-            if (this.cursors.left.isDown && this.current !== Phaser.LEFT)
-            {
-                this.checkDirection(Phaser.LEFT);
-            }
-            else if (this.cursors.right.isDown && this.current !== Phaser.RIGHT)
-            {
-                this.checkDirection(Phaser.RIGHT);
-            }
-            else if (this.cursors.up.isDown && this.current !== Phaser.UP)
-            {
-                this.checkDirection(Phaser.UP);
-            }
-            else if (this.cursors.down.isDown && this.current !== Phaser.DOWN)
-            {
-                this.checkDirection(Phaser.DOWN);
-            }
-            else
-            {
-                //  This forces them to hold the key down to turn the corner
-                this.turning = Phaser.NONE;
-            }
-
-        },
-
-        checkDirection: function (turnTo) {
-
-            if (this.turning === turnTo || this.directions[turnTo] === null || this.directions[turnTo].index !== this.safetile)
-            {
-                //  Invalid direction if they're already set to turn that way
-                //  Or there is no tile there, or the tile isn't index 1 (a floor tile)
-                return;
-            }
-
-            //  Check if they want to turn around and can
-            if (this.current === this.opposites[turnTo])
-            {
-                this.move(turnTo);
-            }
-            else
-            {
-                this.turning = turnTo;
-
-                this.turnPoint.x = (this.marker.x * this.gridsize) + (this.gridsize / 2);
-                this.turnPoint.y = (this.marker.y * this.gridsize) + (this.gridsize / 2);
-            }
-
-        },
-
-        turn: function () {
-
-            var cx = Math.floor(this.pacman.x);
-            var cy = Math.floor(this.pacman.y);
-
-            //  This needs a threshold, because at high speeds you can't turn because the coordinates skip past
-            if (!this.math.fuzzyEqual(cx, this.turnPoint.x, this.threshold) || !this.math.fuzzyEqual(cy, this.turnPoint.y, this.threshold))
-            {
-                return false;
-            }
-
-            //  Grid align before turning
-            this.pacman.x = this.turnPoint.x;
-            this.pacman.y = this.turnPoint.y;
-
-            this.pacman.body.reset(this.turnPoint.x, this.turnPoint.y);
-
-            this.move(this.turning);
-
+        if (this.cursors.left.isDown && this.current !== Phaser.LEFT) {
+            this.checkDirection(Phaser.LEFT);
+        } else if (this.cursors.right.isDown && this.current !== Phaser.RIGHT) {
+            this.checkDirection(Phaser.RIGHT);
+        } else if (this.cursors.up.isDown && this.current !== Phaser.UP) {
+            this.checkDirection(Phaser.UP);
+        } else if (this.cursors.down.isDown && this.current !== Phaser.DOWN) {
+            this.checkDirection(Phaser.DOWN);
+        } else {
+            //  This forces them to hold the key down to turn the corner
             this.turning = Phaser.NONE;
-
-            return true;
-
-        },
-
-        move: function (direction) {
-
-            var speed = this.speed;
-
-            if (direction === Phaser.LEFT || direction === Phaser.UP)
-            {
-                speed = -speed;
-            }
-
-            if (direction === Phaser.LEFT || direction === Phaser.RIGHT)
-            {
-                this.pacman.body.velocity.x = speed;
-            }
-            else
-            {
-                this.pacman.body.velocity.y = speed;
-            }
-
-            //  Reset the scale and angle (Pacman is facing to the right in the sprite sheet)
-            this.pacman.scale.x = 1;
-            this.pacman.angle = 0;
-
-            if (direction === Phaser.LEFT)
-            {
-                this.pacman.scale.x = -1;
-            }
-            else if (direction === Phaser.UP)
-            {
-                this.pacman.angle = 270;
-            }
-            else if (direction === Phaser.DOWN)
-            {
-                this.pacman.angle = 90;
-            }
-
-            this.current = direction;
-
-        },
-
-        eatBonus: function (pacman, bonus) {
-
-            bonus.kill();
-
-            score = score + 10;
-            text.setText("Score: " + score);
-
-        },
-
-        eatGun: function (pacman, gun) {
-
-            gun.kill();
-            this.poomp(pacman);
-
-        },
-
-        eatTP: function (player, tp) {
-            player.reset(26 * 16 + 8, 29 * 15 + 8);
-            this.move(Phaser.UP);
-        },
-
-        eatTP2: function (player, tp) {
-            player.reset(1 * 16 + 8, 29 * 15 + 8);
-            this.move(Phaser.UP);
-        },
-
-        eatTPe: function (player, tp) {
-            player.reset(26 * 16 + 4, 29 * 15 + 4);
-            this.move(Phaser.UP);
-        },
-
-        eatTPe2: function (player, tp) {
-            player.reset(1 * 16 + 4, 29 * 15 + 4);
-            this.move(Phaser.UP);
-        },
-
-        poomp: function (pacman) {
-
-            enablepoomp = 1;
-            disablepoompcnt = 1;
-            poomptext.setText("POOMP THE MOOSCLES");
-
-        },
-
-        eatDot: function (pacman, dot) {
-
-            score++;
-            text.setText("Score: " + score);
-
-
-            dot.kill();
-
-            if (this.switch.isPlaying != true && this.switch2.isPlaying != true) {
-                this.switch.play();
-                this.counter = 1;
-            }
-            else {
-                if (this.counter % 6 == 0) {
-                    this.switch.play();
-                }
-                if (this.counter % 6 == 3) {
-                    this.switch2.play();
-                }
-                this.counter++;
-            }
-
-            if (this.dots.total === 0) {
-                // WHERE IS THE LAST DOT?!
-                wintext.setText("YOU WON!");
-                game.time.events.add(Phaser.Timer.SECOND / 10, playWin, this);
-                won = 1;
-                setTimeout(function(){ window.location = "/level2.html"; }, 2000);
-            }
-
-            function playWin() {
-                this.win.play();
-            }
-
-        },
-
-        eatStrawberry: function (pacman, strawberry) {
-
-
-            score = score + 3;
-            text.setText("Score: " + score);
-
-            strawberry.kill();
-
-            if (this.switch.isPlaying != true && this.switch2.isPlaying != true) {
-                this.switch.play();
-                this.counter = 1;
-            }
-            else {
-                if (this.counter % 6 == 0) {
-                    this.switch.play();
-                }
-                if (this.counter % 6 == 3) {
-                    this.switch2.play();
-                }
-                this.counter++;
-            }
-
-        },
-
-        eatBanana: function (pacman, banana) {
-
-            score = score + 5;
-            text.setText("Score: " + score);
-
-            banana.kill();
-
-            if (this.switch.isPlaying != true && this.switch2.isPlaying != true) {
-                this.switch.play();
-                this.counter = 1;
-            }
-            else {
-                if (this.counter % 6 == 0) {
-                    this.switch.play();
-                }
-                if (this.counter % 6 == 3) {
-                    this.switch2.play();
-                }
-                this.counter++;
-            }
-
-        },
-
-        kill_pacman: function (pacman) {
-            pacman.kill();
-            if (lives == 0) {
-                wintext.setText("YOU LOSE");
-            }
-            else {
-                pacman.reset(13 * 16 + 8, 20 * 16 + 8);
-                lives--;
-            }
-        },
-
-        kill_enemy: function (enemy) {
-            enemy.kill();
-        },
-
-        update: function () {
-
-            this.physics.arcade.collide(this.pacman, this.layer);
-            this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
-            // bonus
-            if (total > 10) {
-                this.physics.arcade.overlap(this.pacman, this.bonuses, this.eatBonus, null, this);
-            }
-
-            if (total > 20) {
-                this.physics.arcade.overlap(this.pacman, this.gun, this.eatGun, null, this);
-            }
-
-            this.physics.arcade.overlap(this.pacman, this.tp, this.eatTP, null, this);
-
-            this.physics.arcade.overlap(this.pacman, this.tp2, this.eatTP2, null, this);
-
-            this.physics.arcade.collide(enemy, this.tp, moveEnemy);
-            this.physics.arcade.collide(enemy, this.tp2, moveEnemy);
-
-            this.physics.arcade.collide(enemy2, this.tp, moveEnemy);
-            this.physics.arcade.collide(enemy2, this.tp2, moveEnemy);
-
-            this.physics.arcade.collide(this.pacman, this.layer);
-
-            this.physics.arcade.collide(enemy, this.layer, moveEnemy);
-            this.physics.arcade.collide(enemy2, this.layer, moveEnemy);
-
-            if (enablepoomp == 0) {
-                this.physics.arcade.collide(this.pacman, enemy, this.kill_pacman);
-                this.physics.arcade.collide(this.pacman, enemy2, this.kill_pacman);
-            }
-            else {
-                this.physics.arcade.collide(enemy, this.pacman, this.kill_enemy);
-                this.physics.arcade.collide(enemy2, this.pacman, this.kill_enemy);
-            }
-
-            this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
-
-            this.physics.arcade.overlap(this.pacman, this.strawberries, this.eatStrawberry, null, this);
-            this.physics.arcade.overlap(this.pacman, this.bananas, this.eatBanana, null, this);
-
-            this.marker.x = this.math.snapToFloor(Math.floor(this.pacman.x), this.gridsize) / this.gridsize;
-            this.marker.y = this.math.snapToFloor(Math.floor(this.pacman.y), this.gridsize) / this.gridsize;
-
-            //  Update our grid sensors
-            this.directions[1] = this.map.getTileLeft(this.layer.index, this.marker.x, this.marker.y);
-            this.directions[2] = this.map.getTileRight(this.layer.index, this.marker.x, this.marker.y);
-            this.directions[3] = this.map.getTileAbove(this.layer.index, this.marker.x, this.marker.y);
-            this.directions[4] = this.map.getTileBelow(this.layer.index, this.marker.x, this.marker.y);
-
-            this.checkKeys();
-
-            if (this.turning !== Phaser.NONE)
-            {
-                this.turn();
-            }
-
-            text2.setText("Timer: " + total + " seconds");
-
-            if (disablepoompcnt == 1) {
-                poompinit = total;
-                disablepoompcnt = total;
-            }
-
-            if (disablepoompcnt > 1 && disablepoompcnt < poompinit + 10) {
-                // not more than 10 seconds have passed since powers enable, keep em up
-                if (total % 10 == 0) {
-                    disablepoompcnt++;
-                }
-            }
-            else {
-                enablepoomp = 0;
-                poomptext.setText("");
-            }
-
-
-            if (total == 10 && disable == 0) {
-                this.bonuses.visible = true;
-                disable = 1;
-            }
-
-            if (total % 15 == 0) {
-                this.bonuses.callAll('kill');
-            }
-
-            if (total % 25 == 0) {
-                this.bonuses.callAll('revive');
-            }
-
-            if (total == 20) {
-                this.gun.visible = true;
-                this.gun.callAll('revive');
-            }
-
-            if (total == 25) {
-                this.gun.callAll('kill');
-            }
-
-            //if (total % 35 == 0) {
-            //    this.gun.callAll('revive');
-            //}
-
-            if (lives >= 0) {
-                text3.setText("Lives: " + lives);
-            }
-            else {
-                // display loss message and nullify text3
-                text3.setText("");
-            }
-
-        },
-
-    };
-
-    function updateCounter() {
-        if (won == 0) {
-            total++;
-        }
-    };
-
-	Enemy = function (game, x, y, direction, speed) {
-		Phaser.Sprite.call(this, game, (x*16), (y*16), "enemy");
-		//this.anchor.setTo(.5);
-		game.physics.enable(this, Phaser.Physics.ARCADE);
-		this.ySpeed = direction*speed*-1;
-        this.xSpeed = 0;
-	};
-
-	Enemy.prototype = Object.create(Phaser.Sprite.prototype);
-	Enemy.prototype.constructor = Enemy;
-
-	Enemy.prototype.update = function() {
-        //game.physics.arcade.collide(Enemy, game.layer, moveEnemy);
-		this.body.velocity.x = this.xSpeed;
-        this.body.velocity.y = this.ySpeed;
-
-	};
-
-	function moveEnemy(enemy,platform){
-
-        var rand = Math.floor((Math.random() * 10) + 1)%2;
-
-        if (enemy.xSpeed == 0) {
-            if (rand == 0) {
-                enemy.xSpeed = enemy.ySpeed;
-            }
-            else {
-                enemy.xSpeed = enemy.ySpeed*-1;
-            }
-            enemy.ySpeed = 0;
-        }
-        else {
-            if (rand == 0) {
-                enemy.ySpeed = enemy.xSpeed;
-            }
-            else {
-                enemy.ySpeed = enemy.xSpeed*-1;
-            }
-            enemy.xSpeed = 0;
         }
 
-	}
+    },
 
-    game.state.add('Game', Pacman, true);
+    checkDirection: function(turnTo) {
 
-    </script>
+        if (this.turning === turnTo || this.directions[turnTo] === null || this.directions[turnTo].index !== this.safetile) {
+            //  Invalid direction if they're already set to turn that way
+            //  Or there is no tile there, or the tile isn't index 1 (a floor tile)
+            return;
+        }
+
+        //  Check if they want to turn around and can
+        if (this.current === this.opposites[turnTo]) {
+            this.move(turnTo);
+        } else {
+            this.turning = turnTo;
+
+            this.turnPoint.x = (this.marker.x * this.gridsize) + (this.gridsize / 2);
+            this.turnPoint.y = (this.marker.y * this.gridsize) + (this.gridsize / 2);
+        }
+
+    },
+
+    turn: function() {
+
+        var cx = Math.floor(this.pacman.x);
+        var cy = Math.floor(this.pacman.y);
+
+        //  This needs a threshold, because at high speeds you can't turn because the coordinates skip past
+        if (!this.math.fuzzyEqual(cx, this.turnPoint.x, this.threshold) || !this.math.fuzzyEqual(cy, this.turnPoint.y, this.threshold)) {
+            return false;
+        }
+
+        //  Grid align before turning
+        this.pacman.x = this.turnPoint.x;
+        this.pacman.y = this.turnPoint.y;
+
+        this.pacman.body.reset(this.turnPoint.x, this.turnPoint.y);
+
+        this.move(this.turning);
+
+        this.turning = Phaser.NONE;
+
+        return true;
+
+    },
+
+    move: function(direction) {
+
+        var speed = this.speed;
+
+        if (direction === Phaser.LEFT || direction === Phaser.UP) {
+            speed = -speed;
+        }
+
+        if (direction === Phaser.LEFT || direction === Phaser.RIGHT) {
+            this.pacman.body.velocity.x = speed;
+        } else {
+            this.pacman.body.velocity.y = speed;
+        }
+
+        //  Reset the scale and angle (Pacman is facing to the right in the sprite sheet)
+        this.pacman.scale.x = 1;
+        this.pacman.angle = 0;
+
+        if (direction === Phaser.LEFT) {
+            this.pacman.scale.x = -1;
+        } else if (direction === Phaser.UP) {
+            this.pacman.angle = 270;
+        } else if (direction === Phaser.DOWN) {
+            this.pacman.angle = 90;
+        }
+
+        this.current = direction;
+
+    },
+
+    eatBonus: function(pacman, bonus) {
+
+        bonus.kill();
+
+        score = score + 10;
+        text.setText("Score: " + score);
+
+    },
+
+    eatGun: function(pacman, gun) {
+
+        gun.kill();
+        this.poomp(pacman);
+
+    },
+
+    eatTP: function(player, tp) {
+        player.reset(26 * 16 + 8, 29 * 15 + 8);
+        this.move(Phaser.UP);
+    },
+
+    eatTP2: function(player, tp) {
+        player.reset(1 * 16 + 8, 29 * 15 + 8);
+        this.move(Phaser.UP);
+    },
+
+    eatTPe: function(player, tp) {
+        player.reset(26 * 16 + 4, 29 * 15 + 4);
+        this.move(Phaser.UP);
+    },
+
+    eatTPe2: function(player, tp) {
+        player.reset(1 * 16 + 4, 29 * 15 + 4);
+        this.move(Phaser.UP);
+    },
+
+    poomp: function(pacman) {
+
+        enablepoomp = 1;
+        disablepoompcnt = 1;
+        poomptext.setText("POOMP THE MOOSCLES");
+
+    },
+
+    eatDot: function(pacman, dot) {
+
+        score++;
+        text.setText("Score: " + score);
+
+
+        dot.kill();
+
+        if (this.switch.isPlaying != true && this.switch2.isPlaying != true) {
+            this.switch.play();
+            this.counter = 1;
+        } else {
+            if (this.counter % 6 == 0) {
+                this.switch.play();
+            }
+            if (this.counter % 6 == 3) {
+                this.switch2.play();
+            }
+            this.counter++;
+        }
+
+        if (this.dots.total === 0) {
+            // WHERE IS THE LAST DOT?!
+            wintext.setText("YOU WON!");
+            game.time.events.add(Phaser.Timer.SECOND / 10, playWin, this);
+            won = 1;
+            setTimeout(function() {
+                window.location = "/level2.html";
+            }, 2000);
+        }
+
+        function playWin() {
+            this.win.play();
+        }
+
+    },
+
+    eatStrawberry: function(pacman, strawberry) {
+
+
+        score = score + 3;
+        text.setText("Score: " + score);
+
+        strawberry.kill();
+
+        if (this.switch.isPlaying != true && this.switch2.isPlaying != true) {
+            this.switch.play();
+            this.counter = 1;
+        } else {
+            if (this.counter % 6 == 0) {
+                this.switch.play();
+            }
+            if (this.counter % 6 == 3) {
+                this.switch2.play();
+            }
+            this.counter++;
+        }
+
+    },
+
+    eatBanana: function(pacman, banana) {
+
+        score = score + 5;
+        text.setText("Score: " + score);
+
+        banana.kill();
+
+        if (this.switch.isPlaying != true && this.switch2.isPlaying != true) {
+            this.switch.play();
+            this.counter = 1;
+        } else {
+            if (this.counter % 6 == 0) {
+                this.switch.play();
+            }
+            if (this.counter % 6 == 3) {
+                this.switch2.play();
+            }
+            this.counter++;
+        }
+
+    },
+
+    kill_pacman: function(pacman) {
+        pacman.kill();
+        if (lives == 0) {
+            wintext.setText("YOU LOSE");
+        } else {
+            pacman.reset(13 * 16 + 8, 20 * 16 + 8);
+            lives--;
+        }
+    },
+
+    kill_enemy: function(enemy) {
+        enemy.kill();
+    },
+
+    update: function() {
+
+        this.physics.arcade.collide(this.pacman, this.layer);
+        this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
+        // bonus
+        if (total > 10) {
+            this.physics.arcade.overlap(this.pacman, this.bonuses, this.eatBonus, null, this);
+        }
+
+        if (total > 20) {
+            this.physics.arcade.overlap(this.pacman, this.gun, this.eatGun, null, this);
+        }
+
+        this.physics.arcade.overlap(this.pacman, this.tp, this.eatTP, null, this);
+
+        this.physics.arcade.overlap(this.pacman, this.tp2, this.eatTP2, null, this);
+
+        this.physics.arcade.collide(enemy, this.tp, moveEnemy);
+        this.physics.arcade.collide(enemy, this.tp2, moveEnemy);
+
+        this.physics.arcade.collide(enemy2, this.tp, moveEnemy);
+        this.physics.arcade.collide(enemy2, this.tp2, moveEnemy);
+
+        this.physics.arcade.collide(this.pacman, this.layer);
+
+        this.physics.arcade.collide(enemy, this.layer, moveEnemy);
+        this.physics.arcade.collide(enemy2, this.layer, moveEnemy);
+
+        if (enablepoomp == 0) {
+            this.physics.arcade.collide(this.pacman, enemy, this.kill_pacman);
+            this.physics.arcade.collide(this.pacman, enemy2, this.kill_pacman);
+        } else {
+            this.physics.arcade.collide(enemy, this.pacman, this.kill_enemy);
+            this.physics.arcade.collide(enemy2, this.pacman, this.kill_enemy);
+        }
+
+        this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
+
+        this.physics.arcade.overlap(this.pacman, this.strawberries, this.eatStrawberry, null, this);
+        this.physics.arcade.overlap(this.pacman, this.bananas, this.eatBanana, null, this);
+
+        this.marker.x = this.math.snapToFloor(Math.floor(this.pacman.x), this.gridsize) / this.gridsize;
+        this.marker.y = this.math.snapToFloor(Math.floor(this.pacman.y), this.gridsize) / this.gridsize;
+
+        //  Update our grid sensors
+        this.directions[1] = this.map.getTileLeft(this.layer.index, this.marker.x, this.marker.y);
+        this.directions[2] = this.map.getTileRight(this.layer.index, this.marker.x, this.marker.y);
+        this.directions[3] = this.map.getTileAbove(this.layer.index, this.marker.x, this.marker.y);
+        this.directions[4] = this.map.getTileBelow(this.layer.index, this.marker.x, this.marker.y);
+
+        this.checkKeys();
+
+        if (this.turning !== Phaser.NONE) {
+            this.turn();
+        }
+
+        text2.setText("Timer: " + total + " seconds");
+
+        if (disablepoompcnt == 1) {
+            poompinit = total;
+            disablepoompcnt = total;
+        }
+
+        if (disablepoompcnt > 1 && disablepoompcnt < poompinit + 10) {
+            // not more than 10 seconds have passed since powers enable, keep em up
+            if (total % 10 == 0) {
+                disablepoompcnt++;
+            }
+        } else {
+            enablepoomp = 0;
+            poomptext.setText("");
+        }
+
+
+        if (total == 10 && disable == 0) {
+            this.bonuses.visible = true;
+            disable = 1;
+        }
+
+        if (total % 15 == 0) {
+            this.bonuses.callAll('kill');
+        }
+
+        if (total % 25 == 0) {
+            this.bonuses.callAll('revive');
+        }
+
+        if (total == 20) {
+            this.gun.visible = true;
+            this.gun.callAll('revive');
+        }
+
+        if (total == 25) {
+            this.gun.callAll('kill');
+        }
+
+        //if (total % 35 == 0) {
+        //    this.gun.callAll('revive');
+        //}
+
+        if (lives >= 0) {
+            text3.setText("Lives: " + lives);
+        } else {
+            // display loss message and nullify text3
+            text3.setText("");
+        }
+
+    },
+
+};
+
+function updateCounter() {
+    if (won == 0) {
+        total++;
+    }
+};
+
+Enemy = function(game, x, y, direction, speed) {
+    Phaser.Sprite.call(this, game, (x * 16), (y * 16), "enemy");
+    //this.anchor.setTo(.5);
+    game.physics.enable(this, Phaser.Physics.ARCADE);
+    this.ySpeed = direction * speed * -1;
+    this.xSpeed = 0;
+};
+
+Enemy.prototype = Object.create(Phaser.Sprite.prototype);
+Enemy.prototype.constructor = Enemy;
+
+Enemy.prototype.update = function() {
+    //game.physics.arcade.collide(Enemy, game.layer, moveEnemy);
+    this.body.velocity.x = this.xSpeed;
+    this.body.velocity.y = this.ySpeed;
+
+};
+
+function moveEnemy(enemy, platform) {
+
+    var rand = Math.floor((Math.random() * 10) + 1) % 2;
+
+    if (enemy.xSpeed == 0) {
+        if (rand == 0) {
+            enemy.xSpeed = enemy.ySpeed;
+        } else {
+            enemy.xSpeed = enemy.ySpeed * -1;
+        }
+        enemy.ySpeed = 0;
+    } else {
+        if (rand == 0) {
+            enemy.ySpeed = enemy.xSpeed;
+        } else {
+            enemy.ySpeed = enemy.xSpeed * -1;
+        }
+        enemy.xSpeed = 0;
+    }
+
+}
+
+game.state.add('Game', Pacman, true);
+</script>
 
 </body>
 </html>
