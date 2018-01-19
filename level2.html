@@ -514,9 +514,6 @@ Pacman.prototype = {
             wintext.setText("YOU WON!");
             game.time.events.add(Phaser.Timer.SECOND / 10, playWin, this);
             won = 1;
-            setTimeout(function() {
-                window.location = "/level2.html";
-            }, 2000);
         }
 
         function playWin() {
