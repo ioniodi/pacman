@@ -19,6 +19,7 @@
     var game = new Phaser.Game(448, 496, Phaser.AUTO);
     // old
     //var game = new Phaser.Game(512, 512, Phaser.AUTO);
+    var level = 1;
 
     var text;
     var text2;
@@ -41,6 +42,7 @@
     var enemy;
     var enemy2;
 
+    var w = 448, h = 496;
 
     var Pacman = function (game) {
 
@@ -101,12 +103,15 @@
 
             this.load.audio('switch', 'assets/audio/switch.mp3');
 
+            this.load.image('menu', 'assets/button.png', 270, 180);
+
             this.load.audio('win', 'assets/audio/switch.mp3');
 
             this.load.image('tiles', 'assets/pacman-tiles.png');
 
             this.load.spritesheet('pacman', 'assets/pacman.png', 32, 32);
             this.load.tilemap('map', 'assets/level1.json', null, Phaser.Tilemap.TILED_JSON);
+            this.load.tilemap('map2', 'assets/level2.json', null, Phaser.Tilemap.TILED_JSON);
 
             game.load.image("enemy","assets/cate.png");
 
@@ -141,10 +146,10 @@
             this.gun.visible = false;
 
             this.map.createFromTiles(39, this.safetile, 'tp', this.layer, this.tp);
-            this.tp.visible = true;
+            this.tp.visible = false;
 
             this.map.createFromTiles(40, this.safetile, 'tp2', this.layer, this.tp2);
-            this.tp2.visible = true;
+            this.tp2.visible = false;
 
             this.map.createFromTiles(7, this.safetile, 'dot', this.layer, this.dots);
 
@@ -233,6 +238,87 @@
             timer.loop(1000, updateCounter, this);
 
             timer.start();
+
+             pause_label = game.add.text(400, 467, 'Pause', { font: '16px Arial', fill: '#fff' });
+    pause_label.inputEnabled = true;
+    pause_label.events.onInputUp.add(function () {
+        // When the paus button is pressed, we pause the game
+        game.paused = true;
+
+        // Then add the menu
+        menu = game.add.sprite(w/2, h/2, 'menu');
+        menu.anchor.setTo(0.5, 0.5);
+
+        // And a label to illustrate which menu item was chosen. (This is not necessary)
+        choiceLabel = game.add.text(w/2, h-130, 'Click outside menu to continue', { font: '30px Arial', fill: '#fff' });
+        choiceLabel.anchor.setTo(0.5, 0.5);
+    });
+
+    // Add a input listener that can help us return from being paused
+    game.input.onDown.add(unpause, self);
+
+    // And finally the method that handels the pause menu
+    function unpause(event){
+        // Only act if paused
+        if(game.paused){
+            // Calculate the corners of the menu
+            var x1 = w/2 - 270/2, x2 = w/2 + 270/2,
+                y1 = h/2 - 180/2, y2 = h/2 + 180/2;
+
+            // Check if the click was inside the menu
+            if(event.x > x1 && event.x < x2 && event.y > y1 && event.y < y2 ){
+                // The choicemap is an array that will help us see which item was clicked
+                var choicemap = ['one', 'two', 'three', 'four', 'five', 'six'];
+
+                // Get menu local coordinates for the click
+                var x = event.x - x1,
+                    y = event.y - y1;
+
+                // Calculate the choice
+                var choice = Math.floor(x / 135) + 2 * Math.floor(y / 90);
+
+                if (choice == 3) {
+                    choice = 2;
+                }
+                // Display the choice
+                //choiceLabel.text = 'You chose menu item: ' + choicemap[choice];
+
+                if (choice == 0) {
+                    //user has selected level 1
+                    if (level == 1) {
+                        choiceLabel.text = 'You already are on level 1';
+                    }
+                    else {
+                        choiceLabel.text = 'Moving to level 1...';
+                        window.location = "/";
+                    }
+                }
+                else if (choice == 1) {
+                    //user has selected level 2
+                    if (level == 2) {
+                        choiceLabel.text = 'You already are on level 2';
+                    }
+                    else {
+                        choiceLabel.text = 'Moving to level 2...';
+                        window.location = "/level2.html";
+                    }
+                }
+                else {
+                    //user has selected restart
+                    choiceLabel.text = 'Restarting...';
+                    window.location = "/";
+                }
+            }
+            else{
+                // Remove the menu and the label
+                menu.destroy();
+                choiceLabel.destroy();
+
+                // Unpause the game
+                game.paused = false;
+            }
+        }
+    };
 
         },
 
@@ -390,7 +476,6 @@
 
             enablepoomp = 1;
             disablepoompcnt = 1;
-            console.log("poomp activated");
             poomptext.setText("POOMP THE MOOSCLES");
 
         },
@@ -479,7 +564,7 @@
         kill_pacman: function (pacman) {
             pacman.kill();
             if (lives == 0) {
-                poomptext.setText("YOU LOSE GOOD DAY SIR!");
+                wintext.setText("YOU LOSE");
             }
             else {
                 pacman.reset(13 * 16 + 8, 20 * 16 + 8);
@@ -508,11 +593,11 @@
 
             this.physics.arcade.overlap(this.pacman, this.tp2, this.eatTP2, null, this);
 
-            this.physics.arcade.overlap(enemy, this.tp, this.eatTPe, null, this);
-            this.physics.arcade.overlap(enemy, this.tp2, this.eatTPe2, null, this);
+            this.physics.arcade.collide(enemy, this.tp, moveEnemy);
+            this.physics.arcade.collide(enemy, this.tp2, moveEnemy);
 
-            this.physics.arcade.overlap(enemy2, this.tp, this.eatTPe, null, this);
-            this.physics.arcade.overlap(enemy2, this.tp2, this.eatTPe2, null, this);
+            this.physics.arcade.collide(enemy2, this.tp, moveEnemy);
+            this.physics.arcade.collide(enemy2, this.tp2, moveEnemy);
 
             this.physics.arcade.collide(this.pacman, this.layer);
 
