@@ -21,6 +21,7 @@
     //var game = new Phaser.Game(512, 512, Phaser.AUTO);
     var level = 1;
     var initmenu = 0;
+    var won = 0;
 
     var text;
     var text2;
@@ -532,6 +533,8 @@
                 // WHERE IS THE LAST DOT?!
                 wintext.setText("YOU WON!");
                 game.time.events.add(Phaser.Timer.SECOND / 10, playWin, this);
+                won = 1;
+                setTimeout(function(){ window.location = "/level2.html"; }, 2000);
             }
 
             function playWin() {
@@ -718,9 +721,9 @@
     };
 
     function updateCounter() {
-
-        total++;
-
+        if (won == 0) {
+            total++;
+        }
     };
 
 	Enemy = function (game, x, y, direction, speed) {
