@@ -20,6 +20,7 @@
     // old
     //var game = new Phaser.Game(512, 512, Phaser.AUTO);
     var level = 1;
+    var initmenu = 0;
 
     var text;
     var text2;
@@ -240,6 +241,15 @@
 
              pause_label = game.add.text(400, 467, 'Pause', { font: '16px Arial', fill: '#fff' });
     pause_label.inputEnabled = true;
+    game.paused = true;
+
+    // Then add the menu
+    menu = game.add.sprite(w/2, h/2, 'menu');
+    menu.anchor.setTo(0.5, 0.5);
+
+    // And a label to illustrate which menu item was chosen. (This is not necessary)
+    choiceLabel = game.add.text(w/2, h-130, 'Click outside menu to start', { font: '30px Arial', fill: '#fff' });
+    choiceLabel.anchor.setTo(0.5, 0.5);
     pause_label.events.onInputUp.add(function () {
         // When the paus button is pressed, we pause the game
         game.paused = true;
@@ -284,7 +294,15 @@
 
                 if (choice == 0) {
                     //user has selected level 1
-                    if (level == 1) {
+                    if (initmenu == 0 && level == 1) {
+                        menu.destroy();
+                        choiceLabel.destroy();
+
+                        // Unpause the game
+                        game.paused = false;
+                        initmenu = 1;
+                    }
+                    else if (level == 1) {
                         choiceLabel.text = 'You already are on level 1';
                     }
                     else {
@@ -294,7 +312,15 @@
                 }
                 else if (choice == 1) {
                     //user has selected level 2
-                    if (level == 2) {
+                    if (initmenu == 0 && level == 2) {
+                        menu.destroy();
+                        choiceLabel.destroy();
+
+                        // Unpause the game
+                        game.paused = false;
+                        initmenu = 1;
+                    }
+                    else if (level == 2) {
                         choiceLabel.text = 'You already are on level 2';
                     }
                     else {
@@ -315,6 +341,7 @@
 
                 // Unpause the game
                 game.paused = false;
+                initmenu = 1;
             }
         }
     };
