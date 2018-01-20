@@ -59,13 +59,13 @@
 
             //  We need this because the assets are on github pages
             //  Remove the next 2 lines if running locally
-            this.load.baseURL = 'https://p15zerv.github.io/pacman/';
-			this.load.crossOrigin = 'anonymous';
+            this.load.baseURL = 'https://ioniodi.github.io/pacman/';
+            this.load.crossOrigin = 'anonymous';
 
             this.load.image('dot', 'assets/dot.png');
-            this.load.image('tiles', 'extensions/pacman-tiles.png');
+            this.load.image('tiles', 'assets/pacman-tiles.png');
             this.load.spritesheet('pacman', 'assets/pacman.png', 32, 32);
-            this.load.tilemap('map', 'extensions/2015111.json', null, Phaser.Tilemap.TILED_JSON);
+            this.load.tilemap('map', 'assets/pacman-map.json', null, Phaser.Tilemap.TILED_JSON);
 
             //  Needless to say, graphics (C)opyright Namco
 
