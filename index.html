@@ -42,8 +42,6 @@
         this.turning = Phaser.NONE;
 	    this.score = 0;
             this.scoreText = "Score: 0";
-            this.bonusScore = 0;
-            this.bonusText = "Bonus: 0";
             this.elapsedTime = "";
             this.lives = 2;
             this.livesText = "Lives: 2"
@@ -118,11 +116,7 @@
                     fontSize: '22px',
                     fill: 'white'
                 });
-                this.bonusText = game.add.text(125, 500, 'Bonus: 0', {
-                    font: 'arial',
-                    fontSize: '22px',
-                    fill: 'white'
-                });
+             
                 this.livesText = game.add.text(250, 500, 'Lives: 2', {
 		    font: 'arial',
                     fontSize: '18px',
