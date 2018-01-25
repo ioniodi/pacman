@@ -41,6 +41,17 @@
         this.current = Phaser.NONE;
         this.turning = Phaser.NONE;
 
+        
+        this.score=0;
+        this.scoreText='';
+
+	    
+	    this.lives = 3;
+	    this.livesText='';
+	    
+	    this.life1 = null;
+	    this.life2 = null;
+	    this.life3 = null;
     };
 
     Pacman.prototype = {
@@ -66,6 +77,7 @@
 
             this.load.image('dot', 'assets/dot.png');
             this.load.image('tiles', 'assets/pacman-tiles.png');
+            this.load.image('lifes2', 'assets/lifes2.png');
             this.load.spritesheet('pacman', 'assets/pacman.png', 32, 32);
             this.load.tilemap('map', 'assets/pacman-map.json', null, Phaser.Tilemap.TILED_JSON);
 
@@ -103,6 +115,12 @@
 
             this.pacman.play('munch');
             this.move(Phaser.LEFT);
+            
+            	
+            this.life1 = this.add.sprite(450, 90, 'lifes2');
+		    this.life2 = this.add.sprite(480, 90, 'lifes2');
+		    this.life3 = this.add.sprite(510, 90, 'lifes2');
+		    this.livesText = game.add.text(450, 60, "Lives: ", { fontSize: "19px", fill: "white"});
 
         },
 
@@ -251,6 +269,29 @@
             {
                 this.turn();
             }
+            
+        this.timeText.text = "Time: " + min + ":" + sec;
+		this.livesText.text = "Lives: ";
+		if(this.lives==0){
+			this.life1.visible = false;
+			this.life2.visible = false;
+			this.life3.visible = false;
+		}
+		else if(this.lives==1){
+			this.life1.visible = true;
+			this.life2.visible = false;
+			this.life3.visible = false;
+		}
+		else if(this.lives==2){
+			this.life1.visible = true;
+			this.life2.visible = true;
+			this.life3.visible = false;
+		}
+		else if(this.lives==3){
+			this.life1.visible = true;
+			this.life2.visible = true;
+			this.life3.visible = true;
+		}
 
         }
 
