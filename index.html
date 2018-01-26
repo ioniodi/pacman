@@ -17,20 +17,21 @@
 </head>
 <body>
  <audio autoplay loop>
+	 
         <source src="assets/rocky.mp3" type="audio/mp3">
     </audio>
     <script type="text/javascript">
+	    
     var game = new Phaser.Game(448, 496, Phaser.AUTO);
     var Pacman = function (game) {
         
-         this.score=0;
+        this.score=0;
         this.bonus=0;
         this.scoreText='';
         this.bonusText=''; 
-       
-        
+	    
         this.map = null;
-        this.layer = nul
+        this.layer = null;
         this.pacman = null;
         this.safetile = 14;
         this.gridsize = 16;
@@ -42,9 +43,11 @@
         this.opposites = [ Phaser.NONE, Phaser.RIGHT, Phaser.LEFT, Phaser.DOWN, Phaser.UP ];
         this.current = Phaser.NONE;
         this.turning = Phaser.NONE;
+        
+       
     };
-    Pacman.prototype = {
-        init: function () {
+        Pacman.prototype = {
+          init: function () {
             this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
             this.scale.pageAlignHorizontally = true;
             this.scale.pageAlignVertically = true;
@@ -55,14 +58,14 @@
             //  We need this because the assets are on github pages
             //  Remove the next 2 lines if running locally
             this.load.baseURL = 'https://gichazap.github.io/pacman/';
-            this.load.crossOrigin = 'anonymous';
             this.load.image('dot', 'assets/dot.png');
             this.load.image('tiles', 'assets/pacman-tiles.png');
             this.load.spritesheet('pacman', 'assets/pacman.png', 32, 32);
             this.load.tilemap('map', 'assets/pacman-map.json', null, Phaser.Tilemap.TILED_JSON);
             //  Needless to say, graphics (C)opyright Namco
         },
-        create: function () {
+       
+           create: function () {
 		scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
             this.map = this.add.tilemap('map');
             this.map.addTilesetImage('pacman-tiles', 'tiles');
