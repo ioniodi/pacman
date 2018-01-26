@@ -30,7 +30,7 @@
        
         
         this.map = null;
-        this.layer = null;
+        this.layer = nul
         this.pacman = null;
         this.safetile = 14;
         this.gridsize = 16;
@@ -59,6 +59,7 @@
             this.load.image('dot', 'assets/dot.png');
             this.load.image('tiles', 'assets/pacman-tiles.png');
             this.load.spritesheet('pacman', 'assets/pacman.png', 32, 32);
+		this.game.load.audio('bell','assests/bell.mp3');
             this.load.tilemap('map', 'assets/pacman-map.json', null, Phaser.Tilemap.TILED_JSON);
             //  Needless to say, graphics (C)opyright Namco
         },
